@@ -248,7 +248,7 @@ $lang = array(
 	'tool_sm_opt' => 'Display every %s% seconds',
 	'tool_sm_msg' => 'Message',
 	'tool_sm_help1' => 'Time to display the message',
-	'tool_sm_help2' => 	'Message to display, you can use the following variables:<br />' .
+	'tool_sm_help2' =>	'Message to display, you can use the following variables:<br />' .
 						'<code>%name%</code> Name<br />' .
 						'<code>%ping%</code> Ping<br />' .
 						'<code>%class%</code> Class<br />' .

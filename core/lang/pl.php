@@ -24,14 +24,14 @@ $lang = array(
 	'lang_name' => 'Polski / Polish',
 	'lang_name_short' => 'PL',
 	'lang_charset' => 'utf8',
-	'lang_translator' => 'Nommo from <a href=www.partisans.com.pl>Partisans</a>',
+	'lang_translator' => 'Nommo from Partisans Clan - www.partisans.com.pl',
 	'lang_notes' => 'Brak', // Add here some additional notes... If you've got some...
 	
 	'github' => 'Sprawdź na GitHub',
 	
 	// Some words
 	'word_tool' => 'Bunny\'s ServerTool',
-	'word.tool' => 'Tool',
+	'word.tool' => 'Limiter:',
 	'word_cp_full' => 'Panel kontrolny',
 	'word_cp' => 'PK',
 	'word_vip' => 'VIP',
@@ -65,7 +65,7 @@ $lang = array(
 	'word_disabled' => 'Wyłączony',
 	'word_ty' => 'Dziękuję!',
 	'word_date' => 'Data',
-	'word_until' => 'Na',
+	'word_until' => 'Do',
 	'word_forever' => 'Zawsze',
 	
 	// Messages
@@ -91,7 +91,7 @@ $lang = array(
 	'btn_close' => 'Zamknij',
 	
 	// Tools general
-	'tool_gen_ignorevip' => 'Ignorój VIPów?',
+	'tool_gen_ignorevip' => 'Ignoruj VIPów?',
 	'tool_gen_help1' => 'Maxymalnie na team',
 	
 	// Tools names and descriptions
@@ -142,7 +142,7 @@ $lang = array(
 	'tool_iteml_desc' => 'Lista wszystkich przedmiotów w Battlefield Play4Free',
 	
 	'tool_set' => 'Ustawienia',
-	'tool_set_desc' => 'Ustawienia panelu kontrolnego i autokicka',
+	'tool_set_desc' => 'Ustawienia panelu kontrolnego',
 	'tool_set_deflang' => 'Domyślny język',
 	'tool_set_df' => 'Format daty',
 	'tool_set_fdf' => 'Pełny format daty',
@@ -210,7 +210,7 @@ $lang = array(
 	
 	'tool_sl' => 'Shotgun limiter',
 	'tool_sl_desc' => 'Ustal maxymalna ilość graczy z shotgunami na drużynę',
-	'tool_sl_max' => 'Maximum',
+	'tool_sl_max' => 'Ilość graczy',
 	'tool_sl_help1' => 'Maxiumum graczy z shotgunami na drużynę',
 	'tool_sl_err1' => 'Nieznany status auto-kicka',
 	'tool_sl_err2' => 'Nieznana wartość ignorowania VIPów',
@@ -241,7 +241,7 @@ $lang = array(
 	'tool_am_online' => 'Wiadomość, gdy na serwerze jest administrator',
 	'tool_am_offline' => 'Wiadomość, gdy na serwerze nie ma administratora',
 	'tool_am_help1' => 'Czas do pokazania wiadomości',
-	'tool_am_help2' => 'Treść wiadomości, gdy conajmniej jeden z administratorów<br /><code>%admins%</code> jest online',
+	'tool_am_help2' => 'Treść wiadomości, gdy conajmniej jeden z administratorów jest online <br /><code>%admins%</code> - ilość administratorów online',
 	'tool_am_help3' => 'Treść wiadomości, gdy na serwerze nie ma administratorów',
 	'tool_am_err1' => 'Nieznany status wiadomości',
 	'tool_am_err2' => 'Nie możesz zostawić tej wiadomości pustej!',
@@ -253,14 +253,14 @@ $lang = array(
 	'tool_sm_msg' => 'Wiadomość',
 	'tool_sm_help1' => 'Czas do wysłania wiadomości',
 	'tool_sm_help2' =>	'Wiadomość do wysłania, możesz użyć następujących zmiennych:<br />' .
-						'<code>%name%</code> Nick<br />' .
-						'<code>%ping%</code> Ping<br />' .
-						'<code>%class%</code> Klasa<br />' .
-						'<code>%rank%</code> Poziom<br />' .
-						'<code>%kills%</code> Kille<br />' .
-						'<code>%deaths%</code> Zgony<br />' .
-						'<code>%score%</code> Punkty<br />' .
-						'<code>%vip%</code> Status VIP)',
+						'<code>%name%</code> - Nick<br />' .
+						'<code>%ping%</code> - Ping<br />' .
+						'<code>%class%</code> - Klasa<br />' .
+						'<code>%rank%</code> - Poziom<br />' .
+						'<code>%kills%</code> - Kille<br />' .
+						'<code>%deaths%</code> - Zgony<br />' .
+						'<code>%score%</code> - Punkty<br />' .
+						'<code>%vip%</code> - Status VIP',
 	
 	'tool_bl' => 'Czarna lista',
 	'tool_bl_desc' => 'Zbanuj gracza, na określony czas bądź permanentnie',
@@ -270,10 +270,10 @@ $lang = array(
 	'tool_bl_warn1' => 'Nie można włączyć/wyłączyc czarnej listy',
 	'tool_bl_err1' => 'Ten gracz ma już bana permanentnego',
 	'tool_bl_err2' => 'Zły ProfileID',
-	'tool_bl_err3' => 'Nikogo jeszcze nie zbanowanego',
+	'tool_bl_err3' => 'Nikt nie został jeszcze zbanowany!',
 	'tool_bl_addedby' => 'Zbanowany przez',
 	'tool_bl_added' => 'Ban został dodany',
-	'tool_bl_deleted' => 'Ban is usunięty',
+	'tool_bl_deleted' => 'Ban został usunięty',
 	
 	'tool_wlist' => 'Biała lista',
 	'tool_wlist_desc' => 'Dodaj graczy, którzy będą bezpieczni',
@@ -319,7 +319,7 @@ $lang = array(
 	// ControlPanel dashboard
 	'cp_dashboard' => 'Panel zarządania',
 	'cp_dashboard_subtitle' => 'Wszystkie opcje w jednym miejscu',
-	'cp_dashboard_explination' => 'Kliknij na <i class="icon-remove"></i> aby aktywować auto-kicka, bądź na <i class="icon-ok"></i> aby go deaktywować. Kliknij na tytuł w celu zarządzania.',
+	'cp_dashboard_explination' => 'Kliknij na <i class="icon-remove"></i> aby aktywować auto-kicka, bądź na <i class="icon-ok"></i> aby go deaktywować. Kliknij na nazwę w celu zarządzania.',
 	
 	// ControlPanel my account
 	'cp_myaccount' => 'Moje konto',
@@ -329,7 +329,7 @@ $lang = array(
 	'cp_myaccount_oldpass' => 'Stare hasło',
 	'cp_myaccount_newpass' => 'Nowe hasło',
 	'cp_myaccount_expl3' => 'Minimum 6 znaków',
-	'cp_myaccount_expl4' => 'Tylko sprawdź',
+	'cp_myaccount_expl4' => 'Hasła muszą się zgadzać!',
 	'cp_myaccount_err1' => 'Twój nick musi mieć minimum 4 znaki',
 	'cp_myaccount_err2' => 'Podałeś złe stare hasło',
 	'cp_myaccount_err3' => 'Nowe hasło musi mieć minimum 6 znaków',
@@ -340,7 +340,7 @@ $lang = array(
 	
 	// ControlPanel footer
 	'cp_footer_thread' => 'Temat',
-	'cp_footer_createdby' => 'Bunny\'s ServerTool %version% jest licencjonowany na Apache License V2.0<br />Copyright &copy; %year% by Danny Li &lt;<i>SharpBunny</i>&gt;',
+	'cp_footer_createdby' => 'Bunny\'s ServerTool %version% jest licencjonowany na Apache License V2.0<br />Copyright &copy; %year% by Danny Li <<i>SharpBunny</i>>',
 	
 	/*
 	 * Q&A THINGS

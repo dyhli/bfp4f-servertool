@@ -117,9 +117,9 @@ if(!defined('INSTALL_PAGE')) {
 	}
 	
 	$rc = new rcon\Base();
-	$rc->ip = decrypt($settings['server_ip']);
-	$rc->port = (int) decrypt($settings['server_admin_port']);
-	$rc->pwd = decrypt($settings['server_rcon_password']);
+	$rc->ip = preg_replace("/[^0-9.]/", "", decrypt($settings['server_ip']));
+	$rc->port = preg_replace("/[^0-9]/", "", decrypt($settings['server_admin_port']));
+	$rc->pwd = preg_replace("/[^.0-9a-zA-Z_-]/", "", decrypt($settings['server_rcon_password']));
 	
 	// User class
 	$user = new User($db, $config);

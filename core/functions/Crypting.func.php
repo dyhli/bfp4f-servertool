@@ -44,6 +44,6 @@ function decrypt($encrypted_string) {
     $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
     $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
     $decrypted_string = mcrypt_decrypt(MCRYPT_BLOWFISH, RANDOM_STRING, $encrypted_string, MCRYPT_MODE_ECB, $iv);
-    return $decrypted_string;
+    return filter_var($decrypted_string, FILTER_SANITIZE_STRING);
 }
 ?>

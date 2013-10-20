@@ -226,7 +226,7 @@ if($rc->init()) {
 				
 				// Check the max. level
 				if($player->level > $settings['tool_ll_max']) {
-					$reason = '[Level limiter] Max. required lvl is ' . $settings['tool_ll_min'] . ', your level is ' . $player->level;
+					$reason = '[Level limiter] Max. required lvl is ' . $settings['tool_ll_max'] . ', your level is ' . $player->level;
 					
 					// Kick the player
 					// We use the index instead of the playername, or else playernames with numbers only won't be kicked

@@ -976,19 +976,19 @@ class IgCommands {
 	 * Voting functions
 	 */
 	public function cmdVotekick($cmdInfo) {
-		$this->cmdVoting('voteKick', $cmdInfo);
+		return $this->cmdVoting('voteKick', $cmdInfo);
 	}
 	
 	public function cmdVoteMap($cmdInfo) {
-		$this->cmdVoting('voteMap', $cmdInfo);
+		return $this->cmdVoting('voteMap', $cmdInfo);
 	}
 	
 	public function cmdVoteYes($cmdInfo) {
-		$this->cmdVoting('voteYes', $cmdInfo);
+		return $this->cmdVoting('voteYes', $cmdInfo);
 	}
 	
 	public function cmdClosePoll($cmdInfo) {
-		$this->cmdVoting('closeActivePoll', $cmdInfo);
+		return $this->cmdVoting('closeActivePoll', $cmdInfo);
 	}
 	
 	/**

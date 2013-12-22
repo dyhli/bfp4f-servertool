@@ -1,21 +1,22 @@
 <?php
 /**
- * Battlefield Play4free Servertool
- * Version 0.4.1
- * 
- * Copyright 2013 Danny Li <SharpBunny> <bfp4f.sharpbunny@gmail.com>
+ * BattlefieldTools.com BFP4F ServerTool
+ * Version 0.6.0
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
  * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
  
 require_once('../../core/init.php');
@@ -64,26 +65,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['status']) && isset($_PO
 	if(count($errors) == 0) {
 				
 		if(updateSetting('tool_am', $_POST['status']) && updateSetting('tool_am_msg', $_POST['online']) && updateSetting('tool_am_msg_alt', $_POST['offline'])) {
-			$status = '<div class="alert alert-success alert-block"><h4><i class="icon-ok"></i> ' . $lang['word_ok'] . '</h4><p>' . $lang['msg_settings_saved'] . '</p></div>';
+			$status = '<div class="alert alert-success alert-block"><h4><i class="fa fa-check"></i> ' . $lang['word_ok'] . '</h4><p>' . $lang['msg_settings_saved'] . '</p></div>';
 			$log->insertActionLog($userInfo['user_id'], 'Admin message settings edited');
 			
 			// Reload settings
 			fetchSettings();
 		} else {
-			$status = '<div class="alert alert-error alert-block"><h4><i class="icon-remove"></i> ' . $lang['word_error'] . '</h4><p>' . $result['message'] . '</p></div>';
+			$status = '<div class="alert alert-danger alert-block"><h4><i class="fa fa-times"></i> ' . $lang['word_error'] . '</h4><p>' . $result['message'] . '</p></div>';
 		}
 		
 	} else {
-		$status = '<div class="alert alert-error alert-block"><h4><i class="icon-remove"></i> ' . $lang['word_error'] . '</h4><p>' . $lang['msg_error'] . '</p><ul><li>' . implode('</li><li>', $errors) . '</li></ul></div>';
+		$status = '<div class="alert alert-danger alert-block"><h4><i class="fa fa-times"></i> ' . $lang['word_error'] . '</h4><p>' . $lang['msg_error'] . '</p><ul><li>' . implode('</li><li>', $errors) . '</li></ul></div>';
 	}
 	
 }
 ?>
 			
-			<div class="row-fluid">
-				<div class="span8 offset2">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
 					
-					<h2><i class="icon-comment"></i> <?=$lang['tool_am']?> <small><?=$lang['tool_am_desc']?></small></h2>
+					<h2><i class="fa fa-comment"></i> <?=$lang['tool_am']?> <small><?=$lang['tool_am_desc']?></small></h2>
 					<hr />
 
 					<form action="<?=HOME_URL?>panel/tool/am" method="post" class="form-horizontal">
@@ -92,9 +93,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['status']) && isset($_PO
 						
 						<br />
 						
-						<div class="control-group">
-							<label class="control-label"><i class="icon-cog"></i> <?=$lang['word.tool']?></label>
-							<div class="controls">
+						<div class="form-group">
+							<label class="control-label col-sm-3"><i class="fa fa-cog"></i> <?=$lang['word.tool']?></label>
+							<div class="col-sm-9">
 								<select name="status" class="selectpicker show-tick" data-width="100%" data-show-subtext="true" required>
 <?php
 foreach(array(0, 30, 60, 90, 120, 180, 240, 300) as $sec) {
@@ -103,7 +104,7 @@ foreach(array(0, 30, 60, 90, 120, 180, 240, 300) as $sec) {
 		$input = $lang['word_disabled'];
 	}
 ?>
-									<option value="<?=$sec?>"<?=(($settings['tool_am'] == $sec) ? ' selected' : '') . (($sec > 0) ? ' " data-icon="icon-time"' : 'data-icon="icon-remove"')?>><?=replace($input, array('%s%' => $sec))?></option>
+									<option value="<?=$sec?>"<?=(($settings['tool_am'] == $sec) ? ' selected' : '') . (($sec > 0) ? ' " data-icon="fa fa-clock-o"' : 'data-icon="fa fa-times"')?>><?=replace($input, array('%s%' => $sec))?></option>
 <?php
 }
 ?>
@@ -116,10 +117,10 @@ foreach(array(0, 30, 60, 90, 120, 180, 240, 300) as $sec) {
 
 						<hr />
 						
-						<div class="control-group">
-							<label class="control-label"><i class="icon-comment"></i> <?=$lang['tool_am_online']?></label>
-							<div class="controls">
-								<input type="text" name="online" class="input-block-level" value="<?=$settings['tool_am_msg']?>" required />
+						<div class="form-group">
+							<label class="control-label col-sm-3"><i class="fa fa-comment"></i> <?=$lang['tool_am_online']?></label>
+							<div class="col-sm-9">
+								<input type="text" name="online" class="form-control" value="<?=$settings['tool_am_msg']?>" required />
 								
 								<span class="help-block">
 									<small><?=$lang['tool_am_help2']?></small>
@@ -127,10 +128,10 @@ foreach(array(0, 30, 60, 90, 120, 180, 240, 300) as $sec) {
 							</div>
 						</div>
 						
-						<div class="control-group">
-							<label class="control-label"><i class="icon-comment"></i> <?=$lang['tool_am_offline']?></label>
-							<div class="controls">
-								<input type="text" name="offline" class="input-block-level" value="<?=$settings['tool_am_msg_alt']?>" required />
+						<div class="form-group">
+							<label class="control-label col-sm-3"><i class="fa fa-comment"></i> <?=$lang['tool_am_offline']?></label>
+							<div class="col-sm-9">
+								<input type="text" name="offline" class="form-control" value="<?=$settings['tool_am_msg_alt']?>" required />
 								
 								<span class="help-block">
 									<small><?=$lang['tool_am_help3']?></small>
@@ -141,8 +142,8 @@ foreach(array(0, 30, 60, 90, 120, 180, 240, 300) as $sec) {
 						
 						<br />
 						
-						<button class="btn btn-inverse pull-right" type="submit"><i class="icon-save"></i> <?=$lang['btn_save']?></button> 
-						<a href="<?=HOME_URL?>panel" class="btn btn-link pull-right"><i class="icon-arrow-left"></i> <?=$lang['btn_back']?></a>
+						<button class="btn btn-primary pull-right" type="submit"><i class="fa fa-save"></i> <?=$lang['btn_save']?></button> 
+						<a href="<?=HOME_URL?>panel" class="btn btn-link pull-right"><i class="fa fa-arrow-left"></i> <?=$lang['btn_back']?></a>
 						
 					</form>
 					

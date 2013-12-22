@@ -1,35 +1,233 @@
 <?php
 /**
- * Battlefield Play4free Servertool
- * Version 0.4.1
- * 
- * Copyright 2013 Danny Li <SharpBunny> <bfp4f.sharpbunny@gmail.com>
+ * BattlefieldTools.com BFP4F ServerTool
+ * Version 0.6.0
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
  * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+ */
+
+/** 
+ * RUN THIS SCRIPT WITH THE BASH SCRIPT
+ * RUN THIS SCRIPT WITH THE BASH SCRIPT
+ * RUN THIS SCRIPT WITH THE BASH SCRIPT
+ * RUN THIS SCRIPT WITH THE BASH SCRIPT
+ * RUN THIS SCRIPT WITH THE BASH SCRIPT
+ * 
+ * Run this script every 5 seconds is recommended.
  */
  
+require_once('../core/init.php');
+
+use T4G\BFP4F\Rcon as rcon;
+
 /**
- * NOTHING TO SEE HERE!
- * NOTHING TO SEE HERE!
- * NOTHING TO SEE HERE!
- * NOTHING TO SEE HERE!
- * NOTHING TO SEE HERE!
- * 
- * THIS WILL BE USED FOR IN-GAME ADMIN COMMANDS WHICH WILL BE RELEASED IN THE FUTURE!
- * THIS WILL BE USED FOR IN-GAME ADMIN COMMANDS WHICH WILL BE RELEASED IN THE FUTURE!
- * THIS WILL BE USED FOR IN-GAME ADMIN COMMANDS WHICH WILL BE RELEASED IN THE FUTURE!
- * THIS WILL BE USED FOR IN-GAME ADMIN COMMANDS WHICH WILL BE RELEASED IN THE FUTURE!
- * THIS WILL BE USED FOR IN-GAME ADMIN COMMANDS WHICH WILL BE RELEASED IN THE FUTURE!
+ * Check if the in-game commands are enabled
  */
- 
+if($settings['tool_igcmds'] == 'false') {
+	
+	die('[' . date($settings['cp_date_format_full']) . '] In-game commands are disabled.');
+	
+}
+
+if($rc->connect($cn, $cs) && $rc->init()) {
+	
+	/**
+	 * Initialize server class
+	 */
+	$sv = new rcon\Server();
+	 
+	/**
+	 * Initialize chat class
+	 */
+	$ct = new rcon\Chat();
+	
+	/**
+	 * Initialize players class
+	 */
+	$pl = new rcon\Players();
+	
+	/**
+	 * Initialize IgVoting class
+	 */
+	$igv = new IgVoting($rc, $sv, $ct, $pl, $db, $config, $settings);
+	
+	/**
+	 * Initialize IgaCommands class
+	 */
+	$igc = new IgCommands($rc, $sv, $ct, $pl, $db, $config, $igv, $settings);
+	$igv->setIgc($igc);
+	
+	/**
+	 * Fetch the messages
+	 */
+	$chats = $ct->fetch();
+
+	/**
+	 * Read chatmessages
+	 */
+	foreach($chats as $chat) {
+		
+		/**
+		 * Check if the message begins with one of the prefixes
+		 * Check if it's not a message from the Admin
+		 */
+		if(in_array(substr($chat->message,0,1), $config['cmd_prefixes']) && $chat->origin != 'Admin') {
+			
+			/**
+			 * The message in different pieces
+			 */
+			$pieces = explode(' ', $chat->message, 2);
+			
+			/**
+			 * Prepare command information
+			 */
+			$cmdInfo = array(
+				/**
+				 * Chat info
+				 */
+				'chat' => (array) $chat,
+				/**
+				 * Used prefix
+				 */
+				'prefix' => substr($pieces[0], 0, 1),
+				/**
+				 * The command
+				 */
+				'cmd' => strtolower(substr($pieces[0], 1)),
+			);
+			
+
+			/**
+			 * The variables in the command (optional)
+			 */
+			if(isset($pieces[1])) {
+				$cmdInfo['vars'] = trim($pieces[1]);
+			} else {
+				$cmdInfo['vars'] = null;
+			}
+						
+			/**
+			 * Get playerinformation about the origin
+			 */
+			$result = $igc->findPlayerByName($chat->origin);
+			if($result['code'] == 'OK') {
+				
+				$cmdInfo['origin'] = $result['player'];
+				
+				/**
+				 * Check if the command is already executed
+				 */
+				if($igc->checkExpiredCmd($cmdInfo)) {
+				
+					/**
+					 * Fetch the command info and check if it exists
+					 */
+					$result = $igc->getCommand($cmdInfo['cmd']);
+					$userRights = $igc->getUserRights($cmdInfo['origin']['nucleusId']);
+					
+					if($result['code'] == 'OK') {
+						
+						/**
+						 * Check the user rights
+						 */
+						if($userRights >= $result['cmd']['cmd_rights']) {
+							
+							/**
+							 * Also pass the command information
+							 */
+							$cmdInfo['_cmd'] = $result['cmd'];
+							
+							/**
+							 * Send it and execute the command if possible
+							 * 
+							 * Also checks if cmd != false, cmd==false means it's only the prefix
+							 * e.g. !
+							 */
+							if($cmdInfo['cmd'] != false && !empty($cmdInfo['cmd'])) {
+								$igc->executeCommand($cmdInfo);
+							}
+						
+						} else {
+							
+							/**
+							 * Send response => Not enough rights
+							 */
+							$igc->logCmd($cmdInfo);
+							$ct->send('|ccc| ' . $cmdInfo['origin']['name'] . ' |ccc|, you haven\'t got enough rights to use command: |ccc| ' . $pieces[0]);
+							
+						}
+					
+					} else {
+						
+						/**
+						 * Send response => Command not found / disabled
+						 * 
+						 * Uncomment this if you want, it's running fine, but because
+						 * you probably run ModManager IGA and this tool at the same time
+						 * it's not really handy...
+						 * 
+						 * e.g. Modmanager uses !k to kick, this tool will display 'Command !k does not exist [...]'
+						 * or if the commands are the same, the command will be executed twice
+						 */
+						//$igc->logCmd($cmdInfo);
+						//$ct->send('Command |ccc| ' . $pieces[0]  . ' |ccc| does not exist or the command has been disabled!');
+						
+					} // END CHECK COMMAND
+				
+				} // END CHECK EXPIRED CMD
+				
+			} // END GET ORIGIN PLAYER
+						
+		} // END PREFIX CHECK AND ADMIN CHECK
+
+	} // END CHATS
+	
+	/**
+	 * Check voting and what not
+	 */
+	$result = $igv->getActivePoll();
+	if($result['code'] == 'OK') {
+		
+		$poll = $result['poll'];
+		$poll['vote_votes'] = json_decode($poll['vote_votes'], true);
+		if(count($poll['vote_votes']) >= $settings['tool_igcmds_votes']) {
+			// EXECUTE
+			$ct->send('|ccc| POLL: Voting success. Command is being executed...');
+			$igv->executedPoll($poll['vote_id']);
+			$igv->$poll['vote_action']($poll);
+		} elseif(time() - strtotime($poll['vote_date']) >= 120) { // 2 minutes
+			// CLOSE VOTING
+			$igv->closePoll($poll['vote_id']);
+			// Send message
+			$ct->send('|ccc| POLL: Not enough votes within 2 minutes. Voting has been closed.');
+		}
+		
+	} // END VOTING
+	
+	/**
+	 * Display message
+	 */
+	die('[' . date($settings['cp_date_format_full']) . '] Executed');
+	
+} else {
+	
+	/**
+	 * Failed...
+	 */
+	die('[' . date($settings['cp_date_format_full']) . '] Could not connect');
+	
+}
 ?>

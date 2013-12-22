@@ -1,21 +1,120 @@
 /**
- * Battlefield Play4free Servertool
- * Version 0.4.1
- * 
- * Copyright 2013 Danny Li <SharpBunny> <bfp4f.sharpbunny@gmail.com>
+ * BattlefieldTools.com BFP4F ServerTool
+ * Version 0.6.0
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
  * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
 
-xx-10-2013 [v0.4.1]
+22-12-2013 [v0.6.0]
+
+	HOW TO UPDATE TO THIS VERSION:
+	- You have to reinstall the whole tool
+
+	* [Feature] In-game commands added
+					* ../core/classes/IgCommands.class.php added
+					* ../cronjobs/igcmds.php updated
+					* ../panel/view-log?log=igcmds added
+	
+	* [Feature] Map rotation editor added
+					* ../core/classes/GameMaps.class.php added
+					* ../panel/rotation.php added
+	
+	* [Feature] Now possible to send servermessages
+					* ../panel/server.php updated
+	
+	* [Feature] Dual-slot limiter added
+					* ../cronjobs/limiters.php updated
+					* Table 'settings' 'tool_dsl' added
+					* ../panel/tool/dsl.php added
+					* ../panel/index.php updated
+					
+	* [Feature] Option to inverse the weapons of the weapon limiter
+					* ../cronjobs/limiters.php updated
+					* Table 'settings' 'tool_wl_inverse' added
+					* ../panel/tool/wl.php updated
+					
+	* [Feature] Quick overview of the server on the dashboard
+				And it automatically checks the server status LIVE
+					* ../panel/index.php updated
+	
+	* [Feature]	Ban reporting (via in-game command) to the BattlefieldTools Global Blacklist
+	
+	* [Feature] Now possible to change the limiter messages
+					* ../cronjobs/limiters.php updated
+					* Table 'settings' 'tool_{TOOL_ABBR}_msg' added
+					* ../panel/tool/*.php updated
+					
+	* [Feature] Makes connection with our main server to check if there's a new version available
+					* ../core/cp_header.php updated
+					* ../panel/checkVersion.php added
+					
+	* [Feature] RCON console added
+					* ../panel/tool/rcon.php added
+					* ../panel/ajax/rconConsole.php added
+					* ../core/cp_header.php updated
+	
+	* [Bugfix]	Ignore VIPs for shotgun limiter fixed
+	* [Bugfix]	[../panel/blacklist.php] Small icon fix (check => ban)
+	* [Bugfix]	[../core/cp_header.php] Logs were not translated, now it is
+	* [Bugfix]	[../index.php] Footer displayed an error (or was blank), fixed now
+	* [Bugfix]	Cleans all POST variables now
+					* ../install.php updated
+					* ../panel/ajax/server.php updated
+	
+	* [Bugfix]	Set the server port as integer, some users got an error about that @ fsockopen()
+					* ../core/init.php updated
+	
+	* [UI]		Updated to Bootstrap 3
+	* [UI]		Changed theme -> brighter, more clear
+	* [UI]		Updated to FontAwesome 4.0.3
+	* [UI]		Mobile and tablet friendly!
+	* [UI]		Favicon changed
+	* [UI]		Slight changes and details added
+	* [UI]		Slight improvement, by adding drag, drop, sort, resize, select and more (jQueryUI)
+					* ../panel/js/jquery-ui-1.10.3.custom.min.js added
+					* ../panel/css/jquery-ui-1.10.3.custom.min.css added
+	
+	* [Update]	install.php updated -> template and such
+	* [Update]	Khukri Blade added to the itemslist
+	* [Update]	Basra Rush added to the rotation list
+	* [Update]	Name changed to BattlefieldTools.com ServerTool
+	* [Update]	Developer added -> the whole BattlefieldTools.com team
+	* [Update]	SQL.TXT updated
+	* [Update]	Language files updated
+					* ../core/lang/en.php updated
+					* All other language files deleted -> You can download language files on BattlefieldTools.com
+	
+	* [Update]	../cronjobs/limiters.php -> more efficient and simple way to get the player's class
+	
+	* [DB]		Tables created: igcmds, log_igcmds, igvote
+	* [DB]		Table 'users', column 'rights_igcmds' added
+	
+	* [Other]	Added files to run in your browser (limiter and in-game commands)
+					* ../cronjobs/limiters_browser.php
+					* ../cronjobs/igcmds_browser.php
+	
+	* [Ohter]	Bash scripts added in ../cronjobs/
+					* igcmds.sh
+					* limiters.sh
+					
+	* [Other]	BattlefieldTools.com API is added
+					* ../core/classes/BTApi.class.php added
+					* ../install.php updated
+					* ../panel/settings.php updated
+	
+	
+19-10-2013 [v0.4.1]
 	* First release

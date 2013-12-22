@@ -1,21 +1,22 @@
 <?php
 /**
- * Battlefield Play4free Servertool
- * Version 0.4.1
- * 
- * Copyright 2013 Danny Li <SharpBunny> <bfp4f.sharpbunny@gmail.com>
+ * BattlefieldTools.com BFP4F ServerTool
+ * Version 0.6.0
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
  * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
 
 /** 
@@ -32,15 +33,8 @@ require_once('../core/init.php');
 
 use T4G\BFP4F\Rcon as rcon;
 
-$rc->connect($cn, $cs);
+if($rc->connect($cn, $cs) && $rc->init()) {
 
-if($rc->init()) {
-	
-	/**
-	 * Update the notifier
-	 */
-	updateSetting('notify_sent', 'false');
-	
 	/**
 	 * Initialize the classes and stuff...
 	 */
@@ -103,8 +97,11 @@ if($rc->init()) {
 		 
 		$ban = $bl->checkPlayer($player->nucleusId);
 		if($ban['code'] == 'OK') {
-		 	
-			$reason = '[Blacklist] You are banned for: ' . $ban['info']['reason'] . '. Until: ' . ((!$ban['info']['until']) ? 'PERMANENTLY' : date("d-m-Y H:i", strtotime($ban['info']['until'])));
+		 				
+			$reason = replace($settings['tool_bl_msg'], array(
+				'%reason%' => $ban['info']['reason'],
+				'%until%' => ((!$ban['info']['until']) ? 'PERMANENTLY' : date("d-m-Y H:i", strtotime($ban['info']['until']))),
+			));
 			
 			// Kick the player
 			// We use the index instead of the playername, or else playernames with numbers only won't be kicked
@@ -119,29 +116,10 @@ if($rc->init()) {
 		
 		/**
 		 * Get the class of the player
+		 * 
+		 * - UPDATE v0.6.0: More simple and efficient way
 		 */
-		switch(true) {
-	        case strpos($player->kit, 'Medic') !== false:
-	            $kit = "Medic";
-	            break;
-	    
-	        case strpos($player->kit, 'Assault') !== false:
-	            $kit = "Assault";
-	            break;
-	    
-	        case strpos($player->kit, 'Recon') !== false:
-	            $kit = "Recon";
-	            break;
-	    
-	        case strpos($player->kit, 'Engineer') !== false:
-	            $kit = "Engineer";
-	            break;
-	
-	        default:
-	            //soldier is dead
-	            $kit = "Dead"; 
-	            break;
-	    }
+		$kit = (($player->kit == 'none') ? 'Dead' : str_replace(array('_','kit','US','RU'), '', $player->kit));
 		
 		// Count +1
 		// Classes
@@ -212,7 +190,10 @@ if($rc->init()) {
 			if($settings['tool_ll_ignorevip'] == 'false' || ($settings['tool_ll_ignorevip'] == 'true' && $player->vip == '0')) {
 				// Check the min. level
 				if($player->level < $settings['tool_ll_min']) {
-					$reason = '[Level limiter] Min. required lvl is ' . $settings['tool_ll_min'] . ', your level is ' . $player->level;
+					$reason = replace($settings['tool_ll_msg_min'], array(
+						'%min%' => $settings['tool_ll_min'],
+						'%lvl%' => $player->level,
+					));
 					
 					// Kick the player
 					// We use the index instead of the playername, or else playernames with numbers only won't be kicked
@@ -226,7 +207,10 @@ if($rc->init()) {
 				
 				// Check the max. level
 				if($player->level > $settings['tool_ll_max']) {
-					$reason = '[Level limiter] Max. required lvl is ' . $settings['tool_ll_max'] . ', your level is ' . $player->level;
+					$reason = replace($settings['tool_ll_msg_max'], array(
+						'%max%' => $settings['tool_ll_max'],
+						'%lvl%' => $player->level,
+					));
 					
 					// Kick the player
 					// We use the index instead of the playername, or else playernames with numbers only won't be kicked
@@ -255,7 +239,10 @@ if($rc->init()) {
 				if($kit != 'Dead') {
 					if($counter[$player->team][$kit.'s'] > $settings['tool_cl_' . $kit . 's']) {
 						
-						$reason = '[Class limiter] Max. ' . $settings['tool_cl_' . $kit . 's'] . ' ' . strtolower($kit.'s') . ' in one team';
+						$reason = replace($settings['tool_cl_msg'], array(
+							'%amount%' => $settings['tool_cl_' . $kit . 's'],
+							'%class%' => strtolower($kit.'s'),
+						));
 						
 						// Kick the player
 						// We use the index instead of the playername, or else playernames with numbers only won't be kicked
@@ -300,6 +287,7 @@ if($rc->init()) {
 		 * - Prebuy limiter
 		 * - Attachments limiter
 		 * - Shotgun limiter
+		 * - Dual-slot limiter
 		 */
 		$loadout = $playerLoadout->retrieveLoadout();
 			
@@ -307,8 +295,45 @@ if($rc->init()) {
 		 * Get the weaponId (BFP4F ID)
 		 */
 		$weapons = array( );
+		$weaponsGroup = array( );
 		foreach($loadout['data']['equipment'] as $key => $value) {
 			$weapons[] = $value['id'];
+			$weaponsGroup[] = $value['validationGroup'];
+		}
+		$primaryWeapons = 0;
+		
+		/**
+		 * DUAL-SLOT LIMITER
+		 * 
+		 * - Checks if the player has two primary weapons
+		 */
+		if($settings['tool_dsl'] == 'true') {
+			// Check if ignorevip is false and he isn't a VIP
+			if($settings['tool_dsl_ignorevip'] == 'false' || ($settings['tool_dsl_ignorevip'] == 'true' && $player->vip == '0')) {
+				
+				// Count the primary weapons
+				foreach($weaponsGroup as $group) {
+					if($group == 'primary') {
+						$primaryWeapons++;
+					}
+				}
+				
+				// Checks if he has got two primary weapons
+				if($primaryWeapons == 2) {
+				
+					$reason = $settings['tool_dsl_msg'];
+					
+					// Kick the player
+					// We use the index instead of the playername, or else playernames with numbers only won't be kicked
+					$pl->kick($player->index, $reason);
+					// Log the kick
+					$log->insertKickLog($player->nucleusId, $player->cdKeyHash, $player->name, $reason);
+						
+					// Skip, don't check for other limiters and stuff
+					continue;
+					
+				}
+			}
 		}
 
 		/**
@@ -331,9 +356,11 @@ if($rc->init()) {
 			if($settings['tool_wl'] == 'true') {
 				
 				// Check which items are selected
-				if(in_array($weaponId, $wlItems)) {
+				if(($settings['tool_wl_inverse'] == 'true' && !in_array($weaponId, $wlItems)) || ($settings['tool_wl_inverse'] == 'false' && in_array($weaponId, $wlItems))) {
 											
-					$reason = '[Weapon limiter] Disallowed weapon: ' . $items[$weaponId]['item_name'];
+					$reason = replace($settings['tool_wl_msg'], array(
+						'%weapon%' => $items[$weaponId]['item_name'],
+					));
 					
 					// Kick the player
 					// We use the index instead of the playername, or else playernames with numbers only won't be kicked
@@ -361,7 +388,11 @@ if($rc->init()) {
 					// Check if the item is not a gadget
 					if($player->level < $items[$weaponId]['item_min_lvl'] && $items[$weaponId]['item_category'] != 'gadget') {
 						
-						$reason = '[Prebuy limiter] Prebought ' . $items[$weaponId]['item_name'] . ' already on rank ' . $player->level . '. Required level: ' . $items[$weaponId]['item_min_lvl'];
+						$reason = replace($settings['tool_pl_msg'], array(
+							'%weapon%' => $items[$weaponId]['item_name'],
+							'%lvl%' => $player->level,
+							'%req%' => $items[$weaponId]['item_min_lvl'],
+						));
 						
 						// Kick the player
 						// We use the index instead of the playername, or else playernames with numbers only won't be kicked
@@ -385,9 +416,11 @@ if($rc->init()) {
 			if($settings['tool_sl'] == 'true') {
 				
 				// If his weapon is a shotgun and there is already the maximum amount of shotgun users -> kick
-				if($items[$weaponId]['item_subcat'] == 'shotgun' && $counter[$player->team]['Shotguns'] > $settings['tool_sl_max']) {
+				if(($items[$weaponId]['item_subcat'] == 'shotgun' && $counter[$player->team]['Shotguns'] > $settings['tool_sl_max']) && ($settings['tool_sl_ignorevip'] == 'false' || ($settings['tool_sl_ignorevip'] == 'true' && $player->vip == '0'))) {
 					
-					$reason = '[Shotgun limiter] Max. ' . $settings['tool_sl_max'] . ' shotgun users in one team';
+					$reason = replace($settings['tool_sl_msg'], array(
+						'%amount%' => $settings['tool_sl_max'],
+					));
 						
 					// Kick the player
 						// We use the index instead of the playername, or else playernames with numbers only won't be kicked
@@ -437,14 +470,14 @@ if($rc->init()) {
 	/**
 	 * Display message
 	 */
-	die('Executed: '  . date($settings['cp_date_format_full']));
+	die('[' . date($settings['cp_date_format_full']) . '] Executed');
 	
 } else {
 	
 	/**
 	 * Failed...
 	 */
-	die('Could not connect ' . date($settings['cp_date_format_full']));
+	die('[' . date($settings['cp_date_format_full']) . '] Could not connect');
 	
 }
 ?>

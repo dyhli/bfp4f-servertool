@@ -9,6 +9,66 @@ CREATE TABLE IF NOT EXISTS {%prefix%}blacklist (
   PRIMARY KEY (ban_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+CREATE TABLE IF NOT EXISTS {%prefix%}igcmds (
+  cmd_id int(11) NOT NULL AUTO_INCREMENT,
+  cmd_name varchar(25) NOT NULL,
+  cmd_function enum('cmdKickPlayer','cmdWarnPlayer','cmdBanPlayer','cmdChangeMap','cmdNextMap','cmdRequestPlayerstats','cmdReportPlayer','cmdPm','cmdVotekick','cmdMessage','cmdVip','cmdReportPlayer','cmdRagequit','cmdRestartRound','cmdFunnyWord','cmdSwitchPlayer','cmdVoteYes','cmdVoteMap','cmdClosePoll','cmdGetLoadout','cmdExecRcon') NOT NULL DEFAULT 'cmdMessage',
+  cmd_response varchar(350) NOT NULL COMMENT 'Only used @ cmdMessage',
+  cmd_response_private enum('yes','no') NOT NULL DEFAULT 'no' COMMENT 'Private response? Or send to all players?',
+  cmd_rights int(3) NOT NULL DEFAULT '25',
+  cmd_active enum('yes','no') NOT NULL DEFAULT 'yes',
+  cmd_added timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (cmd_id)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
+
+INSERT INTO {%prefix%}igcmds (cmd_id, cmd_name, cmd_function, cmd_response, cmd_response_private, cmd_rights, cmd_active, cmd_added) VALUES
+(1, 'kp', 'cmdKickPlayer', '', 'no', 25, 'yes', '0000-00-00 00:00:00'),
+(2, 'bp', 'cmdBanPlayer', '', 'no', 50, 'yes', '0000-00-00 00:00:00'),
+(3, 'wp', 'cmdWarnPlayer', '', 'no', 25, 'yes', '0000-00-00 00:00:00'),
+(4, 'vip', 'cmdVip', '', 'no', 75, 'yes', '0000-00-00 00:00:00'),
+(5, 'cm', 'cmdChangeMap', '', 'no', 100, 'yes', '0000-00-00 00:00:00'),
+(6, 'check', 'cmdRequestPlayerstats', '', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(7, 'report', 'cmdReportPlayer', '', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(8, 'stats', 'cmdMessage', 'Hi |ccc| %player% |ccc| || Ping: |ccc| %ping% |ccc| || Class: |ccc| %class% |ccc| || Rank: |ccc| %rank% |ccc| || Kills: |ccc| %kills% |ccc| || Deaths: |ccc| %deaths% |ccc| || Score: |ccc| %score% |ccc| || VIP: |ccc| %vip% |ccc| || |ccc| Enjoy your stay!', 'yes', 0, 'yes', '0000-00-00 00:00:00'),
+(9, 'vk', 'cmdVotekick', '', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(10, 'votekick', 'cmdVotekick', '', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(11, 'rules', 'cmdMessage', '|ccc| YOUR RULES HERE', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(12, 'ping', 'cmdMessage', '|ccc| %player%, your ping is %ping%', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(13, 'commands', 'cmdMessage', '|ccc| %player%, the public commands you can use are: !check !stats !rules !ping !ragequit !slap !info !pm !eat !spank !tbag !poke !hug', 'yes', 0, 'yes', '0000-00-00 00:00:00'),
+(14, 'maps', 'cmdMessage', '|ccc| The map rotation is: %maps%', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(15, 'nextmap', 'cmdMessage', '|ccc| The next map is: %next_map%', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(16, 'slap', 'cmdFunnyWord', 'slaps', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(17, 'ragequit', 'cmdRagequit', '', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(18, 'nm', 'cmdNextMap', '', 'no', 75, 'yes', '0000-00-00 00:00:00'),
+(19, 'restart', 'cmdRestartRound', '', 'no', 75, 'yes', '0000-00-00 00:00:00'),
+(20, 'info', 'cmdMessage', '|ccc| This server is using BattlefieldTools Servertool %version%!', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(21, 'pm', 'cmdPm', '', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(22, 'spank', 'cmdFunnyWord', 'spanks', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(23, 'eat', 'cmdFunnyWord', 'eats', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(24, 'tbag', 'cmdFunnyWord', 't-bags', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(25, 'poke', 'cmdFunnyWord', 'pokes', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(26, 'hug', 'cmdFunnyWord', 'hugs', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(27, 'boom', 'cmdSwitchPlayer', '', 'no', 25, 'yes', '0000-00-00 00:00:00'),
+(28, 'yes', 'cmdVoteYes', '', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(29, 'vm', 'cmdVoteMap', '', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(30, 'votemap', 'cmdVoteMap', '', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(31, 'voteclose', 'cmdClosePoll', '', 'no', 75, 'yes', '0000-00-00 00:00:00'),
+(32, 'vc', 'cmdClosePoll', '', 'no', 75, 'yes', '0000-00-00 00:00:00'),
+(33, 'loadout', 'cmdGetLoadout', '', 'no', 0, 'yes', '0000-00-00 00:00:00'),
+(34, 'rcon', 'cmdExecRcon', '', 'no', 100, 'yes', '0000-00-00 00:00:00');
+
+CREATE TABLE IF NOT EXISTS {%prefix%}igvote (
+  vote_id int(11) NOT NULL AUTO_INCREMENT,
+  c_profile_id varchar(20) NOT NULL COMMENT 'Creator ProfileID',
+  c_soldier_id varchar(20) NOT NULL COMMENT 'Creator SoldierID',
+  vote_action enum('cmdVotekickExec','cmdVotemapExec') NOT NULL DEFAULT 'cmdVotekickExec',
+  vote_args tinytext NOT NULL,
+  vote_votes varchar(300) NOT NULL DEFAULT '[]',
+  vote_date timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  vote_status enum('closed','pending','executed') NOT NULL DEFAULT 'pending',
+  PRIMARY KEY (vote_id)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 CREATE TABLE IF NOT EXISTS {%prefix%}itemlist (
   item_id int(11) NOT NULL AUTO_INCREMENT,
   item_category enum('weapon','gadget','attachment') NOT NULL DEFAULT 'weapon',
@@ -17,7 +77,7 @@ CREATE TABLE IF NOT EXISTS {%prefix%}itemlist (
   item_name varchar(75) NOT NULL,
   item_min_lvl int(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (item_id)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=141 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=142 ;
 
 INSERT INTO {%prefix%}itemlist (item_id, item_category, item_subcat, item_bf_id, item_name, item_min_lvl) VALUES
 (1, 'gadget', 'none', 3027, 'Knife', 0),
@@ -159,7 +219,8 @@ INSERT INTO {%prefix%}itemlist (item_id, item_category, item_subcat, item_bf_id,
 (137, 'weapon', 'ar', 3133, 'A-91', 30),
 (138, 'weapon', 'smg', 3136, 'MTAR-21', 30),
 (139, 'weapon', 'lmg', 3134, 'LSAT', 30),
-(140, 'weapon', 'sr', 3138, 'M98B', 30);
+(140, 'weapon', 'sr', 3138, 'M98B', 30),
+(141, 'gadget', 'none', 3140, 'Khukri Blade', 30);
 
 CREATE TABLE IF NOT EXISTS {%prefix%}log_autokick (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -179,13 +240,28 @@ CREATE TABLE IF NOT EXISTS {%prefix%}log_cp_actions (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+CREATE TABLE IF NOT EXISTS {%prefix%}log_igcmds (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  profile_id varchar(20) NOT NULL,
+  soldier_id varchar(20) NOT NULL,
+  soldier_name varchar(75) NOT NULL,
+  cmd varchar(25) NOT NULL,
+  cmd_index int(11) NOT NULL,
+  cmd_origin varchar(75) NOT NULL,
+  cmd_time varchar(20) NOT NULL,
+  date timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  cmd_message tinytext NOT NULL,
+  cmd_status enum('success','failed') NOT NULL DEFAULT 'success',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 CREATE TABLE IF NOT EXISTS {%prefix%}settings (
   setting_id int(11) NOT NULL AUTO_INCREMENT,
   setting_name varchar(35) NOT NULL,
   setting_value text NOT NULL,
   setting_desc varchar(250) NOT NULL DEFAULT '(No description)',
   PRIMARY KEY (setting_id)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=60 ;
 
 INSERT INTO {%prefix%}settings (setting_id, setting_name, setting_value, setting_desc) VALUES
 (1, 'server_ip', '{%sv_ip%}', 'Your gameserver IP (ENCRYPTED)'),
@@ -194,23 +270,23 @@ INSERT INTO {%prefix%}settings (setting_id, setting_name, setting_value, setting
 (4, 'cp_default_lang', 'en', 'Default language of the ControlPanel'),
 (5, 'notify', 'false', 'Notify you when the server is down?'),
 (6, 'notify_email', 'myemail@domain.ext', 'E-mailaddress to send a notification when the server is down'),
-(7, 'server_status', 'down', 'The server''s status from the last heartbeat'),
+(7, 'server_status', 'up', 'The server''s status from the last heartbeat'),
 (8, 'server_last_stream', '0', 'The last heartbeat (UNIX stamp)'),
 (9, 'cp_date_format', 'd-m-Y', 'PHP date format, no time'),
 (10, 'cp_date_format_full', 'd-m-Y H:i:s', 'PHP date format, full'),
 (11, 'notify_sent', 'false', 'Is a notification sent?'),
 (12, 'iga_ad', '60', 'Would you like to display an in-game advertisement about this tool? 0=no, >0 = how many seconds'),
-(13, 'iga_ad_last', '0', 'Last advertisement displayed (UNIX timestamp)'),
-(14, 'iga_ad_msg', 'This server is using Bunny''s ServerTool %version%!', 'Advertisment text'),
+(13, 'iga_ad_last', '1387645630', 'Last advertisement displayed (UNIX timestamp)'),
+(14, 'iga_ad_msg', 'This server uses BattlefieldTools Servertool %version%!', 'Advertisment text'),
 (15, 'tool_ll_min', '0', 'Level limiter: min. level'),
 (16, 'tool_ll_max', '30', 'Level limiter: max. level'),
-(17, 'tool_ll', 'true', 'Level limiter: enabled?'),
-(18, 'tool_sm', '60', 'Stats message: 0=disabled, >0 = how many seconds'),
+(17, 'tool_ll', 'false', 'Level limiter: enabled?'),
+(18, 'tool_sm', '0', 'Stats message: 0=disabled, >0 = how many seconds'),
 (19, 'tool_sm_last', '0', 'Last stats message, UNIX timestamp'),
-(20, 'tool_am', '90', 'Admin message: 0=disabled, >0 = how many seconds'),
+(20, 'tool_am', '0', 'Admin message: 0=disabled, >0 = how many seconds'),
 (21, 'tool_am_last', '0', 'Last admin message, UNIX timestamp'),
-(22, 'tool_wl', 'true', 'Weapon limiter enabled?'),
-(23, 'tool_cl', 'true', 'Class limiter enabled?'),
+(22, 'tool_wl', 'false', 'Weapon limiter enabled?'),
+(23, 'tool_cl', 'false', 'Class limiter enabled?'),
 (24, 'tool_cl_Assaults', '16', 'Class limiter: Max. assaults'),
 (25, 'tool_cl_Medics', '16', 'Class limiter: Max. medics'),
 (26, 'tool_cl_Recons', '16', 'Class limiter: Max. recons'),
@@ -220,16 +296,33 @@ INSERT INTO {%prefix%}settings (setting_id, setting_name, setting_value, setting
 (30, 'tool_am_msg', '|ccc| Admins currently in-game: %admins%', 'Admin message: Message when there is at least one admin online'),
 (31, 'tool_am_msg_alt', '|ccc| No admin currently in-game.', 'Admin message: Message when there is no admin online'),
 (32, 'tool_whl', 'false', 'Whitelist enabled?'),
-(33, 'tool_pl', 'true', 'Prebuy limiter enabled?'),
+(33, 'tool_pl', 'false', 'Prebuy limiter enabled?'),
 (34, 'tool_al', 'false', 'Attachment limiter enabled?'),
-(35, 'tool_sl', 'true', 'Shotgun limiter enabled?'),
+(35, 'tool_sl', 'false', 'Shotgun limiter enabled?'),
 (36, 'tool_sl_max', '2', 'Shotgun limiter: Max. shotgun users per team'),
 (37, 'tool_pl_items', 'all', 'Prebuy limiter: items (IDs) to kick for prebuy ''all''=all items'),
 (38, 'tool_wl_items', '[]', 'Weapon limiter: Which items are disallowed? (Array)'),
 (39, 'tool_ll_ignorevip', 'true', 'Level limiter: ignore VIPs?'),
 (40, 'tool_wl_ignorevip', 'false', 'Weapon limiter: ignore VIPs?'),
 (41, 'tool_pl_ignorevip', 'false', 'Prebuy limiter: ignore VIPs?'),
-(42, 'tool_sl_ignorevip', 'true', 'Shotgun limiter: ignore VIPs?');
+(42, 'tool_sl_ignorevip', 'true', 'Shotgun limiter: ignore VIPs?'),
+(43, 'tool_dsl', 'false', 'Dual slot limiter: On/off (true/false)'),
+(44, 'tool_dsl_ignorevip', 'false', 'Dual slot limiter: Ignore VIPs?'),
+(45, 'tool_igcmds', 'true', 'In-game commands enabled? (true/false)'),
+(46, 'tool_mrot_rpm', '10', 'Map rotation: Rounds per map'),
+(47, 'tool_bl_msg', '[Blacklist] You are banned for: %reason%. Until: %until%', 'Blacklist: message'),
+(48, 'tool_ll_msg_min', '[Level limiter] Min. required lvl is %min%, your level is %lvl%', 'Level limiter: min. level message'),
+(49, 'tool_ll_msg_max', '[Level limiter] Max. required lvl is %max%, your level is %lvl%', 'Level limiter: max. level message'),
+(50, 'tool_cl_msg', '[Class limiter] Max. %amount% %class% in one team', 'Class limiter: message'),
+(51, 'tool_dsl_msg', '[Dual-slot limiter] Dual-slot booster is not allowed', 'Dual-slot llimiter: message'),
+(52, 'tool_wl_msg', '[Weapon limiter] Disallowed weapon: %weapon%', 'Weapon limiter: message'),
+(53, 'tool_pl_msg', '[Prebuy limiter] Prebought %weapon% already on rank %lvl%. Required level: %req%', 'Prebuy limiter: message'),
+(54, 'tool_sl_msg', '[Shotgun limiter] Max. %amount% shotgun users in one team', 'Shotgun limiter: message'),
+(55, 'server_bookmark', '', 'Server bookmarklink'),
+(56, 'api_username', '', 'Battlefieldtools.com API username'),
+(57, 'api_key', '', 'Battlefieldtools.com API key'),
+(58, 'tool_wl_inverse', 'false', 'Weapon limiter: inverse'),
+(59, 'tool_igcmds_votes', '6', 'In-game commands: votes');
 
 CREATE TABLE IF NOT EXISTS {%prefix%}users (
   user_id int(11) NOT NULL AUTO_INCREMENT,
@@ -248,11 +341,12 @@ CREATE TABLE IF NOT EXISTS {%prefix%}users (
   rights_limiters enum('yes','no') NOT NULL DEFAULT 'yes',
   rights_logs enum('yes','no') NOT NULL DEFAULT 'yes',
   rights_whitelist enum('yes','no') NOT NULL DEFAULT 'yes',
+  rights_igcmds int(3) NOT NULL DEFAULT '25',
   PRIMARY KEY (user_id)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
-INSERT INTO {%prefix%}users (user_id, user_profile_id, user_name, user_username, user_password, user_last_login, rights_ingameadmin, rights_superadmin, rights_rcon, rights_blacklist, rights_vips, rights_server, rights_itemlist, rights_limiters, rights_logs, rights_whitelist) VALUES
-(1, '{%profile_id%}', '{%name%}', '{%username%}', '{%password%}', '0000-00-00 00:00:00', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes');
+INSERT INTO {%prefix%}users (user_id, user_profile_id, user_name, user_username, user_password, user_last_login, rights_ingameadmin, rights_superadmin, rights_rcon, rights_blacklist, rights_vips, rights_server, rights_itemlist, rights_limiters, rights_logs, rights_whitelist, rights_igcmds) VALUES
+(1, '{%profile_id%}', '{%name%}', '{%username%}', '{%password%}', '0000-00-00 00:00:00', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 100);
 
 CREATE TABLE IF NOT EXISTS {%prefix%}users_sessions (
   session_id int(11) NOT NULL AUTO_INCREMENT,

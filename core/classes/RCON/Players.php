@@ -105,6 +105,21 @@ class Players
         return $soldiers;
     }
 
+	/**
+	 * Set VIP status
+	 * 
+	 * @param $name Playername
+	 * @param $profileId Profile ID
+	 * @param $vip 0=deactivate VIP status, 1=activate VIP status
+	 * 
+	 * @return
+	 * 
+	 * ADDED BY SHARPBUNNY
+	 */
+	public function setVip($name, $profileId, $vip=1) {
+		return Base::query("exec game.setPersonaVipStatus {$name} {$profileId} {$vip}");
+	}
+
     /**
      * List the players on the server
      */

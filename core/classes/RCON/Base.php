@@ -80,6 +80,7 @@ class Base
 			// ADDED BY SHARPBUNNY
 			updateSetting('server_last_stream', time());
 			updateSetting('server_status', 'up');
+			updateSetting('notify_sent', 'false');
 			
 			return true;
 			
@@ -97,7 +98,7 @@ class Base
      */ 
     public function connect(&$cn = 1, &$cs = "Unknown error")
     {
-        $fp = fsockopen($this->ip, $this->port, $cn, $cs, 3) or die(serverDown() . ". Could not connect. " . date("Y-m-d H:i:s") . PHP_EOL);     
+        $fp = @fsockopen($this->ip, $this->port, $cn, $cs, 3) or die(serverDown() . ". Could not connect. " . date("Y-m-d H:i:s") . PHP_EOL);     
         if(!$fp) {
             return false;
         } else {

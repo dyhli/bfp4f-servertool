@@ -1,27 +1,29 @@
 <?php
 /**
- * Battlefield Play4free Servertool
- * Version 0.4.1
- * 
- * Copyright 2013 Danny Li <SharpBunny> <bfp4f.sharpbunny@gmail.com>
+ * BattlefieldTools.com BFP4F ServerTool
+ * Version 0.6.0
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
  * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
 ob_start();
 session_start();
 
-// Rcon classes namespace
+// Namespaces
 use T4G\BFP4F\Rcon as rcon;
+use BT\API as Api;
 
 // Do not display errors
 #error_reporting(0);
@@ -56,6 +58,26 @@ foreach(glob(CORE_DIR . '/classes/*.php') as $file) {
 // RCON classes
 foreach(glob(CORE_DIR . '/classes/RCON/*.php') as $file) {
 	require_once($file);
+}
+
+// Language preference
+// Stores the language preference using a cookie, if no cookie is set, use the default language
+if(isset($_COOKIE['LangPref'])) {
+	if(file_exists(CORE_DIR . '/lang/' . $_COOKIE['LangPref'] . '.php')) {
+		require_once(CORE_DIR . '/lang/' . $_COOKIE['LangPref'] . '.php');
+	} else {
+		require_once(CORE_DIR . '/lang/' . $settings['cp_default_lang'] . '.php');
+	}
+} else {
+	require_once(CORE_DIR . '/lang/' . $settings['cp_default_lang'] . '.php');
+}
+
+// Switch language
+if(isset($_GET['lang'])) {
+	if(file_exists(CORE_DIR . '/lang/' . $_GET['lang'] . '.php')) {
+		setcookie('LangPref', $_GET['lang'], time()+31449600, '/');
+		require_once(CORE_DIR . '/lang/' . $_GET['lang'] . '.php');
+	}
 }
 
 /**
@@ -96,29 +118,9 @@ if(!defined('INSTALL_PAGE')) {
 	 * INITIALZE CLASSES AND STUFF
 	 */
 	
-	// Language preference
-	// Stores the language preference using a cookie, if no cookie is set, use the default language
-	if(isset($_COOKIE['LangPref'])) {
-		if(file_exists(CORE_DIR . '/lang/' . $_COOKIE['LangPref'] . '.php')) {
-			require_once(CORE_DIR . '/lang/' . $_COOKIE['LangPref'] . '.php');
-		} else {
-			require_once(CORE_DIR . '/lang/' . $settings['cp_default_lang'] . '.php');
-		}
-	} else {
-		require_once(CORE_DIR . '/lang/' . $settings['cp_default_lang'] . '.php');
-	}
-	
-	// Switch language
-	if(isset($_GET['lang'])) {
-		if(file_exists(CORE_DIR . '/lang/' . $_GET['lang'] . '.php')) {
-			setcookie('LangPref', $_GET['lang'], time()+31449600, '/');
-			require_once(CORE_DIR . '/lang/' . $_GET['lang'] . '.php');
-		}
-	}
-	
 	$rc = new rcon\Base();
 	$rc->ip = decrypt($settings['server_ip']);
-	$rc->port = decrypt($settings['server_admin_port']);
+	$rc->port = (int) decrypt($settings['server_admin_port']);
 	$rc->pwd = decrypt($settings['server_rcon_password']);
 	
 	// User class
@@ -126,6 +128,11 @@ if(!defined('INSTALL_PAGE')) {
 	
 	// Log class
 	$log = new Log($db, $config);
+	
+	// BattlefieldTools API class
+	$api = new Api\Base();
+	$api->setUser(decrypt($settings['api_username']));
+	$api->setKey(decrypt($settings['api_key']));
 	
 	// If user is logged in, then fetch the user
 	if($user->checkLogin()) {

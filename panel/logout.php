@@ -1,21 +1,22 @@
 <?php
 /**
- * Battlefield Play4free Servertool
- * Version 0.4.1
- * 
- * Copyright 2013 Danny Li <SharpBunny> <bfp4f.sharpbunny@gmail.com>
+ * BattlefieldTools.com BFP4F ServerTool
+ * Version 0.6.0
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
  * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
  
 require_once('../core/init.php');
@@ -32,16 +33,18 @@ if($user->checkLogin()) {
 	die();
 }
 ?>
-			
-			<div class="row-fluid">
-				<div class="span6 offset3">
+						
+			<div class="row" style="margin:40px 0">
+				<div class="col-md-6 col-md-offset-3">
 					
-					<h2><i class="icon-off"></i> <?=$lang['cp_logout']?></h2>
+					<h1 class="center"><i class="fa fa-wrench"></i> Battlefield Play4free Servertool</h1>
 					<hr />
 					
 					<div class="alert alert-success alert-block">
-						<h4><i class="icon-ok"></i> <?=$lang['word_ok']?></h4>
+						<h4><i class="fa fa-check"></i> <?=$lang['word_ok']?></h4>
 						<p><?=$lang['cp_logout_success']?></p>
+						<br />
+						<p><a href="<?=HOME_URL?>panel/login" class="btn btn-success btn-sm btn-block"><i class="fa fa-key"></i> <?=$lang['cp_login']?></a></p>
 					</div>
 					
 				</div>

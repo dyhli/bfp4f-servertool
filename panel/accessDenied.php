@@ -1,21 +1,22 @@
 <?php
 /**
- * Battlefield Play4free Servertool
- * Version 0.4.1
- * 
- * Copyright 2013 Danny Li <SharpBunny> <bfp4f.sharpbunny@gmail.com>
+ * BattlefieldTools.com BFP4F ServerTool
+ * Version 0.6.0
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
  * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
  
 require_once('../core/init.php');
@@ -24,13 +25,13 @@ $pageTitle = $lang['cp_norights'];
 include(CORE_DIR . '/cp_header.php');
 ?>
 			
-			<div class="row-fluid">
-				<div class="span8 offset2">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
 					
 					<div class="alert alert-warning alert-block">
-						<h4><i class="icon-warning-sign"></i> <?=$lang['word_error']?></h4>
+						<h4><i class="fa fa-exclamation-triangle"></i> <?=$lang['word_error']?></h4>
 						<p><?=$lang['cp_norights_msg']?></p><br />
-						<p><a href="javascript:;" onclick="history.go(-1)" class="btn btn-warning"><i class="icon-arrow-left"></i> <?=$lang['btn_back']?></a></p>
+						<p><a href="javascript:;" onclick="history.go(-1)" class="btn btn-warning"><i class="fa fa-arrow-left"></i> <?=$lang['btn_back']?></a></p>
 					</div>
 					
 				</div>

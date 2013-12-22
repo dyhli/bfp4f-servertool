@@ -1,21 +1,22 @@
 <?php
 /**
- * Battlefield Play4free Servertool
- * Version 0.4.1
- * 
- * Copyright 2013 Danny Li <SharpBunny> <bfp4f.sharpbunny@gmail.com>
+ * BattlefieldTools.com BFP4F ServerTool
+ * Version 0.6.0
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
  * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
  
 require_once('../core/init.php');
@@ -47,48 +48,57 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($_
 		header('Location: ' . HOME_URL . 'panel');
 		die();
 	} else {
-		$status = '<div class="alert alert-error alert-block"><h4><i class="icon-remove"></i> ' . $lang['word_error'] . '</h4><p>' . getLang($result['message']) . '</p></div>';
+		$status = '<div class="alert alert-danger alert-block"><h4><i class="fa fa-times"></i> ' . $lang['word_error'] . '</h4><p>' . getLang($result['message']) . '</p></div>';
 	}
 	
 }
 ?>
-			
-			<div class="row-fluid">
-				<div class="span6 offset3 well">
+						
+			<div class="row" style="margin:40px 0">
+				<div class="col-md-6 col-md-offset-3">
 					
-					<h2><i class="icon-key"></i> <?=$lang['cp_login']?></h2>
+					<h1 class="center"><i class="fa fa-wrench"></i> Battlefield Play4free Servertool</h1>
 					<hr />
 					
 					<?=$status?>
 					
 					<form action="<?=HOME_URL?>panel/login" method="post" class="form-horizontal">
 						
-						<div class="control-group">
-							<label class="control-label"><i class="icon-user"></i> <?=$lang['cp_username']?></label>
-							<div class="controls">
-								<input type="text" name="username" class="input-block-level"<?=((isset($_COOKIE['User_UserName'])) ? ' value="' . $_COOKIE['User_UserName'] . '"' : '')?> autofocus required />
+						<div class="form-group">
+							<label class="col-sm-3 control-label"><i class="fa fa-user"></i> <?=$lang['cp_username']?></label>
+ 							<div class="col-sm-9">
+								<input type="text" name="username" class="form-control"<?=((isset($_COOKIE['User_UserName'])) ? ' value="' . $_COOKIE['User_UserName'] . '"' : '')?> autofocus required />
 							</div>
 						</div>
 												
-						<div class="control-group">
-							<label class="control-label"><i class="icon-lock"></i> <?=$lang['cp_password']?></label>
-							<div class="controls">
-								<input type="password" name="password" class="input-block-level" required />
+						<div class="form-group">
+							<label class="col-sm-3 control-label"><i class="fa fa-lock"></i> <?=$lang['cp_password']?></label>
+ 							<div class="col-sm-9">
+								<input type="password" name="password" class="form-control" required />
 							</div>
 						</div>
 						
 						<br />
 						
-						<div class="control-group">
-							<div class="controls">
-								<label><input type="checkbox" name="remember" /> <span><?=$lang['cp_login_remember']?></span></label>
+						<div class="form-group">
+							<div class="col-sm-9 col-sm-offset-3">
+								<div class="checkbox">
+									<label><input type="checkbox" name="remember" /> <span><?=$lang['cp_login_remember']?></span></label>
+								</div>
 							</div>
-						</div>
+ 						</div>
 						
 						<br />
 						
-						<button class="btn btn-inverse pull-right" type="submit"><?=$lang['word_go']?> <i class="icon-arrow-right right"></i></button>
-						
+						<div class="form-group">
+							<div class="col-sm-4">
+								<a class="btn btn-block btn-default" href="<?=HOME_URL?>"><i class="fa fa-heart"></i> <?=$lang['cp_menu_credits']?></a>
+							</div>
+							<div class="col-sm-4 col-sm-offset-4">
+								<button type="submit" class="btn btn-block btn-primary"><?=$lang['word_go']?> <i class="fa fa-arrow-right fa-right"></i></button>
+							</div>
+						</div>
+													
 					</form>
 					
 				</div>

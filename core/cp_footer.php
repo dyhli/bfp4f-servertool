@@ -1,7 +1,7 @@
-			<footer class="row-fluid">
-				<div class="span12">
+			<footer class="row">
+				<div class="col-md-12">
 					<hr />		
-					<p class="muted"><a href="http://battlefield.play4free.com/en/forum/showthread.php?tid=131825" target="_blank"><i class="icon-bookmark"></i> Bunnies' Battlefield</a> &middot; <a href="http://battlefield.play4free.com/en/forum/showthread.php?tid=137006" target="_blank"><i class="icon-file-text"></i> <?=$lang['cp_footer_thread']?></a> &middot; <a href="https://github.com/dyhli/bfp4f-servertool/" target="_blank"><i class="icon-github"></i> <?=$lang['github']?></a> <span class="pull-right"><?=replace($lang['cp_footer_createdby'])?></span></p>
+					<p class="text-muted"><a href="http://battlefieldtools.com" target="_blank"><i class="fa fa-wrench"></i> BattlefieldTools.com</a> &middot; <a href="http://battlefield.play4free.com/en/forum/showthread.php?tid=137006" target="_blank"><i class="fa fa-file-text"></i> <?=$lang['cp_footer_thread']?></a> &middot; <a href="https://github.com/dyhli/bfp4f-servertool/" target="_blank"><i class="fa fa-github"></i> <?=$lang['github']?></a> <span class="pull-right">BattlefieldTools Servertool is licensed under GPL v3.0.<br />Copyright &copy; <?=date('Y')?> by Danny Li <SharpBunny></span></p>
 				</div>
 			</footer>
 			

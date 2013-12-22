@@ -187,8 +187,12 @@ class Server
 
     public function appendMap($map, $gameType, $size = 32)
     {
-        return Base::query("exec admin.append {$map} {$gameType} {$size}");
+        return Base::query("exec maplist.append {$map} {$gameType} {$size}");
     }   
+	public function clearRotation() // ADDED BY SHARPBUNNY
+	{
+		return Base::query("exec maplist.clear");
+	}
 
     /**
      * Retrieves position of current map in map rotator

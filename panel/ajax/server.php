@@ -1,21 +1,22 @@
 <?php
 /**
- * Battlefield Play4free Servertool
- * Version 0.4.1
- * 
- * Copyright 2013 Danny Li <SharpBunny> <bfp4f.sharpbunny@gmail.com>
+ * BattlefieldTools.com BFP4F ServerTool
+ * Version 0.6.0
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
  * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
  
 require_once('../../core/init.php');
@@ -49,6 +50,7 @@ if($user->checkLogin()) {
 
 		$sv = new rcon\Server();
 		$pl = new rcon\Players();
+		$ct = new rcon\Chat();
 		
 		// Commands
 		switch($_POST['cmd']) {
@@ -161,7 +163,7 @@ if($user->checkLogin()) {
 				if(isset($_POST['vars']['serverIp']) && isset($_POST['vars']['adminPort']) && isset($_POST['vars']['rconPass'])) {
 					if(!empty($_POST['vars']['serverIp']) && !empty($_POST['vars']['adminPort']) && !empty($_POST['vars']['rconPass'])) {
 						if($userInfo['rights_rcon'] == 'yes') {
-							if(updateSetting('server_ip',encrypt($_POST['vars']['serverIp'])) && updateSetting('server_admin_port',encrypt($_POST['vars']['adminPort'])) && updateSetting('server_rcon_password',encrypt($_POST['vars']['rconPass']))) {
+							if(updateSetting('server_ip',encrypt(trim($_POST['vars']['serverIp']))) && updateSetting('server_admin_port',encrypt(trim($_POST['vars']['adminPort']))) && updateSetting('server_rcon_password',encrypt(trim($_POST['vars']['rconPass'])))) {
 								$response['status'] = 'OK';
 								$response['msg'] = $lang['msg_settings_saved'];
 								
@@ -257,8 +259,10 @@ if($user->checkLogin()) {
 						 * ll = Level limiter
 						 * cl = Class limiter
 						 * whl = Whitelist
+						 * dsl = Dual-slot limiter
+						 * igcmds = In-game commands
 						 */
-						$tools = array('wl','pl','al','sl','ll','cl','whl');
+						$tools = array('wl','pl','al','sl','ll','cl','whl','dsl','igcmds');
 						
 						if(in_array($_POST['vars']['tool'], $tools)) {
 							
@@ -406,6 +410,58 @@ if($user->checkLogin()) {
 						} else {
 							$response['msg'] = $lang['msg_cmd_failed'];
 						}
+					} else {
+						$response['msg'] = $lang['msg_cmd_noaccess'];
+					}
+				} else {
+					$response['msg'] = $lang['msg_cmd_missingvars'];
+				}
+			break;
+			
+			/**
+			 * Send servermessage
+			 */
+			case 'sendSrvMsg':
+				if(isset($_POST['vars']['msg']) && !empty($_POST['vars']['msg'])) {
+					if($userInfo['rights_server'] == 'yes') {
+						
+						// Connect to server
+						$rc->connect($cn, $cs);
+						$cn = $rc->init();
+						
+						if($cn) {
+							$ct->send($_POST['vars']['msg']);
+							
+							$response['status'] = 'OK';
+							$response['msg'] = $lang['tool_server_msg_sent'];
+							$log->insertActionLog($userInfo['user_id'], 'Sent servermessage: ' . $_POST['vars']['msg']);
+						} else {
+							$response['msg'] = $lang['msg_serverdown'] . ' ' . date($settings['cp_date_format_full'], $settings['server_last_stream']);
+						}
+					} else {
+						$response['msg'] = $lang['msg_cmd_noaccess'];
+					}
+				} else {
+					$response['msg'] = $lang['msg_cmd_missingvars'];
+				}
+			break;
+			
+			/**
+			 * Delete from in-game commands
+			 */
+			case 'deleteIgcmd':
+				if(isset($_POST['vars']['id'])) {
+					if($userInfo['rights_igcmds'] >= 100) {
+						$igc = new IgCommands(null, null, null, null, $db, $config, null, $settings);
+						if($igc->deleteCommand($_POST['vars']['id'])) {
+							$response['status'] = 'OK';
+							$response['msg'] = $lang['tool_igcmds_deleted'];
+							
+							$log->insertActionLog($userInfo['user_id'], 'In-game command deleted');
+						} else {
+							$response['msg'] = $lang['msg_cmd_failed'];
+						}
+
 					} else {
 						$response['msg'] = $lang['msg_cmd_noaccess'];
 					}

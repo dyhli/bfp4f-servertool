@@ -1,21 +1,22 @@
 <?php
 /**
- * Battlefield Play4free Servertool
- * Version 0.4.1
- * 
- * Copyright 2013 Danny Li <SharpBunny> <bfp4f.sharpbunny@gmail.com>
+ * BattlefieldTools.com BFP4F ServerTool
+ * Version 0.6.0
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
  * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
  
 require_once('../core/init.php');
@@ -65,31 +66,35 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['lang']) && isset($_POST
 	if(!in_array($_POST['iga_ad'], array(0, 30, 60, 90, 120, 180, 240, 300))) {
 		$errors[] = $lang['tool_set_err2'];
 	}
+	// Check bml
+	//if(!preg_match('{(http://|https://)(www.)?(battlefield.play4free.com/bookmark/server:)([a-z0-9-]+)}', $_POST['bml'], $matches)) {
+	//	$errors[] = $lang['tool_set_err5'];
+	//}
 	
 	// Check errors and stuff
 	if(count($errors) == 0) {
 				
 		if(updateSetting('cp_default_lang', $_POST['lang']) && updateSetting('cp_date_format', $_POST['df']) && updateSetting('cp_date_format_full', $_POST['df_full']) && updateSetting('notify', $_POST['notifier']) && updateSetting('notify_email', $_POST['notify_email']) && updateSetting('iga_ad', $_POST['iga_ad'])) {
-			$status = '<div class="alert alert-success alert-block"><h4><i class="icon-ok"></i> ' . $lang['word_ok'] . '</h4><p>' . $lang['msg_settings_saved'] . '</p></div>';
+			$status = '<div class="alert alert-success alert-block"><h4><i class="fa fa-check"></i> ' . $lang['word_ok'] . '</h4><p>' . $lang['msg_settings_saved'] . '</p></div>';
 			$log->insertActionLog($userInfo['user_id'], 'Settings edited');
 			
 			// Reload settings
 			fetchSettings();
 		} else {
-			$status = '<div class="alert alert-error alert-block"><h4><i class="icon-remove"></i> ' . $lang['word_error'] . '</h4><p>' . $result['message'] . '</p></div>';
+			$status = '<div class="alert alert-danger alert-block"><h4><i class="fa fa-times"></i> ' . $lang['word_error'] . '</h4><p>' . $result['message'] . '</p></div>';
 		}
 		
 	} else {
-		$status = '<div class="alert alert-error alert-block"><h4><i class="icon-remove"></i> ' . $lang['word_error'] . '</h4><p>' . $lang['msg_error'] . '</p><ul><li>' . implode('</li><li>', $errors) . '</li></ul></div>';
+		$status = '<div class="alert alert-danger alert-block"><h4><i class="fa fa-times"></i> ' . $lang['word_error'] . '</h4><p>' . $lang['msg_error'] . '</p><ul><li>' . implode('</li><li>', $errors) . '</li></ul></div>';
 	}
 	
 }
 ?>
 			
-			<div class="row-fluid">
-				<div class="span8 offset2">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
 					
-					<h2><i class="icon-wrench"></i> <?=$lang['tool_set']?> <small><?=$lang['tool_set_desc']?></small></h2>
+					<h2><i class="fa fa-wrench"></i> <?=$lang['tool_set']?> <small><?=$lang['tool_set_desc']?></small></h2>
 					<hr />
 
 					<form action="<?=HOME_URL?>panel/settings" method="post" class="form-horizontal">
@@ -98,10 +103,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['lang']) && isset($_POST
 						
 						<h4><?=$lang['word_cp_full']?></h4>
 						<br />
-												
-						<div class="control-group">
-							<label class="control-label"><i class="icon-flag"></i> <?=$lang['tool_set_deflang']?></label>
-							<div class="controls">
+						
+						<div class="form-group">
+							<label class="col-sm-3 control-label"><i class="fa fa-flag"></i> <?=$lang['tool_set_deflang']?></label>
+ 							<div class="col-sm-9">
 								<select name="lang" class="selectpicker show-tick" data-width="100%" required>
 <?php
 foreach(glob(CORE_DIR . '/lang/*.php') as $b) {
@@ -115,20 +120,20 @@ foreach(glob(CORE_DIR . '/lang/*.php') as $b) {
 							</div>
 						</div>
 						
-						<div class="control-group">
-							<label class="control-label"><i class="icon-time"></i> <?=$lang['tool_set_df']?></label>
-							<div class="controls">
-								<input type="text" name="df" class="input-block-level" value="<?=$settings['cp_date_format']?>" required />
+						<div class="form-group">
+							<label class="col-sm-3 control-label"><i class="fa fa-clock-o"></i> <?=$lang['tool_set_df']?></label>
+ 							<div class="col-sm-9">
+								<input type="text" name="df" class="form-control" value="<?=$settings['cp_date_format']?>" required />
 								<span class="help-block">
 									<small><?=$lang['tool_set_help1']?></small>
 								</span>
 							</div>
 						</div>
 						
-						<div class="control-group">
-							<label class="control-label"><i class="icon-time"></i> <?=$lang['tool_set_fdf']?></label>
-							<div class="controls">
-								<input type="text" name="df_full" class="input-block-level" value="<?=$settings['cp_date_format_full']?>" required />
+						<div class="form-group">
+							<label class="col-sm-3 control-label"><i class="fa fa-clock-o"></i> <?=$lang['tool_set_fdf']?></label>
+ 							<div class="col-sm-9">
+								<input type="text" name="df_full" class="form-control" value="<?=$settings['cp_date_format_full']?>" required />
 								<span class="help-block">
 									<small><?=$lang['tool_set_help1']?></small>
 								</span>
@@ -138,31 +143,31 @@ foreach(glob(CORE_DIR . '/lang/*.php') as $b) {
 						<h4><?=$lang['tool_set_notifier']?></h4>
 						<br />
 						
-						<div class="control-group">
-							<label class="control-label"><i class="icon-exclamation-sign"></i> <?=$lang['tool_set_notifier']?></label>
-							<div class="controls">
+						<div class="form-group">
+							<label class="col-sm-3 control-label"><i class="fa fa-exclamation-circle"></i> <?=$lang['tool_set_notifier']?></label>
+							<div class="col-sm-9">
 								<select name="notifier" class="selectpicker show-tick" data-width="100%" required>
-									<option value="false" data-icon="icon-remove"><?=$lang['word_disabled']?></option>
-									<option value="true" data-icon="icon-ok"<?=(($settings['notify'] == 'true') ? ' selected' : '')?>><?=$lang['word_enabled']?></option>
+									<option value="false" data-icon="fa fa-times"><?=$lang['word_disabled']?></option>
+									<option value="true" data-icon="fa fa-check"<?=(($settings['notify'] == 'true') ? ' selected' : '')?>><?=$lang['word_enabled']?></option>
 								</select>
 
 							</div>
 						</div>
 						
-						<div class="control-group">
-							<label class="control-label"><i class="icon-envelope"></i> <?=$lang['tool_set_notify_email']?></label>
-							<div class="controls">
-								<input type="email" name="notify_email" class="input-block-level" value="<?=$settings['notify_email']?>" required />
+						<div class="form-group">
+							<label class="col-sm-3 control-label"><i class="fa fa-envelope"></i> <?=$lang['tool_set_notify_email']?></label>
+							<div class="col-sm-9">
+								<input type="email" name="notify_email" class="form-control" value="<?=$settings['notify_email']?>" required />
 							</div>
 						</div>
 						<br />
 						
-						<h4><?=$lang['word_tool']?></h4>
+						<h4>BattlefieldTools Servertool</h4>
 						<br />
 						
-						<div class="control-group">
-							<label class="control-label"><i class="icon-heart"></i> <?=$lang['tool_set_iga_ad']?></label>
-							<div class="controls">
+						<div class="form-group">
+							<label class="col-sm-3 control-label"><i class="fa fa-heart"></i> <?=$lang['tool_set_iga_ad']?></label>
+							<div class="col-sm-9">
 								<select name="iga_ad" class="selectpicker show-tick" data-width="100%" data-show-subtext="true" required>
 <?php
 foreach(array(0, 30, 60, 90, 120, 180, 240, 300) as $sec) {
@@ -171,7 +176,7 @@ foreach(array(0, 30, 60, 90, 120, 180, 240, 300) as $sec) {
 		$input = $lang['word_disabled'];
 	}
 ?>
-									<option value="<?=$sec?>"<?=(($settings['iga_ad'] == $sec) ? ' selected' : '') . (($sec > 0) ? ' data-subtext="' . $lang['word_ty'] . '" data-icon="icon-time"' : 'data-icon="icon-remove"')?>><?=replace($input, array('%s%' => $sec))?></option>
+									<option value="<?=$sec?>"<?=(($settings['iga_ad'] == $sec) ? ' selected' : '') . (($sec > 0) ? ' data-subtext="' . $lang['word_ty'] . '" data-icon="fa fa-clock-o"' : 'data-icon="fa fa-times"')?>><?=replace($input, array('%s%' => $sec))?></option>
 <?php
 }
 ?>
@@ -184,7 +189,11 @@ foreach(array(0, 30, 60, 90, 120, 180, 240, 300) as $sec) {
 						
 						<br />
 						
-						<button class="btn btn-inverse pull-right" type="submit"><i class="icon-save"></i> <?=$lang['btn_save']?></button>
+						<div class="form-group">
+							<div class="col-sm-4 col-sm-offset-8">
+								<button type="submit" class="btn btn-block btn-primary"><i class="fa fa-save"></i> <?=$lang['btn_save']?></button>
+							</div>
+						</div>
 						
 					</form>
 					

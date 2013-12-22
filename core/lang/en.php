@@ -1,21 +1,22 @@
 <?php
 /**
- * Battlefield Play4free Servertool
- * Version 0.4.1
- * 
- * Copyright 2013 Danny Li <SharpBunny> <bfp4f.sharpbunny@gmail.com>
+ * BattlefieldTools.com BFP4F ServerTool
+ * Version 0.6.0
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
  * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
  
 $lang = array(
@@ -30,7 +31,7 @@ $lang = array(
 	'github' => 'View on GitHub',
 	
 	// Some words
-	'word_tool' => 'Bunny\'s ServerTool',
+	'word_tool' => 'BattlefieldTools Servertool',
 	'word.tool' => 'Tool',
 	'word_cp_full' => 'ControlPanel',
 	'word_cp' => 'CP',
@@ -69,8 +70,8 @@ $lang = array(
 	'word_forever' => 'Forever',
 	
 	// Messages
-	'msg_serverdown' => 'The tool could not connect to the server, it\'s probably down or incorrect RCON details are given, go check it!<br />The last heartbeat was:',
-	'msg_serverup' => 'The server is up and running.<br />The last heartbeat was:',
+	'msg_serverdown' => 'The tool could not connect to the server, it\'s probably down or incorrect RCON details are given, go check it!',
+	'msg_serverup' => 'The server is up and running.',
 	'msg_norights' => 'You haven\'t got enough rights to access this page.',
 	'msg_settings_saved' => 'The settings have been saved',
 	'msg_error' => 'The following error(s) have been occured:',
@@ -90,9 +91,22 @@ $lang = array(
 	'btn_add' => 'Add',
 	'btn_close' => 'Close',
 	
+	// Version checker
+	'vcheck' => 'Check version',
+	'vcheck_latest' => 'Latest version',
+	'vcheck_current' => 'Current version',
+	'vcheck_past' => 'Past versions',
+	'vcheck_download' => 'Download',
+	'vcheck_notes' => 'Notes',
+	'vcheck_err1' => 'Could not connect to the mainserver, please try again later!',
+	'vcheck_ok' => 'Latest version installed!',
+	'vcheck_old' => 'Seems like your version is outdated, please update to the latest version!',
+	
 	// Tools general
 	'tool_gen_ignorevip' => 'Ignore VIPs?',
 	'tool_gen_help1' => 'Maximum per team',
+	'tool_gen_kick_msg' => 'Kick message',
+	'tool_gen_help2' => 'The message that the player will see when he gets kicked',
 	
 	// Tools names and descriptions
 	'tool_server' => 'Server management',
@@ -131,6 +145,45 @@ $lang = array(
 	'tool_server_kick' => 'Kick player',
 	'tool_server_warn' => 'Warn player',
 	'tool_server_nochat' => 'No chatmessages',
+	'tool_server_send_msg' => 'Send message',
+	'tool_server_send_msg_help1' => 'This message will appear in the adminchat!',
+	'tool_server_msg_sent' => 'Servermessage is sent',
+	
+	'tool_rcon' => 'RCON Console',
+	'tool_rcon_desc' => 'Execute RCON commands',
+	'tool_rcon_info1' => 'Do NOT use if you don\'t know what you\'re doing!',
+	'tool_rcon_field1' => 'Command',
+	
+	'tool_igcmds_rights' => 'In-game commands rights',
+	'tool_igcmds_add' => 'Add an in-game command',
+	'tool_igcmds_edit' => 'Edit an in-game command',
+	'tool_igcmds_cmd' => 'Command',
+	'tool_igcmds_func' => 'Function',
+	'tool_igcmds_lvl' => 'Level',
+	'tool_igcmds_active' => 'Active',
+	'tool_igcmds_response' => 'Response',
+	'tool_igcmds_deleted' => 'In-game command deleted',
+	'tool_igcmds_err1' => 'In-game commands rights has to be 0 - 100',
+	'tool_igcmds_err2' => 'The command cannot be blank',
+	'tool_igcmds_err3' => 'This command already exists',
+	'tool_igcmds_err4' => 'This function does not exist',
+	'tool_igcmds_err5' => 'Max. characters for the response is 75',
+	'tool_igcmds_help1' => 'Level 0 - 100',
+	'tool_igcmds_help2' => 'Only works with cmdMessage',
+	'tool_igcmds_help3' => 'Only send the response to the player?',
+	'tool_igcmds_help4' => 'Command active?',
+	
+	'tool_mrot' => 'Edit map rotation',
+	'tool_mrot_map' => 'Mapname',
+	'tool_mrot_gamemode' => 'Gamemode',
+	'tool_mrot_current' => 'Current rotation',
+	'tool_mrot_available' => 'Available maps',
+	'tool_mrot_rpm' => 'Rounds per map',
+	'tool_mrot_help1' => 'Click on the map to add this to your rotation!',
+	'tool_mrot_help2' => 'You can drag and drop to edit your rotation order!',
+	'tool_mrot_err1' => 'Invalid rotation value',
+	'tool_mrot_err2' => 'Min. one map is required in the rotation',
+	'tool_mrot_err3' => 'The rounds per map is not a number',
 	
 	'tool_vipm' => 'VIPs management',
 	'tool_vipm_desc' => 'Add or delete VIPs',
@@ -149,13 +202,16 @@ $lang = array(
 	'tool_set_notifier' => 'Notifier',
 	'tool_set_notify_email' => 'Notify e-mailaddress',
 	'tool_set_iga_ad' => 'Small advertisement',
+	'tool_set_bml' => 'Bookmarklink',
 	'tool_set_iga_ad_opt' => 'Display every %s% seconds',
 	'tool_set_iga_ad_help' => "Displays the following message: '%msg%'",
 	'tool_set_help1' => 'More information about date formats, see <a href="http://nl3.php.net/manual/en/function.date.php" target="_blank">PHP date()</a>',
+	'tool_set_help2' => 'I use this for tracking which servers are using the tool. To disable servertracking, leave the field blank',
 	'tool_set_err1' => 'Language %lang% doesn\'t exist!',
 	'tool_set_err2' => 'Invalid value for the advertisement',
 	'tool_set_err3' => 'Unknown notifier value for the tool',
 	'tool_set_err4' => 'Please enter a valid e-mailaddress to notify you when the tool cannot connect to your server',
+	'tooL_set_err5' => 'Invalid bookmarklink',
 	
 	'tool_acc' => 'Accounts',
 	'tool_acc_desc' => 'Manage the accounts',
@@ -191,11 +247,14 @@ $lang = array(
 	'tool_logs1_desc' => 'All the executed kicks',
 	'tool_logs2' => 'CP actions log',
 	'tool_logs2_desc' => 'All the executed actions via the CP',
+	'tool_logs3' => 'In-game commands log',
+	'tool_logs3_desc' => 'All the executed and failed in-game commands',
 	'tool_word_desc' => 'Description',
 	
 	'tool_wl' => 'Weapon limiter',
 	'tool_wl_desc' => 'Pick the disallowed weapons and automatically kick the players',
 	'tool_wl_disallowed' => 'Disallowed items',
+	'tool_wl_inverse' => '<b>Inverse:</b> Only <u>allow</u> the selected weapons above',
 	'tool_wl_err1' => 'Unknown status value for the tool',
 	'tool_wl_err2' => 'Unknown ignvip value for the tool',
 	'tool_wl_err3' => 'Invalid BFID: %id%',
@@ -284,6 +343,12 @@ $lang = array(
 	'tool_wlist_err3' => 'No players whitelisted yet',
 	'tool_wlist_addedby' => 'Added by',
 	
+	'tool_dsl' => 'Dual-slot limiter',
+	'tool_dsl_desc' => 'Disallow the dual-slot booster',
+	
+	'tool_igcmds' => 'In-game commands',
+	'tool_igcmds_desc' => 'Use commands in-game',
+	
 	// Installation page
 	#'install_welcome' => 'Welcome to the installation wizard, make sure all your details are filled in correctly. Then click on install.',
 	#'install_error_config' => 'Please fill in your details in the file config.php before trying to install the tool',
@@ -320,6 +385,8 @@ $lang = array(
 	'cp_dashboard' => 'Dashboard',
 	'cp_dashboard_subtitle' => 'Summary and easy navigation',
 	'cp_dashboard_explination' => 'Click on the <i class="icon-remove"></i> to activate a tool or click on the <i class="icon-ok"></i> to deactivate a tool. Click on the title to manage the tool.',
+	'cp_dashboard_info_1' => 'Players in server',
+	'cp_dashboard_info_2' => 'Server status',
 	
 	// ControlPanel my account
 	'cp_myaccount' => 'My account',
@@ -340,11 +407,10 @@ $lang = array(
 	
 	// ControlPanel footer
 	'cp_footer_thread' => 'Tool thread',
-	'cp_footer_createdby' => 'Bunny\'s ServerTool %version% is licensed under Apache License V2.0<br />Copyright &copy; %year% by Danny Li &lt;<i>SharpBunny</i>&gt;',
 	
 	/*
-	 * Q&A THINGS
-	 */
+	* Q&A THINGS
+	*/
 	'qa_questions' => 'Questions',
 	'qa_answers' => 'Answers',
 	'qa_note' => 'NOTE: More Q&A will be added in the future, meanwhile you can ask me via PM, RaidCall or e-mail.',
@@ -353,7 +419,7 @@ $lang = array(
 		1 => array(
 			'question' => 'How to find the player\'s profileID?',
 			'anwser' => 'Example: <code>http://battlefield.play4free.com/en/profile/2567963101/540307041</code><br /><code>2567963101</code> = ProfileID<br /><code>540307041</code> = SoldierID'
-	 	),
+		),
 	),
 
 );

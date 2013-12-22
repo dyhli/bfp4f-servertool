@@ -1,21 +1,22 @@
 <?php
 /**
- * Battlefield Play4free Servertool
- * Version 0.4.1
- * 
- * Copyright 2013 Danny Li <SharpBunny> <bfp4f.sharpbunny@gmail.com>
+ * BattlefieldTools.com BFP4F ServerTool
+ * Version 0.6.0
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
  * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
  
 // Don't redirect to installation page, even when the tool is not installed yet
@@ -40,17 +41,17 @@ require_once('core/init.php');
 		<script src="<?=HOME_URL?>panel/js/custom.js"></script>
 	</head>
 	
-	<body>
+	<body style="margin-top:0">
 		
 		<div class="container">
 			
-			<div class="row-fluid">
-				<div class="span10 offset1">
+			<div class="row">
+				<div class="col-md-10 col-md-offset-1">
 					
 					<h1 class="center">
-						<img src="<?=HOME_URL?>panel/img/Logo_Battlefield-Play4Free.png" alt="Battlefield Play4Free" />
+						<img src="<?=HOME_URL?>panel/img/battlefieldtools-logo.png" alt="BattlefieldTools.com" />
 						<br />
-						<small>Bunny's ServerTool <?=TOOL_VERSION?></small>
+						<small>BattlefieldTools.com ServerTool <?=TOOL_VERSION?></small>
 					</h1>
 					<hr />
 					
@@ -58,19 +59,19 @@ require_once('core/init.php');
 					
 					<p><b>Current version:</b> <?=TOOL_VERSION?></p>
 					
-					<p class="center"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ES4X5T4623TEU" target="_blank"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Donate" /></a></p>
+					<p class="center"><a href="http://battlefieldtools.com/donate" target="_blank"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Donate" /></a></p>
 					
 					<hr />
 					
-					<div class="row-fluid">
-						<div class="span6 offset3">
-							<a href="<?=HOME_URL?>panel" class="btn btn-success btn-large btn-block">Continue to the panel <i class="icon-arrow-right"></i></a>
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3">
+							<a href="<?=HOME_URL?>panel" class="btn btn-success btn-lg btn-block">Continue to the panel <i class="fa fa-arrow-right"></i></a>
 						</div>
 					</div>
 					
 					<hr />
 					
-					<h2 class="center red" id="credits"><i class="icon-heart"></i> CREDITS <i class="icon-heart"></i></h2>
+					<h2 class="center red" id="credits"><i class="fa fa-heart"></i> CREDITS <i class="fa fa-heart"></i></h2>
 					
 					<br />
 					
@@ -78,47 +79,46 @@ require_once('core/init.php');
 					
 					<br />
 					
-					<div class="row-fluid">
-						<div class="span4">
+					<div class="row">
+						<div class="col-md-4">
 							<h3 class="center">Developers</h3>
-							<ul class="icons-ul">
-								<li><i class="icon-li icon-user"></i>Danny Li &lt;SharpBunny&gt;<br />bfp4f.sharpbunny@gmail.com</li>
+							<ul class="fa-ul">
+								<li><i class="fa-li fa fa-user"></i>Danny Li &lt;SharpBunny&gt;<br />bunny@battlefieldtools.com</li>
+								
+								<li><i class="fa-li fa fa-group"></i>BattlefieldTools.com Staff</li>
 							</ul>
 						</div>
-						<div class="span4">
+						<div class="col-md-4">
 							<h3 class="center">Translators</h3>
-							<ul class="icons-ul">
-								<li><i class="icon-li icon-user"></i>SharpBunny - English & Nederlands</li>
-								<li><i class="icon-li icon-user"></i>NommoPL - Polski</li>
-								<li><i class="icon-li icon-user"></i>-SM-MED-NB93 - Français</li>
-								<li><i class="icon-li icon-user"></i>Johncze - čeština</li>
-								<li><i class="icon-li icon-user"></i>BeckerDerBro - Deutsch</li>
+							<ul class="fa-ul">
+								<li><i class="fa-li fa fa-user"></i>SharpBunny - English & Nederlands</li>
+								<li><i class="fa-li fa fa-user"></i>NommoPL - Polski</li>
+								<li><i class="fa-li fa fa-user"></i>-SM-MED-NB93 - Français</li>
+								<li><i class="fa-li fa fa-user"></i>Johncze - čeština</li>
+								<li><i class="fa-li fa fa-user"></i>BeckerDerBro - Deutsch</li>
 							</ul>
 						</div>
-						<div class="span4">
+						<div class="col-md-4">
 							<h3 class="center">Suggestions</h3>
-							<ul class="icons-ul">
-								<li><i class="icon-li icon-user"></i>kosamiitti - Attachment limiter</li>
-								<li><i class="icon-li icon-user"></i>roennel - Server config</li>
-								<li><i class="icon-li icon-user"></i>-SM-MED-NB93 - Extra weaponslot limiter</li>
+							<ul class="fa-ul">
+								<li><i class="fa-li fa fa-user"></i>kosamiitti - Attachment limiter</li>
+								<li><i class="fa-li fa fa-user"></i>roennel - Server config</li>
+								<li><i class="fa-li fa fa-user"></i>-SM-MED-NB93 - Dual-slot limiter</li>
 							</ul>
 						</div>
 					</div>
 					
 					<br />
 					
-					<h3 class="muted">Thanks to...</h3>
-					<ul class="icons-ul">
-						<li><i class="icon-li icon-group"></i>BFP4F community, <i>for everything you guys have done</i></li>
-						<li><i class="icon-li icon-group"></i>BJW, <i>for the awesome support and fun I had and still have</i></li>
-						<li><i class="icon-li icon-user"></i>piqus.pl, <i>for the support and RCON class!</i></li>
-						<li><i class="icon-li icon-user"></i>MR_MEANY, <i>for the graphicwork</i></li>
-						<li><i class="icon-li icon-user"></i>VincentWhite, <i>for using his server to offer hosted versions</i></li>
-						<li><i class="icon-li icon-user"></i>Medic_Alert, <i>for the support and some information he gave me</i></li>
+					<h3 class="text-muted">Thanks to...</h3>
+					<ul class="fa-ul">
+						<li><i class="fa-li fa fa-group"></i>BFP4F community, <i>for everything you guys have done</i></li>
+						<li><i class="fa-li fa fa-group"></i>BTC, <i>for the awesome support and fun I had and still have</i></li>
+						<li><i class="fa-li fa fa-user"></i>piqus.pl, <i>for the support and RCON class!</i></li>
 						<br />
-						<li><i class="icon-li icon-gift red"></i>All the people who have donated</li>
+						<li><i class="fa-li fa fa-gift red"></i>All the people who have donated</li>
 						<br />
-						<li><i class="icon-li icon-coffee brown"></i>A lot of coffee... <small><i>and food... I LOVE FOOD! NOM NOM NOM!</i></small></li>
+						<li><i class="fa-li fa fa-coffee brown"></i>A lot of coffee... <small><i>and food... I LOVE FOOD! NOM NOM NOM!</i></small></li>
 					</ul>
 					
 					<br />
@@ -127,10 +127,10 @@ require_once('core/init.php');
 				</div>
 			</div>
 			
-			<footer class="row-fluid">
-				<div class="span12">
+			<footer class="row">
+				<div class="col-md-12">
 					<hr />		
-					<p class="muted"><a href="http://battlefield.play4free.com/en/forum/showthread.php?tid=131825" target="_blank"><i class="icon-bookmark"></i> Bunnies' Battlefield</a> &middot; <a href="http://battlefield.play4free.com/en/forum/showthread.php?tid=137006" target="_blank"><i class="icon-file-text"></i> Tool thread</a> &middot; <a href="https://github.com/dyhli/bfp4f-servertool/" target="_blank"><i class="icon-github"></i> View on GitHub</a> <span class="pull-right"><?=replace($lang['cp_footer_createdby'])?></span></p>
+					<p class="text-muted"><a href="http://battlefieldtools.com" target="_blank"><i class="fa fa-wrench"></i> BattlefieldTools.com</a> &middot; <a href="http://battlefield.play4free.com/en/forum/showthread.php?tid=137006" target="_blank"><i class="fa fa-file-text"></i> Tool thread</a> &middot; <a href="https://github.com/dyhli/bfp4f-servertool/" target="_blank"><i class="fa fa-github"></i> View on GitHub</a> <span class="pull-right">BattlefieldTools Servertool is licensed under GPL v3.0.<br />Copyright &copy; <?=date('Y')?> by Danny Li <SharpBunny></span></p>
 				</div>
 			</footer>
 			

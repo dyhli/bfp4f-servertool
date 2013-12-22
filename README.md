@@ -1,22 +1,23 @@
-Bunny's ServerTool
+BattlefieldTools BFP4F Servertool
 ================
 
 Battlefield Play4free Servertool
-Version 0.4.1
+Version 0.6.0
 
-Copyright 2013 Danny Li <SharpBunny> <bfp4f.sharpbunny@gmail.com>
+Copyright 2013 Danny Li <SharpBunny> <bunny@battlefieldtools.com>
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-   http://www.apache.org/licenses/LICENSE-2.0
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 
 - - - - 
 
@@ -43,6 +44,7 @@ FEATURES
 * Weapon limiter
 * Prebuy limiter
 * Shotgun limiter
+* Dual-slot limiter
 * Blacklist
 * Whitelist
 * In-game playerstats message
@@ -56,31 +58,12 @@ FEATURES
 * VIPs management
 * Logviewer
 * Questions and answers (Q&A)
-* Maybe some easter eggs? :P
-
-- - - - 
-
-FUTURE FEATURES
---------
-* Send chatmessages
-* Ban appeals
-* Ban reporting
-* In-game commands
-	* Admin commands
-		* Kick
-		* Add/Delete whitelist
-		* Add/Delete blacklist
-		* Add/delete VIP
-		* Change map
-		* Request playerstats (like HS ratio, killstreak etc. to check suspicious things)
+* In-game commands **34 commands by default**
 	* Public commands
-		* Report command (report to blacklist)
-		* Stats commands
-		* Rules command
-		* Votekicking
-		* Custom commands
-* Attachment limiter
-* Dual-slot booster limiter
+	* Admin/mod commands
+	* Possible to create your own commands
+	* Much more!
+* Maybe some easter eggs? :P
 
 - - - - 
 
@@ -94,8 +77,8 @@ SUGGESTIONS
 --------
 * Post it in the forumthread: http://battlefield.play4free.com/en/forum/showthread.php?tid=137006
 * PM me (SharpBunny)
-* Send an e-mail to bfp4f.sharpbunny@gmail.com
-* Via BJW's RaidCall: 6700681
+* Send an e-mail to bunny@battlefieldtools.com
+* BattlefieldTools/BTC Teamspeak 3: ts.battlefieldtools.com
 
 - - - - 
 
@@ -118,8 +101,8 @@ SUPPORT
 --------
 * Post it in the forumthread: http://battlefield.play4free.com/en/forum/showthread.php?tid=137006
 * PM me (SharpBunny)
-* Send an e-mail to bfp4f.sharpbunny@gmail.com
-* Via BJW's RaidCall: 6700681
+* Send an e-mail to bunny@battlefieldtools.com
+* BattlefieldTools/BTC Teamspeak 3: ts.battlefieldtools.com
 
 - - - - 
 
@@ -127,8 +110,8 @@ BUGS
 --------
 * Post it in the forumthread: http://battlefield.play4free.com/en/forum/showthread.php?tid=137006
 * PM me (SharpBunny)
-* Send an e-mail to bfp4f.sharpbunny@gmail.com
-* Via BJW's RaidCall: 6700681
+* Send an e-mail to bunny@battlefieldtools.com
+* BattlefieldTools/BTC Teamspeak 3: ts.battlefieldtools.com
 
 - - - - 
 

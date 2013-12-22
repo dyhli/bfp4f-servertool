@@ -1,21 +1,22 @@
 <?php
 /**
- * Battlefield Play4free Servertool
- * Version 0.4.1
- * 
- * Copyright 2013 Danny Li <SharpBunny> <bfp4f.sharpbunny@gmail.com>
+ * BattlefieldTools.com BFP4F ServerTool
+ * Version 0.6.0
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
  * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
  
 class Accounts {
@@ -37,20 +38,26 @@ class Accounts {
 	 */
 	public function getNameById($id) {
 		
-		if($result = $this->db->query("SELECT user_name FROM " . $this->config['db_prefix'] . "users WHERE
-		user_id='" . $this->db->real_escape_string($id) . "' LIMIT 1")) {
+		if($id == 0) {
 			
-			if($result->num_rows == 1) {
-				$user = $result->fetch_array();
+			return 'In-game command';
+			
+		} else {
+			if($result = $this->db->query("SELECT user_name FROM " . $this->config['db_prefix'] . "users WHERE
+			user_id='" . $this->db->real_escape_string($id) . "' LIMIT 1")) {
 				
-				return $user['user_name'];
+				if($result->num_rows == 1) {
+					$user = $result->fetch_array();
+					
+					return $user['user_name'];
+				}
+				
+				$result->free();
+				
 			}
-			
-			$result->free();
-			
 		}
 		
-		return null;
+		return 'Unknown';
 		
 	}
 	
@@ -207,4 +214,3 @@ class Accounts {
 }
  
 ?>
-

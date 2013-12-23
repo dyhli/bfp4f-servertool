@@ -29,7 +29,7 @@ if($user->checkLogin()) {
 	$user->Logout();
 	
 	// Refresh page, so the menu will turn back
-	header('Location: ' . HOME_URL . 'panel/logout');
+	header('Location: ' . HOME_URL . 'panel/logout.php');
 	die();
 }
 ?>
@@ -44,7 +44,7 @@ if($user->checkLogin()) {
 						<h4><i class="fa fa-check"></i> <?=$lang['word_ok']?></h4>
 						<p><?=$lang['cp_logout_success']?></p>
 						<br />
-						<p><a href="<?=HOME_URL?>panel/login" class="btn btn-success btn-sm btn-block"><i class="fa fa-key"></i> <?=$lang['cp_login']?></a></p>
+						<p><a href="<?=HOME_URL?>panel/login.php" class="btn btn-success btn-sm btn-block"><i class="fa fa-key"></i> <?=$lang['cp_login']?></a></p>
 					</div>
 					
 				</div>

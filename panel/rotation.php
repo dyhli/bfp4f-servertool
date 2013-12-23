@@ -25,7 +25,7 @@ $user->checkLogin(true);
 
 // Check his rights
 if($userInfo['rights_server'] == 'no') {
-	header('Location: ' . HOME_URL . 'panel/accessDenied');
+	header('Location: ' . HOME_URL . 'panel/accessDenied.php');
 	die();
 }
 
@@ -172,7 +172,7 @@ foreach($cmg->combos as $key => $value) {
 							</select>
 						</div>
 						
-						<form class="col-md-7 form-horizontal center" method="post">
+						<form action="" class="col-md-7 form-horizontal center" method="post">
 							<h3><?=$lang['tool_mrot_current']?></h3>
 							
 							<div class="alert alert-info"><i class="fa fa-lightbulb-o"></i> <?=$lang['tool_mrot_help2']?></div>

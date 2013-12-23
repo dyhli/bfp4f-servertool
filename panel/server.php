@@ -25,7 +25,7 @@ $user->checkLogin(true);
 
 // Check his rights
 if($userInfo['rights_server'] == 'no') {
-	header('Location: ' . HOME_URL . 'panel/accessDenied');
+	header('Location: ' . HOME_URL . 'panel/accessDenied.php');
 	die();
 }
 
@@ -76,7 +76,7 @@ include(CORE_DIR . '/cp_header.php');
 				}
 				
 				function fetchInfo() {
-					$.get('<?=HOME_URL?>panel/ajax/serverInfo', {players:true,chat:true}, function(data) {
+					$.get('<?=HOME_URL?>panel/ajax/serverInfo.php', {players:true,chat:true}, function(data) {
 						if(data.status.length > 0) {
 							if(data.status == 'OK') {
 								
@@ -185,7 +185,7 @@ include(CORE_DIR . '/cp_header.php');
 					
 					<a href="javascript:;" onclick="$('#rconInfo').slideToggle()" class="btn btn-default"><i class="fa fa-pencil"></i> <?=$lang['tool_server_editrcon']?></a>
 					<a href="javascript:;" onclick="i.toggle();$(this).toggleClass('btn-danger btn-success')" class="btn btn-success" data-toggle="button"><i class="fa fa-refresh"></i> <?=$lang['tool_server_toggle']?></a>
-					<a href="<?=HOME_URL?>panel/rotation" class="btn btn-info"><i class="fa fa-pencil"></i> <?=$lang['tool_mrot']?></a>
+					<a href="<?=HOME_URL?>panel/rotation.php" class="btn btn-info"><i class="fa fa-pencil"></i> <?=$lang['tool_mrot']?></a>
 					
 					<form id="rconInfo" style="display:none">
 						<hr />

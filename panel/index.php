@@ -42,7 +42,7 @@ include(CORE_DIR . '/cp_header.php');
 					}
 					
 					function fetchInfo() {
-						$.get('<?=HOME_URL?>panel/ajax/serverInfo', function(data) {
+						$.get('<?=HOME_URL?>panel/ajax/serverInfo.php', function(data) {
 							if(data.status.length > 0) {
 								if(data.status == 'OK') {
 									
@@ -97,22 +97,22 @@ include(CORE_DIR . '/cp_header.php');
 					<div class="row">
 						<div class="col-md-3 center db-item<?=(($userInfo['rights_server'] == 'no') ? ' disabled' : '')?>">
 							<h1 class="dark"><i class="fa fa-hdd-o fa-2x"></i></h1>
-							<h3><a href="<?=HOME_URL?>panel/server"><?=$lang['tool_server']?></a></h3>
+							<h3><a href="<?=HOME_URL?>panel/server.php"><?=$lang['tool_server']?></a></h3>
 							<p><?=$lang['tool_server_desc']?></p>
 						</div>
 						<div class="col-md-3 center db-item<?=(($userInfo['rights_vips'] == 'no') ? ' disabled' : '')?>">
 							<h1 class="orange"><i class="fa fa-star fa-2x"></i></h1>
-							<h3><a href="<?=HOME_URL?>panel/vips"><?=$lang['tool_vipm']?></a></h3>
+							<h3><a href="<?=HOME_URL?>panel/vips.php"><?=$lang['tool_vipm']?></a></h3>
 							<p><?=$lang['tool_vipm_desc']?></p>
 						</div>
 						<div class="col-md-3 center db-item<?=(($userInfo['rights_itemlist'] == 'no') ? ' disabled' : '')?>">
 							<h1 class="dark"><i class="fa fa-list fa-2x"></i></h1>
-							<h3><a href="<?=HOME_URL?>panel/itemlist"><?=$lang['tool_iteml']?></a></h3>
+							<h3><a href="<?=HOME_URL?>panel/itemlist.php"><?=$lang['tool_iteml']?></a></h3>
 							<p><?=$lang['tool_iteml_desc']?></p>
 						</div>
 						<div class="col-md-3 center db-item<?=(($userInfo['rights_superadmin'] == 'no') ? ' disabled' : '')?>">
 							<h1 class="dark"><i class="fa fa-wrench fa-2x"></i></h1>
-							<h3><a href="<?=HOME_URL?>panel/settings"><?=$lang['tool_set']?></a></h3>
+							<h3><a href="<?=HOME_URL?>panel/settings.php"><?=$lang['tool_set']?></a></h3>
 							<p><?=$lang['tool_set_desc']?></p>
 						</div>
 					</div>
@@ -120,17 +120,17 @@ include(CORE_DIR . '/cp_header.php');
 					<div class="row">
 						<div class="col-md-3 center db-item<?=(($userInfo['rights_whitelist'] == 'no') ? ' disabled' : '')?>">
 							<h1 class="dark"><i class="fa fa-check-square-o fa-2x"></i></h1>
-							<h3><a href="<?=HOME_URL?>panel/whitelist"><?=$lang['tool_wlist']?></a></h3>
+							<h3><a href="<?=HOME_URL?>panel/whitelist.php"><?=$lang['tool_wlist']?></a></h3>
 							<p><?=$lang['tool_wlist_desc']?></p>
 						</div>
 						<div class="col-md-3 center db-item<?=(($userInfo['rights_superadmin'] == 'no') ? ' disabled' : '')?>">
 							<h1 class="dark"><i class="fa fa-group fa-2x"></i></h1>
-							<h3><a href="<?=HOME_URL?>panel/accounts"><?=$lang['tool_acc']?></a></h3>
+							<h3><a href="<?=HOME_URL?>panel/accounts.php"><?=$lang['tool_acc']?></a></h3>
 							<p><?=$lang['tool_acc_desc']?></p>
 						</div>
 						<div class="col-md-3 center db-item">
 							<h1 class="dark"><i class="fa fa-user fa-2x"></i></h1>
-							<h3><a href="<?=HOME_URL?>panel/my-account"><?=$lang['cp_myaccount']?></a></h3>
+							<h3><a href="<?=HOME_URL?>panel/my-account.php"><?=$lang['cp_myaccount']?></a></h3>
 							<p><?=$lang['cp_myaccount_subtitle']?></p>
 						</div>
 						<div class="col-md-3 center db-item">
@@ -147,22 +147,22 @@ include(CORE_DIR . '/cp_header.php');
 					<div class="row">
 						<div class="col-md-3 center db-item<?=(($userInfo['rights_limiters'] == 'no') ? ' disabled' : '')?>">
 							<h1><a href="javascript:;" onclick="$.executeCmd('toggleTool',{'vars':{'tool':'wl'}});$(this).find('i').toggleClass('fa fa-times red fa fa-check green')"><i class="<?=(($settings['tool_wl'] == 'true') ? 'fa fa-check green' : 'fa fa-times red')?> fa-2x"></i></a></h1>
-							<h3><a href="<?=HOME_URL?>panel/tool/wl"><?=$lang['tool_wl']?></a></h3>
+							<h3><a href="<?=HOME_URL?>panel/tool/wl.php"><?=$lang['tool_wl']?></a></h3>
 							<p><?=$lang['tool_wl_desc']?></p>
 						</div>
 						<div class="col-md-3 center db-item<?=(($userInfo['rights_limiters'] == 'no') ? ' disabled' : '')?>">
 							<h1><a href="javascript:;" onclick="$.executeCmd('toggleTool',{'vars':{'tool':'pl'}});$(this).find('i').toggleClass('fa fa-times red fa fa-check green')"><i class="<?=(($settings['tool_pl'] == 'true') ? 'fa fa-check green' : 'fa fa-times red')?> fa-2x"></i></a></h1>
-							<h3><a href="<?=HOME_URL?>panel/tool/pl"><?=$lang['tool_pl']?></a></h3>
+							<h3><a href="<?=HOME_URL?>panel/tool/pl.php"><?=$lang['tool_pl']?></a></h3>
 							<p><?=$lang['tool_pl_desc']?></p>
 						</div>
 						<div class="col-md-3 center db-item<?=(($userInfo['rights_limiters'] == 'no') ? ' disabled' : '')?>">
 							<h1><a href="javascript:;" onclick="$.executeCmd('toggleTool',{'vars':{'tool':'dsl'}});$(this).find('i').toggleClass('fa fa-times red fa fa-check green')"><i class="<?=(($settings['tool_dsl'] == 'true') ? 'fa fa-check green' : 'fa fa-times red')?> fa-2x"></i></a></h1>
-							<h3><a href="<?=HOME_URL?>panel/tool/dsl"><?=$lang['tool_dsl']?></a></h3>
+							<h3><a href="<?=HOME_URL?>panel/tool/dsl.php"><?=$lang['tool_dsl']?></a></h3>
 							<p><?=$lang['tool_dsl_desc']?></p>
 						</div>
 						<div class="col-md-3 center db-item<?=(($userInfo['rights_limiters'] == 'no') ? ' disabled' : '')?>">
 							<h1><a href="javascript:;" onclick="$.executeCmd('toggleTool',{'vars':{'tool':'sl'}});$(this).find('i').toggleClass('fa fa-times red fa fa-check green')"><i class="<?=(($settings['tool_sl'] == 'true') ? 'fa fa-check green' : 'fa fa-times red')?> fa-2x"></i></a></h1>
-							<h3><a href="<?=HOME_URL?>panel/tool/sl"><?=$lang['tool_sl']?></a></h3>
+							<h3><a href="<?=HOME_URL?>panel/tool/sl.php"><?=$lang['tool_sl']?></a></h3>
 							<p><?=$lang['tool_sl_desc']?></p>
 						</div>
 					</div>
@@ -170,22 +170,22 @@ include(CORE_DIR . '/cp_header.php');
 					<div class="row">
 						<div class="col-md-3 center db-item<?=(($userInfo['rights_limiters'] == 'no') ? ' disabled' : '')?>">
 							<h1><a href="javascript:;" onclick="$.executeCmd('toggleTool',{'vars':{'tool':'ll'}});$(this).find('i').toggleClass('fa fa-times red fa fa-check green')"><i class="<?=(($settings['tool_ll'] == 'true') ? 'fa fa-check green' : 'fa fa-times red')?> fa-2x"></i></a></h1>
-							<h3><a href="<?=HOME_URL?>panel/tool/ll"><?=$lang['tool_ll']?></a></h3>
+							<h3><a href="<?=HOME_URL?>panel/tool/ll.php"><?=$lang['tool_ll']?></a></h3>
 							<p><?=$lang['tool_ll_desc']?></p>
 						</div>
 						<div class="col-md-3 center db-item<?=(($userInfo['rights_limiters'] == 'no') ? ' disabled' : '')?>">
 							<h1><a href="javascript:;" onclick="$.executeCmd('toggleTool',{'vars':{'tool':'cl'}});$(this).find('i').toggleClass('fa fa-times red fa fa-check green')"><i class="<?=(($settings['tool_cl'] == 'true') ? 'fa fa-check green' : 'fa fa-times red')?> fa-2x"></i></a></h1>
-							<h3><a href="<?=HOME_URL?>panel/tool/cl"><?=$lang['tool_cl']?></a></h3>
+							<h3><a href="<?=HOME_URL?>panel/tool/cl.php"><?=$lang['tool_cl']?></a></h3>
 							<p><?=$lang['tool_cl_desc']?></p>
 						</div>
 						<div class="col-md-3 center db-item<?=(($userInfo['rights_limiters'] == 'no') ? ' disabled' : '')?>">
 							<h1><a href="javascript:;" onclick="alert('<?=$lang['msg_db1']?>')"><i class="<?=(($settings['tool_am'] > 0) ? 'fa fa-check green' : 'fa fa-times red')?> fa-2x"></i></a></h1>
-							<h3><a href="<?=HOME_URL?>panel/tool/am"><?=$lang['tool_am']?></a></h3>
+							<h3><a href="<?=HOME_URL?>panel/tool/am.php"><?=$lang['tool_am']?></a></h3>
 							<p><?=$lang['tool_am_desc']?></p>
 						</div>
 						<div class="col-md-3 center db-item<?=(($userInfo['rights_limiters'] == 'no') ? ' disabled' : '')?>">
 							<h1><a href="javascript:;" onclick="alert('<?=$lang['msg_db1']?>')"><i class="<?=(($settings['tool_sm'] > 0) ? 'fa fa-check green' : 'fa fa-times red')?> fa-2x"></i></a></h1>
-							<h3><a href="<?=HOME_URL?>panel/tool/sm"><?=$lang['tool_sm']?></a></h3>
+							<h3><a href="<?=HOME_URL?>panel/tool/sm.php"><?=$lang['tool_sm']?></a></h3>
 							<p><?=$lang['tool_sm_desc']?></p>
 						</div>
 					</div>
@@ -193,13 +193,13 @@ include(CORE_DIR . '/cp_header.php');
 					<div class="row">
 						<div class="col-md-4 col-md-offset-2 center db-item<?=(($userInfo['rights_blacklist'] == 'no') ? ' disabled' : '')?>">
 							<h1><i class="fa fa-ban red fa-2x"></i></h1>
-							<h3><a href="<?=HOME_URL?>panel/blacklist"><?=$lang['tool_bl']?></a></h3>
+							<h3><a href="<?=HOME_URL?>panel/blacklist.php"><?=$lang['tool_bl']?></a></h3>
 							<p><?=$lang['tool_bl_desc']?></p>
 							<p><i><?=$lang['tool_bl_warn1']?></i></p>
 						</div>
 						<div class="col-md-4 center db-item<?=(($userInfo['rights_rcon'] == 'no') ? ' disabled' : '')?>">
 							<h1><i class="fa fa-terminal blue fa-2x"></i></h1>
-							<h3><a href="<?=HOME_URL?>panel/tool/rcon"><?=$lang['tool_rcon']?></a></h3>
+							<h3><a href="<?=HOME_URL?>panel/tool/rcon.php"><?=$lang['tool_rcon']?></a></h3>
 							<p><?=$lang['tool_rcon_desc']?></p>
 							<p><i><?=$lang['tool_rcon_info1']?></i></p>
 						</div>

@@ -127,7 +127,7 @@ if($status != '') {
 } else {
 ?>
 					
-					<form action="<?=HOME_URL?>install" method="post" class="form-horizontal">
+					<form action="<?=HOME_URL?>install.php" method="post" class="form-horizontal">
 						
 						<h3><i class="fa fa-hdd-o"></i> Server</h3>
 						<hr />

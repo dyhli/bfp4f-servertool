@@ -64,7 +64,7 @@
 					onError: function() { }
 				}, options);
 			 		
-				$.post('<?=HOME_URL?>panel/ajax/server', {cmd:cmd, vars:settings.vars}, function(data) {
+				$.post('<?=HOME_URL?>panel/ajax/server.php', {cmd:cmd, vars:settings.vars}, function(data) {
 					if(data.status == "OK") {
 						$.bootstrapGrowl('<b><?=$lang['word_ok']?></b><br />' + data.msg, {type:'success'});
 						settings.onSuccess();
@@ -104,7 +104,7 @@
 if(!$user->checkLogin()) {
 ?>
 				<ul class="nav navbar-nav navbar-left">
-					<li><a href="<?=HOME_URL?>panel/login"><i class="fa fa-block fa-key"></i> <?=$lang['cp_login']?></a></li>
+					<li><a href="<?=HOME_URL?>panel/login.php"><i class="fa fa-block fa-key"></i> <?=$lang['cp_login']?></a></li>
 				</ul>
 <?php
 } else {
@@ -115,46 +115,46 @@ if(!$user->checkLogin()) {
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-hdd-o"></i> Server <b class="fa fa-caret-down"></b></a>
 						<ul class="dropdown-menu">
-							<li<?=(($userInfo['rights_server'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/server"><i class="fa fa-block fa-hdd-o"></i> <?=$lang['tool_server']?></a></li>
-							<li<?=(($userInfo['rights_vips'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/vips"><i class="fa fa-block fa-star"></i> <?=$lang['tool_vipm']?></a></li>
+							<li<?=(($userInfo['rights_server'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/server.php"><i class="fa fa-block fa-hdd-o"></i> <?=$lang['tool_server']?></a></li>
+							<li<?=(($userInfo['rights_vips'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/vips.php"><i class="fa fa-block fa-star"></i> <?=$lang['tool_vipm']?></a></li>
 							<li class="divider"></li>
-							<li<?=(($userInfo['rights_server'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/rotation"><i class="fa fa-block fa-pencil"></i> <?=$lang['tool_mrot']?></a></li>
-							<li<?=(($userInfo['rights_rcon'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/rcon"><i class="fa fa-block fa-terminal"></i> <?=$lang['tool_rcon']?></a></li>
+							<li<?=(($userInfo['rights_server'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/rotation.php"><i class="fa fa-block fa-pencil"></i> <?=$lang['tool_mrot']?></a></li>
+							<li<?=(($userInfo['rights_rcon'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/rcon.php"><i class="fa fa-block fa-terminal"></i> <?=$lang['tool_rcon']?></a></li>
 						</ul>
 					</li>
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i> <?=$lang['cp_menu_tools']?> <b class="fa fa-caret-down"></b></a>
 						<ul class="dropdown-menu">
-							<li<?=(($userInfo['rights_igcmds'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/igcmds"><i class="fa fa-block fa-bullhorn"></i> <?=$lang['tool_igcmds']?></a></li>
+							<li<?=(($userInfo['rights_igcmds'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/igcmds.php"><i class="fa fa-block fa-bullhorn"></i> <?=$lang['tool_igcmds']?></a></li>
 							<li class="divider"></li>
-							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/wl"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_wl']?></a></li>
-							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/pl"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_pl']?></a></li>
-							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/dsl"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_dsl']?></a></li>
-							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/sl"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_sl']?></a></li>
-							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/ll"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_ll']?></a></li>
-							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/cl"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_cl']?></a></li>
-							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/am"><i class="fa fa-block fa-comment"></i> <?=$lang['tool_am']?></a></li>
-							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/sm"><i class="fa fa-block fa-comment"></i> <?=$lang['tool_sm']?></a></li>
+							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/wl.php"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_wl']?></a></li>
+							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/pl.php"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_pl']?></a></li>
+							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/dsl.php"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_dsl']?></a></li>
+							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/sl.php"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_sl']?></a></li>
+							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/ll.php"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_ll']?></a></li>
+							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/cl.php"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_cl']?></a></li>
+							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/am.php"><i class="fa fa-block fa-comment"></i> <?=$lang['tool_am']?></a></li>
+							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/sm.php"><i class="fa fa-block fa-comment"></i> <?=$lang['tool_sm']?></a></li>
 							<li class="divider"></li>
-							<li<?=(($userInfo['rights_blacklist'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/blacklist"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_bl']?></a></li>
+							<li<?=(($userInfo['rights_blacklist'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/blacklist.php"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_bl']?></a></li>
 							<li class="divider"></li>
-							<li<?=(($userInfo['rights_whitelist'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/whitelist"><i class="fa fa-block fa-check-square-o"></i> <?=$lang['tool_wlist']?></a></li>
+							<li<?=(($userInfo['rights_whitelist'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/whitelist.php"><i class="fa fa-block fa-check-square-o"></i> <?=$lang['tool_wlist']?></a></li>
 						</ul>
 					</li>
-					<li<?=(($userInfo['rights_superadmin'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/accounts"><i class="fa fa-group"></i> <?=$lang['tool_acc']?></a></li>
+					<li<?=(($userInfo['rights_superadmin'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/accounts.php"><i class="fa fa-group"></i> <?=$lang['tool_acc']?></a></li>
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i> <?=$lang['word_cp']?> <b class="fa fa-caret-down"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="<?=HOME_URL?>panel/my-account"><i class="fa fa-block fa-user"></i> <?=$lang['cp_myaccount']?></a></li>
+							<li><a href="<?=HOME_URL?>panel/my-account.php"><i class="fa fa-block fa-user"></i> <?=$lang['cp_myaccount']?></a></li>
 							<li class="divider"></li>
-							<li<?=(($userInfo['rights_itemlist'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/itemlist"><i class="fa fa-block fa-list"></i> <?=$lang['tool_iteml']?></a></li>
-							<li<?=(($userInfo['rights_superadmin'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/settings"><i class="fa fa-block fa-wrench"></i> <?=$lang['tool_set']?></a></li>
+							<li<?=(($userInfo['rights_itemlist'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/itemlist.php"><i class="fa fa-block fa-list"></i> <?=$lang['tool_iteml']?></a></li>
+							<li<?=(($userInfo['rights_superadmin'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/settings.php"><i class="fa fa-block fa-wrench"></i> <?=$lang['tool_set']?></a></li>
 							<li class="divider"></li>
-							<li<?=(($userInfo['rights_logs'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/view-log?log=autokick" target="_blank"><i class="fa fa-block fa-archive"></i> <?=$lang['tool_logs1']?></a></li>
-							<li<?=(($userInfo['rights_logs'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/view-log?log=cp_actions" target="_blank"><i class="fa fa-block fa-archive"></i> <?=$lang['tool_logs2']?></a></li>
-							<li<?=(($userInfo['rights_logs'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/view-log?log=igcmds" target="_blank"><i class="fa fa-block fa-archive"></i> <?=$lang['tool_logs3']?></a></li>
+							<li<?=(($userInfo['rights_logs'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/view-log.php?log=autokick" target="_blank"><i class="fa fa-block fa-archive"></i> <?=$lang['tool_logs1']?></a></li>
+							<li<?=(($userInfo['rights_logs'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/view-log.php?log=cp_actions" target="_blank"><i class="fa fa-block fa-archive"></i> <?=$lang['tool_logs2']?></a></li>
+							<li<?=(($userInfo['rights_logs'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/view-log.php?log=igcmds" target="_blank"><i class="fa fa-block fa-archive"></i> <?=$lang['tool_logs3']?></a></li>
 							<li class="divider"></li>
-							<li><a href="<?=HOME_URL?>panel/checkVersion"><i class="fa fa-block fa-refresh"></i> <?=$lang['vcheck']?></a></li>
+							<li><a href="<?=HOME_URL?>panel/checkVersion.php"><i class="fa fa-block fa-refresh"></i> <?=$lang['vcheck']?></a></li>
 						</ul>
 					</li>
 				</ul>
@@ -177,7 +177,7 @@ if(!$user->checkLogin()) {
 							<li class="divider"></li>
 							<li><a href="https://github.com/dyhli/bfp4f-servertool/wiki/Changelog-&-Todo" target="_blank"><i class="fa fa-block fa-archive"></i> <?=$lang['cp_menu_changelog']?></a></li>
 							<li class="divider"></li>
-							<li><a href="<?=HOME_URL?>panel/checkVersion"><i class="fa fa-block fa-refresh"></i> <?=$lang['vcheck']?></a></li>
+							<li><a href="<?=HOME_URL?>panel/checkVersion.php"><i class="fa fa-block fa-refresh"></i> <?=$lang['vcheck']?></a></li>
 							<li class="divider"></li>
 							<li><a href="https://github.com/dyhli/bfp4f-servertool/" target="_blank"><i class="fa fa-block fa-github"></i> <?=$lang['github']?></a></li>
 							<li><a href="http://battlefieldtools.com"><i class="fa fa-block fa-wrench"></i> BattlefieldTools.com</a></li>
@@ -201,7 +201,7 @@ if($user->checkLogin()) {
 ?>
 					
 					<li class="divider-vertical"></li>
-					<li><a href="<?=HOME_URL?>panel/logout"><i class="fa fa-power-off"></i> <?=$lang['cp_menu_logout']?></a></li>
+					<li><a href="<?=HOME_URL?>panel/logout.php"><i class="fa fa-power-off"></i> <?=$lang['cp_menu_logout']?></a></li>
 <?php
 }
 ?>

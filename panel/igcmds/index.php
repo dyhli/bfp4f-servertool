@@ -25,7 +25,7 @@ $user->checkLogin(true);
 
 // Check his rights
 if($userInfo['rights_igcmds'] < 100) {
-	header('Location: ' . HOME_URL . 'panel/accessDenied');
+	header('Location: ' . HOME_URL . 'panel/accessDenied.php');
 	die();
 }
 
@@ -43,7 +43,7 @@ include(CORE_DIR . '/cp_header.php');
 					<h2><i class="fa fa-bullhorn"></i> <?=$lang['tool_igcmds']?> <small><?=$lang['tool_igcmds_desc']?></small></h2>
 					<hr />
 					
-					<a href="<?=HOME_URL?>panel/igcmds/add" class="btn btn-success"><i class="fa fa-plus"></i> <?=$lang['btn_add']?></a>
+					<a href="<?=HOME_URL?>panel/igcmds/add.php" class="btn btn-success"><i class="fa fa-plus"></i> <?=$lang['btn_add']?></a>
 					
 					<hr />
 					
@@ -70,7 +70,7 @@ if($igcmds['code'] == 'OK') {
 									<td class="center"><?=$cmd['cmd_function']?></td>
 									<td class="center"><?=$cmd['cmd_rights']?></td>
 									<td class="center"><?=(($cmd['cmd_active'] == 'yes') ? $lang['word_yes'] : $lang['word_no'])?></td>
-									<td class="center"><a href="javascript:;" onclick="if(confirm('<?=$lang['msg_sure']?>')){$.executeCmd('deleteIgcmd', {'vars':{'id':'<?=$cmd['cmd_id']?>'},'onSuccess':function(){$('tr#cmd_<?=$cmd['cmd_id']?>').fadeOut()}})}" class="btn btn-xs btn-danger"><i class="fa fa-times icon-only"></i></a> <a href="<?=HOME_URL?>panel/igcmds/edit?id=<?=$cmd['cmd_id']?>" class="btn btn-default btn-xs"><i class="fa fa-pencil icon-only"></i></a></td>
+									<td class="center"><a href="javascript:;" onclick="if(confirm('<?=$lang['msg_sure']?>')){$.executeCmd('deleteIgcmd', {'vars':{'id':'<?=$cmd['cmd_id']?>'},'onSuccess':function(){$('tr#cmd_<?=$cmd['cmd_id']?>').fadeOut()}})}" class="btn btn-xs btn-danger"><i class="fa fa-times icon-only"></i></a> <a href="<?=HOME_URL?>panel/igcmds/edit.php?id=<?=$cmd['cmd_id']?>" class="btn btn-default btn-xs"><i class="fa fa-pencil icon-only"></i></a></td>
 								</tr>
 <?php
 	}

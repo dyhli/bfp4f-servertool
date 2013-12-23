@@ -25,7 +25,7 @@ $user->checkLogin(true);
 
 // Check his rights
 if($userInfo['rights_superadmin'] == 'no') {
-	header('Location: ' . HOME_URL . 'panel/accessDenied');
+	header('Location: ' . HOME_URL . 'panel/accessDenied.php');
 	die();
 }
 
@@ -148,7 +148,7 @@ if($user['code'] == 'OK') {
 					<h2><i class="fa fa-pencil"></i> <?=$lang['tool_acc_edit']?> <small><?=$lang['tool_acc']?></small></h2>
 					<hr />
 					
-					<a href="<?=HOME_URL?>panel/accounts" class="btn btn-primary"><i class="fa fa-arrow-left"></i> <?=$lang['btn_back']?></a>
+					<a href="<?=HOME_URL?>panel/accounts.php" class="btn btn-primary"><i class="fa fa-arrow-left"></i> <?=$lang['btn_back']?></a>
 					
 					<hr />
 					
@@ -256,7 +256,7 @@ foreach(range(0, 100) as $lvl) {
 					<h2><i class="fa fa-pencil"></i> <?=$lang['tool_acc_edit']?> <small><?=$lang['tool_acc']?></small></h2>
 					<hr />
 					
-					<a href="<?=HOME_URL?>panel/accounts" class="btn btn-primary"><i class="fa fa-arrow-left"></i> <?=$lang['btn_back']?></a>
+					<a href="<?=HOME_URL?>panel/accounts.php" class="btn btn-primary"><i class="fa fa-arrow-left"></i> <?=$lang['btn_back']?></a>
 					
 					<hr />
 					

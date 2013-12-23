@@ -25,7 +25,7 @@ $user->checkLogin(true);
 
 // Check his rights
 if($userInfo['rights_rcon'] == 'no') {
-	header('Location: ' . HOME_URL . 'panel/accessDenied');
+	header('Location: ' . HOME_URL . 'panel/accessDenied.php');
 	die();
 }
 
@@ -76,14 +76,14 @@ include(CORE_DIR . '/cp_header.php');
 					</div>
 					
 					<div class="dropdown contextMenu clearfix">
-    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
-      <li><a tabindex="-1" href="#">Action</a></li>
-      <li><a tabindex="-1" href="#">Another action</a></li>
-      <li><a tabindex="-1" href="#">Something else here</a></li>
-      <li class="divider"></li>
-      <li><a tabindex="-1" href="#">Separated link</a></li>
-    </ul>
-  </div>
+ 				     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
+				        <li><a tabindex="-1" href="#">Action</a></li>
+				        <li><a tabindex="-1" href="#">Another action</a></li>
+				        <li><a tabindex="-1" href="#">Something else here</a></li>
+				        <li class="divider"></li>
+				        <li><a tabindex="-1" href="#">Separated link</a></li>
+				      </ul>
+				    </div>
 					
 				</div>
 			</div>

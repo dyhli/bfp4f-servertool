@@ -25,7 +25,7 @@ $user->checkLogin(true);
 
 // Check his rights
 if($userInfo['rights_igcmds'] < 100) {
-	header('Location: ' . HOME_URL . 'panel/accessDenied');
+	header('Location: ' . HOME_URL . 'panel/accessDenied.php');
 	die();
 }
 
@@ -116,7 +116,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cmd']) && isset($_POST[
 					<h2><i class="fa fa-plus green"></i> <?=$lang['tool_igcmds_add']?> <small><?=$lang['tool_igcmds']?></small></h2>
 					<hr />
 					
-					<a href="<?=HOME_URL?>panel/igcmds" class="btn btn-primary"><i class="fa fa-arrow-left"></i> <?=$lang['btn_back']?></a>
+					<a href="<?=HOME_URL?>panel/igcmds.php" class="btn btn-primary"><i class="fa fa-arrow-left"></i> <?=$lang['btn_back']?></a>
 					
 					<hr />
 					

@@ -25,7 +25,7 @@ $user->checkLogin(true);
 
 // Check his rights
 if($userInfo['rights_limiters'] == 'no') {
-	header('Location: ' . HOME_URL . 'panel/accessDenied');
+	header('Location: ' . HOME_URL . 'panel/accessDenied.php');
 	die();
 }
 
@@ -102,7 +102,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['status']) && isset($_PO
 					<h2><i class="fa fa-ban"></i> <?=$lang['tool_pl']?> <small><?=$lang['tool_pl_desc']?></small></h2>
 					<hr />
 
-					<form action="<?=HOME_URL?>panel/tool/pl" method="post" class="form-horizontal">
+					<form action="<?=HOME_URL?>panel/tool/pl.php" method="post" class="form-horizontal">
 						
 						<?=$status?>
 						

@@ -62,7 +62,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($_
 					
 					<?=$status?>
 					
-					<form action="<?=HOME_URL?>panel/login" method="post" class="form-horizontal">
+					<form action="<?=HOME_URL?>panel/login.php" method="post" class="form-horizontal">
 						
 						<div class="form-group">
 							<label class="col-sm-3 control-label"><i class="fa fa-user"></i> <?=$lang['cp_username']?></label>

@@ -51,7 +51,7 @@ class User {
 		
 		if($redirect) {
 			if(!$login) {
-				header('Location: ' . HOME_URL . 'panel/login');
+				header('Location: ' . HOME_URL . 'panel/login.php');
 				die();
 			}
 		}

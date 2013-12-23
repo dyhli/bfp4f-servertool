@@ -114,6 +114,10 @@
 					* ../core/classes/BTApi.class.php added
 					* ../install.php updated
 					* ../panel/settings.php updated
+					
+	MORE UPDATES:
+	
+	* [Other]	Removed HTACCESS, because it caused problems
 	
 	
 19-10-2013 [v0.4.1]

@@ -25,7 +25,7 @@ $user->checkLogin(true);
 
 // Check his rights
 if($userInfo['rights_superadmin'] == 'no') {
-	header('Location: ' . HOME_URL . 'panel/accessDenied');
+	header('Location: ' . HOME_URL . 'panel/accessDenied.php');
 	die();
 }
 
@@ -43,7 +43,7 @@ include(CORE_DIR . '/cp_header.php');
 					<h2><i class="fa fa-group"></i> <?=$lang['tool_acc']?> <small><?=$lang['tool_acc_desc']?></small></h2>
 					<hr />
 					
-					<a href="<?=HOME_URL?>panel/new-account" class="btn btn-success"><i class="fa fa-plus"></i> <?=$lang['btn_add']?></a>
+					<a href="<?=HOME_URL?>panel/new-account.php" class="btn btn-success"><i class="fa fa-plus"></i> <?=$lang['btn_add']?></a>
 					
 					<hr />
 					
@@ -68,7 +68,7 @@ if($users['code'] == 'OK') {
 									<td><?=$user['user_username']?></td>
 									<td><?=$user['user_name']?></td>
 									<td><a href="http://battlefield.play4free.com/en/profile/<?=$user['user_profile_id']?>" target="_blank"><?=$user['user_profile_id']?></a></td>
-									<td class="center"><a href="javascript:;" onclick="if(confirm('<?=$lang['msg_sure']?>')){$.executeCmd('deleteUser', {'vars':{'id':'<?=$user['user_id']?>'},'onSuccess':function(){$('tr#us_<?=$user['user_id']?>').fadeOut()}})}" class="btn btn-xs btn-danger"><i class="fa fa-times icon-only"></i></a> <a href="<?=HOME_URL?>panel/edit-account?id=<?=$user['user_id']?>" class="btn btn-default btn-xs"><i class="fa fa-pencil icon-only"></i></a></td>
+									<td class="center"><a href="javascript:;" onclick="if(confirm('<?=$lang['msg_sure']?>')){$.executeCmd('deleteUser', {'vars':{'id':'<?=$user['user_id']?>'},'onSuccess':function(){$('tr#us_<?=$user['user_id']?>').fadeOut()}})}" class="btn btn-xs btn-danger"><i class="fa fa-times icon-only"></i></a> <a href="<?=HOME_URL?>panel/edit-account.php?id=<?=$user['user_id']?>" class="btn btn-default btn-xs"><i class="fa fa-pencil icon-only"></i></a></td>
 								</tr>
 <?php
 	}

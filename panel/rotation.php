@@ -51,6 +51,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['rotation']) && isset($_
 	// Some checks
 	
 	$maps = array( );
+	$rotation = array( );
 	
 	// Check rotation
 	if(!is_array($_POST['rotation'])) {
@@ -60,7 +61,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['rotation']) && isset($_
 			$errors[] = $lang['tool_mrot_err2'];
 		} else {
 			foreach($_POST['rotation'] as $map) {
-				$maps[] = explode('|', $map);
+				$rotation[] = explode('|', $map);
 			}
 		}
 	}
@@ -79,11 +80,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['rotation']) && isset($_
 			$sv = new rcon\Server();
 			
 			$sv->clearRotation();
-			foreach($maps as $map) {
+			foreach($rotation as $map) {
 				$sv->appendMap($map[0], $map[1]);
 			}
 			$sv->setNumOfRounds($_POST['rpm']);
-						
+
 			$status = '<div class="alert alert-success alert-block"><h4><i class="fa fa-check"></i> ' . $lang['word_ok'] . '</h4><p>' . $lang['msg_settings_saved'] . '</p></div>';
 			$log->insertActionLog($userInfo['user_id'], 'Map rotation edited');
 
@@ -97,14 +98,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['rotation']) && isset($_
 }
 
 // Fetch the current rotation
-$mapsArray = explode("\r", $rc->query("maplist"));
+$mapsArray = explode("\n", $rc->query("maplist"));
 
-$maps = array( );
+$curRot = array( );
 
 foreach($mapsArray as $map) {
 	preg_match('/([0-9]+)(: )(")([a-zA-Z_]+)(")( )([a-zA-Z_-]+)( )([0-9]+)/', $map, $matches);
 	
-	$maps[] = array(
+	$curRot[] = array(
 		'index' => $matches[0],
 		'name' => $matches[4],
 		'gamemode' => $matches[7],
@@ -189,7 +190,7 @@ foreach($cmg->combos as $key => $value) {
 								
 								<tbody id="currentRotation">
 <?php
-foreach($maps as $map) {
+foreach($curRot as $map) {
 ?>
 									<tr>
 										<input type="hidden" name="rotation[]" value="<?=$map['name']?>|<?=$map['gamemode']?>" />

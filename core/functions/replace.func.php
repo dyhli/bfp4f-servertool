@@ -46,7 +46,7 @@ function replace($str, $other='') {
 		'%version%' => TOOL_VERSION,
 		
 		// SERVER
-		'%ip%' => $_SERVER['REMOTE_ADDR'],
+		'%ip%' => ((isset($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : null),
 		
 	);
 	

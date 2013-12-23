@@ -25,7 +25,7 @@ $user->checkLogin(true);
 
 // Check his rights
 if($userInfo['rights_superadmin'] == 'no') {
-	header('Location: ' . HOME_URL . 'panel/accessDenied');
+	header('Location: ' . HOME_URL . 'panel/accessDenied.php');
 	die();
 }
 
@@ -97,7 +97,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['lang']) && isset($_POST
 					<h2><i class="fa fa-wrench"></i> <?=$lang['tool_set']?> <small><?=$lang['tool_set_desc']?></small></h2>
 					<hr />
 
-					<form action="<?=HOME_URL?>panel/settings" method="post" class="form-horizontal">
+					<form action="<?=HOME_URL?>panel/settings.php" method="post" class="form-horizontal">
 						
 						<?=$status?>
 						

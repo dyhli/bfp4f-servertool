@@ -220,14 +220,14 @@ if($rc->connect($cn, $cs) && $rc->init()) {
 	/**
 	 * Display message
 	 */
-	die('[' . date($settings['cp_date_format_full']) . '] Executed');
+	die('[' . date($settings['cp_date_format_full']) . '] Executed' . PHP_EOL);
 	
 } else {
 	
 	/**
 	 * Failed...
 	 */
-	die('[' . date($settings['cp_date_format_full']) . '] Could not connect');
+	die('[' . date($settings['cp_date_format_full']) . '] Could not connect' . PHP_EOL);
 	
 }
 ?>

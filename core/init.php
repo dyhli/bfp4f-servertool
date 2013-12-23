@@ -69,7 +69,7 @@ if(isset($_COOKIE['LangPref'])) {
 		require_once(CORE_DIR . '/lang/' . $settings['cp_default_lang'] . '.php');
 	}
 } else {
-	require_once(CORE_DIR . '/lang/' . $settings['cp_default_lang'] . '.php');
+	require_once(CORE_DIR . '/lang/en.php');
 }
 
 // Switch language

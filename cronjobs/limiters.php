@@ -455,6 +455,7 @@ if($rc->connect($cn, $cs) && $rc->init()) {
 		}
 
 		$ct->send($message);
+		updateSetting('tool_am_last', time());
 			
 	}
 	

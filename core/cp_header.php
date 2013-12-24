@@ -125,7 +125,7 @@ if(!$user->checkLogin()) {
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i> <?=$lang['cp_menu_tools']?> <b class="fa fa-caret-down"></b></a>
 						<ul class="dropdown-menu">
-							<li<?=(($userInfo['rights_igcmds'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/igcmds.php"><i class="fa fa-block fa-bullhorn"></i> <?=$lang['tool_igcmds']?></a></li>
+							<li<?=(($userInfo['rights_igcmds'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/igcmds"><i class="fa fa-block fa-bullhorn"></i> <?=$lang['tool_igcmds']?></a></li>
 							<li class="divider"></li>
 							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/wl.php"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_wl']?></a></li>
 							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/pl.php"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_pl']?></a></li>

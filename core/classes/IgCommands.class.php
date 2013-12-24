@@ -292,10 +292,7 @@ class IgCommands {
 							
 			if($result->num_rows == 1) {
 				
-				$fetch = $result->fetch_array();
-				if((time()-strtotime($fetch['date'])) < 300) {
-					return false;
-				}
+				return false;
 							
 			}
 			
@@ -912,6 +909,7 @@ class IgCommands {
 			'%deaths%' => $cmdInfo['origin']['deaths'],
 			'%score%' => $cmdInfo['origin']['score'],
 			'%vip%' => (($cmdInfo['origin']['vip'] == '1') ? 'Yes' : 'No'),
+			'%position%' => $cmdInfo['origin']['position'],
 		));
 		
 		if($cmdInfo['_cmd']['cmd_response_private'] == 'yes') {

@@ -225,7 +225,7 @@ if($user['code'] == 'OK') {
 <?php
 foreach(range(0, 100) as $lvl) {
 ?>
-									<option value="<?=$lvl?>"<?=(($userInfo['rights_igcmds'] == $lvl) ? ' selected' : '')?>><?=$lvl?></option>
+									<option value="<?=$lvl?>"<?=(($user['rights_igcmds'] == $lvl) ? ' selected' : '')?>><?=$lvl?></option>
 <?php
 }
 ?>

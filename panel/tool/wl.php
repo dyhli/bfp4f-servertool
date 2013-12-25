@@ -161,7 +161,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['status']) && isset($_PO
 										itemText: 'text',
 										typeahead: {
 									 		source: function(query) {
-												return $.getJSON('<?=HOME_URL?>panel/ajax/fetchItems');
+												return $.getJSON('<?=HOME_URL?>panel/ajax/fetchItems.php');
 											}
 										}
 									});

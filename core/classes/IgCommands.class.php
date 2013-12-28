@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -492,7 +492,7 @@ class IgCommands {
 					if($varsSplit[0] == 0) {
 						$until = '0000-00-00 00:00:00';
 					} else {
-						$until = time() + $varSplit[0] * 3600;
+						$until = time() + $varsSplit[0] * 3600;
 						$until = date('Y-m-d H:i:s', $until);
 					}
 					
@@ -907,6 +907,7 @@ class IgCommands {
 			'%rank%' => $cmdInfo['origin']['level'],
 			'%kills%' => $cmdInfo['origin']['kills'],
 			'%deaths%' => $cmdInfo['origin']['deaths'],
+			'%kd%' => round($cmdInfo['origin']['kills']/$cmdInfo['origin']['deaths'], 2, PHP_ROUND_HALF_UP),
 			'%score%' => $cmdInfo['origin']['score'],
 			'%vip%' => (($cmdInfo['origin']['vip'] == '1') ? 'Yes' : 'No'),
 			'%position%' => $cmdInfo['origin']['position'],

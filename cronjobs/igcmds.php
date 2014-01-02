@@ -29,7 +29,7 @@
  * Run this script every 5 seconds is recommended.
  */
  
-require_once(dirname(dirname(__FILE__)) . 'core/init.php');
+require_once(dirname(dirname(__FILE__)) . '/core/init.php');
 
 use T4G\BFP4F\Rcon as rcon;
 

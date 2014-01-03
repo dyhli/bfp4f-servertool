@@ -24,7 +24,7 @@ require_once('../core/init.php');
 $user->checkLogin(true);
 
 // Check his rights
-if($userInfo['rights_whitelist'] == 'no') {
+if($userInfo['rights_blacklist'] == 'no') {
 	header('Location: ' . HOME_URL . 'panel/accessDenied.php');
 	die();
 }

@@ -128,7 +128,7 @@ if($cmd['code'] == 'OK') {
 					<h2><i class="fa fa-pencil"></i> <?=$lang['tool_igcmds_edit']?> <small><?=$lang['tool_igcmds']?></small></h2>
 					<hr />
 					
-					<a href="<?=HOME_URL?>panel/igcmds.php" class="btn btn-primary"><i class="fa fa-arrow-left"></i> <?=$lang['btn_back']?></a>
+					<a href="<?=HOME_URL?>panel/igcmds/" class="btn btn-primary"><i class="fa fa-arrow-left"></i> <?=$lang['btn_back']?></a>
 					
 					<hr />
 					

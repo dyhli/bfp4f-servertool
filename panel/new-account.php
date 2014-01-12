@@ -123,7 +123,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['name']) && isset($_POST
 					<h2><i class="fa fa-plus green"></i> <?=$lang['tool_acc_add']?> <small><?=$lang['tool_acc']?></small></h2>
 					<hr />
 					
-					<a href="<?=HOME_URL?>panel/accounts" class="btn btn-primary"><i class="fa fa-arrow-left"></i> <?=$lang['btn_back']?></a>
+					<a href="<?=HOME_URL?>panel/accounts.php" class="btn btn-primary"><i class="fa fa-arrow-left"></i> <?=$lang['btn_back']?></a>
 					
 					<hr />
 					

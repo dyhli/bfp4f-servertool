@@ -29,7 +29,7 @@ if($userInfo['rights_server'] == 'no') {
 	die();
 }
 
-// Fetch the in-game commands
+// Fetch the timed messages
 $tmsg = new TimedMessages($db, $config);
 $msgs = $tmsg->fetchMessages();
 

@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS {%prefix%}igcmds (
   PRIMARY KEY (cmd_id)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
 
-INSERT INTO igcmds (cmd_id, cmd_name, cmd_function, cmd_response, cmd_response_private, cmd_rights, cmd_active, cmd_added) VALUES
+INSERT INTO {%prefix%}igcmds (cmd_id, cmd_name, cmd_function, cmd_response, cmd_response_private, cmd_rights, cmd_active, cmd_added) VALUES
 (1, 'kp', 'cmdKickPlayer', '', 'no', 25, 'yes', '0000-00-00 00:00:00'),
 (2, 'bp', 'cmdBanPlayer', '', 'no', 50, 'yes', '0000-00-00 00:00:00'),
 (3, 'wp', 'cmdWarnPlayer', '', 'no', 25, 'yes', '0000-00-00 00:00:00'),
@@ -337,7 +337,7 @@ INSERT INTO {%prefix%}settings (setting_id, setting_name, setting_value, setting
 (68, 'tool_watcher', 'false', '(No description)'),
 (69, 'tool_minusone', 'false', '(No description)');
 
-CREATE TABLE IF NOT EXISTS timed_msg (
+CREATE TABLE IF NOT EXISTS {%prefix%}timed_msg (
   msg_id int(11) NOT NULL AUTO_INCREMENT,
   msg_content varchar(255) NOT NULL,
   msg_last int(15) NOT NULL,

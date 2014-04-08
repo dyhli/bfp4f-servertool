@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS {%prefix%}blacklist (
 CREATE TABLE IF NOT EXISTS {%prefix%}igcmds (
   cmd_id int(11) NOT NULL AUTO_INCREMENT,
   cmd_name varchar(25) NOT NULL,
-  cmd_function enum('cmdKickPlayer','cmdWarnPlayer','cmdBanPlayer','cmdChangeMap','cmdNextMap','cmdRequestPlayerstats','cmdReportPlayer','cmdPm','cmdVotekick','cmdMessage','cmdVip','cmdReportPlayer','cmdRagequit','cmdRestartRound','cmdFunnyWord','cmdSwitchPlayer','cmdVoteYes','cmdVoteMap','cmdClosePoll','cmdGetLoadout','cmdExecRcon') NOT NULL DEFAULT 'cmdMessage',
+  cmd_function enum('cmdKickPlayer','cmdWarnPlayer','cmdBanPlayer','cmdChangeMap','cmdNextMap','cmdRequestPlayerstats','cmdReportPlayer','cmdPm','cmdVotekick','cmdMessage','cmdVip','cmdReportPlayer','cmdRagequit','cmdRestartRound','cmdFunnyWord','cmdSwitchPlayer','cmdVoteYes','cmdVoteMap','cmdClosePoll','cmdGetLoadout','cmdExecRcon','cmdGetAttachments','cmdWhiteList') NOT NULL DEFAULT 'cmdMessage',
   cmd_response varchar(350) NOT NULL COMMENT 'Only used @ cmdMessage',
   cmd_response_private enum('yes','no') NOT NULL DEFAULT 'no' COMMENT 'Private response? Or send to all players?',
   cmd_rights int(3) NOT NULL DEFAULT '25',

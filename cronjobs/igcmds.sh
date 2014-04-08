@@ -8,7 +8,8 @@ done
 cd "`dirname "${SCRIPT_PATH}"`" > /dev/null
 SCRIPT_PATH="`pwd`";
 popd  > /dev/null
-while true
+end=$(date -ud "1 minute" +%s)
+while [[ $(date -u +%s) -le $end ]]
 do
 	php ${SCRIPT_PATH}/igcmds.php >> "${SCRIPT_PATH}/logs/IGCMDS_$(date +\%F).txt"
 	sleep 5

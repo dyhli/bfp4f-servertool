@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -99,8 +99,8 @@ class IgVoting {
 		$result = $this->getActivePoll();
 		if($result['code'] == 'OK') {
 			$this->closePoll($result['poll']['vote_id']);
+			$this->ct->send('|ccc| Poll closed.');
 		}
-		$this->ct->send('|ccc| Poll closed.');
 		return array(
 			'code' => 'OK'
 		);
@@ -150,10 +150,11 @@ class IgVoting {
 		
 		$args = json_encode($args);
 		
-		return $this->db->query("INSERT INTO " . $this->config['db_prefix'] . "igvote (c_profile_id,c_soldier_id,vote_action,vote_args,vote_date) VALUES (
+		return $this->db->query("INSERT INTO " . $this->config['db_prefix'] . "igvote (c_profile_id,c_soldier_id,vote_action,vote_votes,vote_args,vote_date) VALUES (
 			'" . $this->db->real_escape_string($nucleusId) . "',
 			'" . $this->db->real_escape_string($cdKeyHash) . "',
 			'" . $this->db->real_escape_string($cmd) . "',
+			'" . $this->db->real_escape_string(json_encode($nucleusId)) . "',
 			'" . $this->db->real_escape_string($args) . "',
 			NOW()
 		)");
@@ -183,7 +184,7 @@ class IgVoting {
 				$votes[] = $cmdInfo['origin']['nucleusId'];
 				
 				if($result = $this->db->query("UPDATE " . $this->config['db_prefix'] . "igvote SET vote_votes='" . $this->db->real_escape_string(json_encode($votes)) . "' WHERE vote_id='" . $this->db->real_escape_string($poll['poll']['vote_id']) . "' AND vote_status='pending' LIMIT 1")) {
-					$this->ct->send('|ccc| ' . $cmdInfo['origin']['name'] . ' voted yes. Still ' . ((int) $this->settings['tool_igcmds_votes']-count($votes)) . ' votes needed!');
+					$this->ct->send('|ccc| ' . $cmdInfo['origin']['name'] . ' voted yes. Votes status: ' . count($votes) . ' / ' . $this->settings['tool_igcmds_votes']);
 					return array('code' => 'OK');
 					$result->free();
 				} else {
@@ -227,7 +228,7 @@ class IgVoting {
 							'reason' => ((isset($varsSplit[1])) ? $varsSplit[1] : 'Unknown')
 						));
 						$return['code'] = 'OK';
-						$this->ct->send('|ccc| Votekick poll created for player \'' . $result['player']['name'] . '\'. ' . $this->settings['tool_igcmds_votes'] . ' more votes needed. Type !yes to approve.');
+						$this->ct->send('|ccc| Votekick poll created for player \'' . $result['player']['name'] . '\'. ' . ($this->settings['tool_igcmds_votes']-1) . ' more votes needed. Type !yes to approve.');
 					} else {
 						$return['message'] = $result['message'];
 					}
@@ -281,7 +282,7 @@ class IgVoting {
 							'gamemode_name' => $modeName,
 						));
 						$return['code'] = 'OK';
-						$this->ct->send('|ccc| Votemap poll created for map ' . $mapName . ' ' . $modeName . '. ' . $this->settings['tool_igcmds_votes'] . ' more votes needed. Type !yes to approve.');
+						$this->ct->send('|ccc| Votemap poll created for map ' . $mapName . ' ' . $modeName . '. ' . ($this->settings['tool_igcmds_votes']-1) . ' more votes needed. Type !yes to approve.');
 					
 					} else {
 						$return['message'] = '|ccc| Map \'' . $varsSplit[0] . '\' was not found!';
@@ -293,6 +294,34 @@ class IgVoting {
 			} else {
 				$return['message'] = '|ccc| Please specify a map';
 			}
+		} else {
+			$return['message'] = '|ccc| There\'s already a poll going on. Please wait until that poll ends...';
+		}
+		
+		return $return;
+		
+	}
+
+/**
+	 * voteRestart()
+	 * Voterestart
+	 * 
+	 * @param $cmdInfo - Command info
+	 * @return array - Status
+	 */
+	public function voteRestart($cmdInfo) {
+		
+		$return = array(
+			'code' => 'ERROR',
+			'message' => '',
+		);
+		
+		if(!$this->checkPollActive()) {
+
+			$this->createPoll('cmdVoteRestartExec', $cmdInfo['origin']['nucleusId'], $cmdInfo['origin']['cdKeyHash'], array());
+			$return['code'] = 'OK';
+			$this->ct->send('|ccc| Voterestart poll created. ' . ($this->settings['tool_igcmds_votes']-1) . ' more votes needed. Type !yes to approve.');
+					
 		} else {
 			$return['message'] = '|ccc| There\'s already a poll going on. Please wait until that poll ends...';
 		}
@@ -329,6 +358,20 @@ class IgVoting {
 		$args = json_decode($poll['vote_args'], true);
 		$this->sv->changeMap($args['map'], $args['gamemode']);
 		$this->ct->send('|ccc| VOTEMAP success! Changing map to ' . $args['map_name'] . ' ' . $args['gamemode_name'] . '...');
+		
+	}
+	
+	/**
+	 * cmdVoteRestartExec()
+	 * Execute voterestart
+	 * 
+	 * @param $poll array - Poll
+	 * @return void
+	 */
+	public function cmdVoteRestartExec($poll) {
+		
+		$this->sv->restartMap();
+		$this->ct->send('|ccc| VOTERESTART success! Restarting round...');
 		
 	}
 	

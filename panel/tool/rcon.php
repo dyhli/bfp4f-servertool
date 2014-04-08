@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,17 +51,17 @@ include(CORE_DIR . '/cp_header.php');
 					<h2><i class="fa fa-terminal"></i> <?=$lang['tool_rcon']?> <small><?=$lang['tool_rcon_desc']?></small></h2>
 					<hr />
 
-					<div id="terminal">
+					<div id="terminal" class="f1">
 						<div class="center">
 							<h2>
 								<i class="fa fa-cog fa-spin fa-3x"></i><br /><br />
 								Preparing RCON console<br />
-								<small>Please wait...</small>
+								<small class="f4">Please wait...</small>
 							</h2>
 						</div>
 					</div>
 					<hr />
-					<div class="form-horizontal">
+					<div class="form-horizontal f6">
 						
 						<div class="form-group">
 							<label class="control-label col-sm-2"><i class="fa fa-terminal"></i> <?=$lang['tool_rcon_field1']?></label>

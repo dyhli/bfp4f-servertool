@@ -29,7 +29,8 @@ class IgCommands {
 	public	  $rc,
 			  $sv,
 			  $ct,
-			  $pl;
+			  $pl,
+			  $userId = 0;
 			  
 	function __construct($rc, $sv, $ct, $pl, $db, $config, $voting, $settings) {
 		$this->rc = $rc;
@@ -57,14 +58,15 @@ class IgCommands {
 			 */
 			'cmdKickPlayer' => 'Kick player {!player} {reason}', // Kicking players
 			'cmdWarnPlayer' => 'Warn player {!player} {reason}', // Warning players
-			'cmdBanPlayer' => 'Ban player {!player} {reason}', // Banning players
+			'cmdBanPlayer' => 'Ban player {!time} {!player} {reason}', // Banning players
 			'cmdChangeMap' => 'Change map {!map} {mode}', // Change map
 			'cmdNextMap' => 'Next map', // Skip to next map
 			'cmdVip' => 'Add/Remove VIP {!player}', // Add / Delete as VIP
 			'cmdRestartRound' => 'Restart round', // Restarts round
 			'cmdSwitchPlayer' => 'Switch player {!player}', // Switch player
-			'cmdExecRcon' => 'Execute RCON {cmd}', //Executes RCON Command and returns RCON response
-			'cmdClosePoll' => 'Closes active poll session', //Closes poll (map or kick) 
+			'cmdExecRcon' => 'Execute RCON {cmd}', // Execute RCON Command and return RCON response
+			'cmdClosePoll' => 'Close active poll session', // Close poll (map or kick)
+			'cmdWhiteList' => 'Add/Remove from whitelist {!player}', // Whitelist a player
 			
 			/**
 			 * Public commands
@@ -73,11 +75,13 @@ class IgCommands {
 			'cmdReportPlayer' => 'Report player to BattlefieldTools Blacklist {!player} {!reason}', // Report player to the BattlefieldTools.com Blacklist
 			'cmdVotekick' => 'Votekick {!player} {reason}', // Votekicking
 			'cmdVoteMap' => 'Votemap {!map} {mode}', // Votemap
+			'cmdVoteRestart' => 'Voterestart', // Voterestart
 			'cmdMessage' => 'Custom message', // Custom command + custom message (e.g. !rules /rules |rules -> Do not this that blah blah)
 			'cmdFunnyWord' => 'Funny word {player}', // {player} {word} {player2} e.g. SharpBunny slaps FakeBunny :D (EASTER EGG)
 			'cmdRagequit' => 'Ragequit', // Kicks the player himself :D (EASTER EGG)
 			'cmdVoteYes' => 'Vote yes', // Vote yes
 			'cmdGetLoadout' => 'Request playerloadout {!player}', // Get the player's loadout
+			'cmdGetAttachments' => 'Request attachments {!player}', // Get the player's attachments
 			
 		);
 		
@@ -215,20 +219,23 @@ class IgCommands {
 	 */
 	public function getUserRights($nucleusId) {
 		
-		if($result = $this->db->query("SELECT rights_igcmds FROM " . $this->config['db_prefix'] . "users WHERE
+		if($result = $this->db->query("SELECT user_id,rights_igcmds FROM " . $this->config['db_prefix'] . "users WHERE
 		user_profile_id='" . $this->db->real_escape_string($nucleusId) . "' LIMIT 1")) {
 			
 			if($result->num_rows == 1) {				
 				$return = $result->fetch_array();
+				$this->userId = $return['user_id'];
 				
 				return (int) $return['rights_igcmds'];
 			} else {
+				$this->userId = 0;
 				return (int) 0;
 			}
 			
 			$result->free();
 			
 		} else {
+			$this->userId = 0;
 			return (int) 0;
 		}
 		
@@ -294,7 +301,7 @@ class IgCommands {
 			if($result->num_rows == 1) {
 				
 				return false;
-							
+				
 			}
 			
 			$result->free();
@@ -372,10 +379,7 @@ class IgCommands {
 		
 	}
 	
-	
-	
 	// ------------------------------------------------------------------------------------------------------------ //
-	
 	
 	/**
 	 * ALL THE COMMANDS
@@ -446,8 +450,8 @@ class IgCommands {
 			if(!empty($varsSplit[0])) {
 				$result = $this->findPlayerByName($varsSplit[0]);
 								
-				if($result['code'] == 'OK') {
-					$this->pl->warn($result['player']['index'], ((isset($varsSplit[1])) ? $varsSplit[1] : ((!empty($cmdInfo['_cmd']['cmd_response'])) ? $cmdInfo['_cmd']['cmd_response'] : 'Unknown')));
+				if($result['code'] == 'OK') {					
+					$this->ct->send('|ccc| WARNING ' . $result['player']['name'] . ': ' . ((isset($varsSplit[1])) ? $varsSplit[1] : ((!empty($cmdInfo['_cmd']['cmd_response'])) ? $cmdInfo['_cmd']['cd']['cmd_response'] : 'Unknown')));
 					$return['code'] = 'OK';
 				} else {
 					$return['message'] = $result['message'];
@@ -501,10 +505,10 @@ class IgCommands {
 						
 						$bl = new Blacklist($this->db, $this->config);
 						
-						$ban = $bl->addBan(0, $result['player']['nucleusId'], $reason, $until);
+						$ban = $bl->addBan($cmdInfo['origin']['userId'], $result['player']['nucleusId'], $reason, $until);
 						
 						if($ban == true) {
-							$this->ct->sendPlayer($cmdInfo['origin']['name'], '|ccc| ' . $result['player']['name'] . ' is succesfully banned');
+							$this->ct->sendPlayer($cmdInfo['origin']['index'], '|ccc| ' . $result['player']['name'] . ' is succesfully banned');
 							$return['code'] = 'OK';
 						} else {
 							$return['message'] = '|ccc| Could not ban the player, probably this player already has a ban';
@@ -614,11 +618,11 @@ class IgCommands {
 					
 					if($result['player']['vip'] == '1') {
 						$this->pl->setVip($result['player']['name'], $result['player']['nucleusId'], 0);
-						$this->ct->sendPlayer($cmdInfo['origin']['name'], '|ccc| ' . $result['player']['name'] . ' is deleted as a VIP!');
+						$this->ct->sendPlayer($cmdInfo['origin']['index'], '|ccc| ' . $result['player']['name'] . ' is deleted as a VIP!');
 						$return['code'] = 'OK';
 					} else {
 						$this->pl->setVip($result['player']['name'], $result['player']['nucleusId'], 1);
-						$this->ct->sendPlayer($cmdInfo['origin']['name'], '|ccc| ' . $result['player']['name'] . ' is added as a VIP!');
+						$this->ct->sendPlayer($cmdInfo['origin']['index'], '|ccc| ' . $result['player']['name'] . ' is added as a VIP!');
 						$return['code'] = 'OK';
 					}
 					
@@ -680,7 +684,7 @@ class IgCommands {
 			if($result['code'] == 'OK') {
 								
 				$this->pl->switchPlayer($result['player']['index']);
-				$this->ct->sendPlayer($cmdInfo['origin']['name'], '|ccc| Switched ' . $result['player']['name'] . ' to the other team');
+				$this->ct->sendPlayer($cmdInfo['origin']['index'], '|ccc| Switched ' . $result['player']['name'] . ' to the other team');
 				$return['code'] = 'OK';
 				
 			} else {
@@ -714,10 +718,61 @@ class IgCommands {
 		if(!empty($cmdInfo['vars']) || $cmdInfo['vars'] != null) {
 			
 			$return['code'] = 'OK';
-			$this->ct->sendPlayer($cmdInfo['origin']['name'], '|ccc| RCON response: ' . $this->rc->query($cmdInfo['vars']));
+			$this->ct->sendPlayer($cmdInfo['origin']['index'], '|ccc| RCON response: ' . $this->rc->query($cmdInfo['vars']));
 			
 		} else {
 			$return['message'] = '|ccc| Please specify a RCON command';
+		}
+		
+		return $return;
+		
+	}
+	
+	// ------------------------------------------------------------------------------------------------------------ //
+	
+	/**
+	 * cmdWhiteList()
+	 * Add/Remove player from the whitelist
+	 * 
+	 * @param $cmdInfo - Command Info
+	 * @return array - Status
+	 */
+	public function cmdWhiteList($cmdInfo) {
+		
+		$return = array(
+			'code' => 'ERROR',
+			'message' => '',
+		);
+		
+		if(!empty($cmdInfo['vars']) || $cmdInfo['vars'] != null) {
+										
+			if(!empty($cmdInfo['vars'])) {
+				$result = $this->findPlayerByName($cmdInfo['vars']);
+								
+				if($result['code'] == 'OK') {
+					
+					$wl = new Whitelist($this->db, $this->config);
+					$check = $wl->checkPlayer($result['player']['nucleusId']);
+					
+					if($check) {
+						$wl->deletePlayer($wl->listId);
+						$this->ct->sendPlayer($cmdInfo['origin']['index'], '|ccc| ' . $result['player']['name'] . ' is deleted as from the whitelist!');
+						$return['code'] = 'OK';
+					} else {
+						$wl->addPlayer($cmdInfo['origin']['userId'], $result['player']['nucleusId']);
+						$this->ct->sendPlayer($cmdInfo['origin']['index'], '|ccc| ' . $result['player']['name'] . ' is added to the whitelist!');
+						$return['code'] = 'OK';
+					}
+					
+				} else {
+					$return['message'] = $result['message'];
+				}
+			} else {
+				$return['message'] = '|ccc| Please specify a player to add or delete from the whitelist';
+			}
+			
+		} else {
+			$return['message'] = '|ccc| Please specify a player to add or delete from the whitelist';
 		}
 		
 		return $return;
@@ -755,7 +810,7 @@ class IgCommands {
 					
 					$msg = 'Stats of |ccc| ' . $result['player']['name'] . ': |ccc| || Level: |ccc| ' . $result['player']['level'] . ' |ccc| || Class: |ccc| ' . $result['player']['class'] . ' |ccc| || KD: |ccc| ' . $stats['killratio'] . ' |ccc| || Accuracy: |ccc| ' . $stats['accuracy']*100 . '% |ccc| || HS ratio: |ccc| ' . $stats['headshotratio']*100 . '% |ccc| || Killstreak: |ccc| ' . $stats['killStreak'] . ' |ccc| || Deathstreak: |ccc| ' . $stats['deathStreak'];
 					
-					$this->ct->sendPlayer($cmdInfo['origin']['name'], $msg);
+					$this->ct->sendPlayer($cmdInfo['origin']['index'], $msg);
 					
 					$return['code'] = 'OK';
 
@@ -816,7 +871,7 @@ class IgCommands {
 						
 						if($api->requestStatus[0] == 'success') {
 							$msg = '|ccc| Player ' . $result['player']['name'] . ' has been reported to the BattlefieldTools Global Blacklist!';
-							$this->ct->sendPlayer($cmdInfo['origin']['name'], $msg);
+							$this->ct->sendPlayer($cmdInfo['origin']['index'], $msg);
 							$return['code'] = 'OK';
 						} else {
 							$return['message'] = '|ccc| ' . $api->requestStatus[1];
@@ -915,7 +970,7 @@ class IgCommands {
 		));
 		
 		if($cmdInfo['_cmd']['cmd_response_private'] == 'yes') {
-			$this->ct->sendPlayer($cmdInfo['origin']['name'], $return);
+			$this->ct->sendPlayer($cmdInfo['origin']['index'], $return);
 		} else {
 			$this->ct->send($return);
 		}
@@ -951,8 +1006,8 @@ class IgCommands {
 								
 				if($result['code'] == 'OK') {
 										
-					$this->ct->sendPlayer($result['player']['name'], '|ccc| PM from ' . $cmdInfo['origin']['name'] . ': ' . ((isset($varsSplit[1])) ? $varsSplit[1] : 'No message given'));
-					$this->ct->sendPlayer($cmdInfo['origin']['name'], '|ccc| PM is sent to ' . $result['player']['name']);
+					$this->ct->sendPlayer($result['player']['index'], '|ccc| PM from ' . $cmdInfo['origin']['name'] . ': ' . ((isset($varsSplit[1])) ? $varsSplit[1] : 'No message given'));
+					$this->ct->sendPlayer($cmdInfo['origin']['index'], '|ccc| PM is sent to ' . $result['player']['name']);
 					$return['code'] = 'OK';
 					
 				} else {
@@ -981,6 +1036,10 @@ class IgCommands {
 	
 	public function cmdVoteMap($cmdInfo) {
 		return $this->cmdVoting('voteMap', $cmdInfo);
+	}
+	
+	public function cmdVoteRestart($cmdInfo) {
+		return $this->cmdVoting('voteRestart', $cmdInfo);
 	}
 	
 	public function cmdVoteYes($cmdInfo) {
@@ -1021,26 +1080,17 @@ class IgCommands {
 				if($result['code'] == 'OK') {
 					
 					$st = new T4G\BFP4F\Rcon\Stats($result['player']['nucleusId'], $result['player']['cdKeyHash']);
-					$it = new Itemlist($this->db, $this->config);
-					
-					$itemList = $it->fetchItems();
-					$items = $itemList['items'];
-					
 					$loadout = $st->retrieveLoadout();
 					$weapons = array( );
 					$msg = '';
 					foreach($loadout['data']['equipment'] as $key => $value) {
-						$weapons[] = $value['id'];
-					}
-					
-					foreach($weapons as $weaponId) {
-						$msg[] = $items[$weaponId]['item_name'];
+						$msg[] = $value['name'];
 					}
 					
 					$msg = implode(', ', $msg);
 					$msg = '|ccc| Loadout of ' . $result['player']['name'] . ': ' . $msg;
 					
-					$this->ct->sendPlayer($cmdInfo['origin']['name'], $msg);
+					$this->ct->sendPlayer($cmdInfo['origin']['index'], $msg);
 					
 					$return['code'] = 'OK';
 
@@ -1053,6 +1103,69 @@ class IgCommands {
 			
 		} else {
 			$return['message'] = '|ccc| Please specify a player to get the loadout of';
+		}
+		
+		return $return;
+		
+	}
+	
+	// ------------------------------------------------------------------------------------------------------------ //
+	
+	public function cmdGetAttachments($cmdInfo) {
+		
+		$return = array(
+			'code' => 'ERROR',
+			'message' => '',
+		);
+		
+		if(!empty($cmdInfo['vars']) || $cmdInfo['vars'] != null) {
+										
+			if(!empty($cmdInfo['vars'])) {
+				$result = $this->findPlayerByName($cmdInfo['vars']);
+								
+				if($result['code'] == 'OK') {
+					
+					$st = new T4G\BFP4F\Rcon\Stats($result['player']['nucleusId'], $result['player']['cdKeyHash']);
+					$loadout = $st->retrieveLoadout();
+					$weapons = array( );
+					$msg = '';
+					foreach($loadout['data']['equipment'] as $key => $value) {
+						if(isset($value['attachments']) && count($value['attachments']) > 0) {
+							$weapons[$value['id']] = array(
+								$value['attachments'],
+								$value['name'],
+							);
+						}
+					}
+					
+					$attachments = array( );
+					foreach($loadout['data']['attachments'] as $attachment) {
+						$attachments[$attachment['id']] = $attachment['name'];
+					}
+					
+					foreach($weapons as $weapon) {
+						$attachments0 = array( );
+						foreach($weapon[0] as $aId) {
+							$attachments0[] = $attachments[$aId];
+						}
+						$msg .= $weapon[1] . ': ' . implode(', ', $attachments0) . '. ';
+					}
+					
+					$msg = '|ccc| Attachments of ' . $result['player']['name'] . ': ' . $msg;
+					
+					$this->ct->sendPlayer($cmdInfo['origin']['index'], $msg);
+					
+					$return['code'] = 'OK';
+
+				} else {
+					$return['message'] = $result['message'];
+				}
+			} else {
+				$return['message'] = '|ccc| Please specify a player to get the attachments of';
+			}
+			
+		} else {
+			$return['message'] = '|ccc| Please specify a player to get the attachments of';
 		}
 		
 		return $return;

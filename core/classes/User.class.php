@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -157,7 +157,7 @@ class User {
 			'" . $this->db->real_escape_string($user_id) . "',
 			'" . $hash . "',
 			NOW(),
-			NOW() + INTERVAL 2 HOUR,
+			NOW() + INTERVAL 1 WEEK,
 			'" . $this->db->real_escape_string($_SERVER['REMOTE_ADDR']) . "'
 		)")) {
 			return array('code' => 'OK', 'hash' => $hash);

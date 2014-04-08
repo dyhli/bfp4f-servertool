@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ use T4G\BFP4F\Rcon as rcon;
  */
 if($settings['tool_igcmds'] == 'false') {
 	
-	die('[' . date($settings['cp_date_format_full']) . '] In-game commands are disabled.');
+	die('[' . date($settings['cp_date_format_full']) . '] In-game commands are disabled.' . PHP_EOL);
 	
 }
 
@@ -113,10 +113,9 @@ if($rc->connect($cn, $cs) && $rc->init()) {
 			/**
 			 * The variables in the command (optional)
 			 */
+			$cmdInfo['vars'] = null;
 			if(isset($pieces[1])) {
 				$cmdInfo['vars'] = trim($pieces[1]);
-			} else {
-				$cmdInfo['vars'] = null;
 			}
 						
 			/**
@@ -144,6 +143,11 @@ if($rc->connect($cn, $cs) && $rc->init()) {
 						 * Check the user rights
 						 */
 						if($userRights >= $result['cmd']['cmd_rights']) {
+							
+							/**
+							 * The user id (if exists)
+							 */
+							$cmdInfo['origin']['userId'] = $igc->userId;
 							
 							/**
 							 * Also pass the command information
@@ -208,11 +212,11 @@ if($rc->connect($cn, $cs) && $rc->init()) {
 			$ct->send('|ccc| POLL: Voting success. Command is being executed...');
 			$igv->executedPoll($poll['vote_id']);
 			$igv->$poll['vote_action']($poll);
-		} elseif(time() - strtotime($poll['vote_date']) >= 120) { // 2 minutes
+		} elseif(time() - strtotime($poll['vote_date']) >= $settings['tool_igcmds_ptime']) {
 			// CLOSE VOTING
 			$igv->closePoll($poll['vote_id']);
 			// Send message
-			$ct->send('|ccc| POLL: Not enough votes within 2 minutes. Voting has been closed.');
+			$ct->send('|ccc| POLL: Not enough votes within ' . $settings['tool_igcmds_ptime'] . ' seconds. Poll closed.');
 		}
 		
 	} // END VOTING

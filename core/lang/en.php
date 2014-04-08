@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,6 +82,9 @@ $lang = array(
 	'msg_sure' => 'Are you sure?',
 	'msg_notadded' => 'This function is not added yet',
 	'msg_db1' => 'Please go to the configuration page to enable/disable this tool',
+	'msg_limdis' => '<b>ATTENTION</b> All the limiters have been disabled, you can enable the limiters in your settings',
+	'msg_igcmdsdis' => '<b>ATTENTION</b> All the in-game commands have been disabled, you can enable the in-game commands in your settings',
+	'msg_minusone' => 'Did you see the new public watcher yet? You can see it <a href="../public" class="alert-link">here</a>, but first turn this feature on in your settings!',
 	
 	// Buttons
 	'btn_back' => 'Back',
@@ -90,6 +93,22 @@ $lang = array(
 	'btn_save' => 'Save',
 	'btn_add' => 'Add',
 	'btn_close' => 'Close',
+	
+	// i3D API
+	'i3d' => 'i3D API',
+	'i3d_your' => 'Your i3D server',
+	'i3d_start' => 'Start server',
+	'i3d_stop' => 'Stop server',
+	'i3d_restart' => 'Restart server',
+	'i3d_cpu' => 'CPU usage',
+	'i3d_mem' => 'Memory usage',
+	'i3d_disk' => 'Hard disk usage',
+	'i3d_warn1' => '<b>ATTENTION</b> This is for i3D gameservers only!',
+	'i3d_err1' => 'i3D API: Gameserver not found, invalid ID',
+	'i3d_err2' => 'This option is only for i3D servers or your i3D API details are invalid',
+	'i3d_msg1' => 'Server is starting...',
+	'i3d_msg2' => 'Server is stopping...',
+	'i3d_msg3' => 'Server is restarting...',
 	
 	// Version checker
 	'vcheck' => 'Check version',
@@ -113,14 +132,20 @@ $lang = array(
 	'tool_server_desc' => 'Current status and manage the server',
 	'tool_server_editrcon' => 'Edit RCON information',
 	'tool_server_toggle' => 'Toggle streaming',
+	'tool_server_switchmap' => 'Switch map',
+	'tool_server_switchmap_msg' => 'Switched map to %map%',
 	'tool_server_nextmap' => 'Next map',
 	'tool_server_nextmap_msg' => 'Map is being switched',
 	'tool_server_restartround' => 'Restart round',
 	'tool_server_restartround_msg' => 'Round is being restarted',
+	'tool_server_closepoll' => 'Close active poll',
+	'tool_server_closepoll_msg' => 'Active poll was closed',
+	'tool_server_closepoll_err' => 'There is no poll active',
 	'tool_server_empty' => 'Server is empty',
 	'tool_server_editrcon_msg' => 'The new RCON info has been saved', // Not used anymore...
 	'tool_server_warnpl_msg' => 'Player has been warned',
 	'tool_server_kickpl_msg' => 'Player has been kicked',
+	'tool_server_switchpl_msg' => 'Player has been switched to the other team',
 	'tool_server_ranked' => 'RANKED', // NOTE: All uppercase!
 	'tool_server_unranked' => 'UNRANKED', // NOTE: All uppercase!
 	'tool_server_joining' => 'joining', // NOTE: All lowercase
@@ -144,16 +169,25 @@ $lang = array(
 	'tool_server_ltp' => 'Link to profile',
 	'tool_server_kick' => 'Kick player',
 	'tool_server_warn' => 'Warn player',
+	'tool_server_switch' => 'Switch player',
 	'tool_server_nochat' => 'No chatmessages',
 	'tool_server_send_msg' => 'Send message',
 	'tool_server_send_msg_help1' => 'This message will appear in the adminchat!',
 	'tool_server_msg_sent' => 'Servermessage is sent',
+	'tool_server_loadout' => 'Get loadout',
+	'tool_server_loadout_title' => 'Loadout of', // Loadout of {name}
+	
+	// Server settings
+	'tool_svset' => 'Server settings',
+	'tool_svset_desc' => 'Configure your server settings',
 	
 	'tool_rcon' => 'RCON Console',
 	'tool_rcon_desc' => 'Execute RCON commands',
 	'tool_rcon_info1' => 'Do NOT use if you don\'t know what you\'re doing!',
 	'tool_rcon_field1' => 'Command',
 	
+	'tool_igcmds' => 'In-game commands',
+	'tool_igcmds_desc' => 'Use commands in-game',
 	'tool_igcmds_rights' => 'In-game commands rights',
 	'tool_igcmds_add' => 'Add an in-game command',
 	'tool_igcmds_edit' => 'Edit an in-game command',
@@ -162,16 +196,31 @@ $lang = array(
 	'tool_igcmds_lvl' => 'Level',
 	'tool_igcmds_active' => 'Active',
 	'tool_igcmds_response' => 'Response',
+	'tool_igcmds_votes' => 'Votes needed',
+	'tool_igcmds_active' => 'In-game commands active',
+	'tool_igcmds_polltime' => 'Poll time',
+	'tool_igcmds_pt_opt' => 'Close poll after %s% seconds',
 	'tool_igcmds_deleted' => 'In-game command deleted',
 	'tool_igcmds_err1' => 'In-game commands rights has to be 0 - 100',
 	'tool_igcmds_err2' => 'The command cannot be blank',
 	'tool_igcmds_err3' => 'This command already exists',
 	'tool_igcmds_err4' => 'This function does not exist',
 	'tool_igcmds_err5' => 'Max. characters for the response is 75',
+	'tool_igcmds_err6' => 'Votes: invalid',
+	'tool_igcmds_err7' => 'Polltime: invalid',
 	'tool_igcmds_help1' => 'Level 0 - 100',
-	'tool_igcmds_help2' => 'Only works with cmdMessage',
+	'tool_igcmds_help2' => 'cmdMessage, cmdKickPlayer, cmdWarnPlayer, cmdBanPlayer and cmdFunnyWord',
 	'tool_igcmds_help3' => 'Only send the response to the player?',
 	'tool_igcmds_help4' => 'Command active?',
+	
+	'tool_tmsg' => 'Timed messages',
+	'tool_tmsg_desc' => 'Display timed messages on the server',
+	'tool_tmsg_msg' => 'Message',
+	'tool_tmsg_freq' => 'Frequency',
+	'tool_tmsg_active' => 'Active',
+	'tool_tmsg_secs' => 'seconds',
+	'tool_tmsg_deleted' => 'Timed message deleted',
+	'tool_tmsg_err1' => 'No timed messages found',
 	
 	'tool_mrot' => 'Edit map rotation',
 	'tool_mrot_map' => 'Mapname',
@@ -203,6 +252,7 @@ $lang = array(
 	'tool_set_notify_email' => 'Notify e-mailaddress',
 	'tool_set_iga_ad' => 'Small advertisement',
 	'tool_set_bml' => 'Bookmarklink',
+	'tool_set_lim' => 'Limiters',
 	'tool_set_iga_ad_opt' => 'Display every %s% seconds',
 	'tool_set_iga_ad_help' => "Displays the following message: '%msg%'",
 	'tool_set_help1' => 'More information about date formats, see <a href="http://nl3.php.net/manual/en/function.date.php" target="_blank">PHP date()</a>',
@@ -243,13 +293,15 @@ $lang = array(
 	
 	'tool_logs' => 'Logs',
 	'tool_logs_desc' => 'Check the logs, are there some unusual things?',
-	'tool_logs1' => 'Autokicker log',
-	'tool_logs1_desc' => 'All the executed kicks',
-	'tool_logs2' => 'CP actions log',
-	'tool_logs2_desc' => 'All the executed actions via the CP',
-	'tool_logs3' => 'In-game commands log',
-	'tool_logs3_desc' => 'All the executed and failed in-game commands',
+	'tool_logs_autokick' => 'Autokicker log',
+	'tool_logs_autokick_desc' => 'All the executed kicks',
+	'tool_logs_cp_actions' => 'CP actions log',
+	'tool_logs_cp_actions_desc' => 'All the executed actions via the CP',
+	'tool_logs_igcmds' => 'In-game commands log',
+	'tool_logs_igcmds_desc' => 'All the executed and failed in-game commands',
 	'tool_word_desc' => 'Description',
+	'tool_logs_info1' => 'No log entries found',
+	'tool_logs_err1' => 'Log not found',
 	
 	'tool_wl' => 'Weapon limiter',
 	'tool_wl_desc' => 'Pick the disallowed weapons and automatically kick the players',
@@ -346,14 +398,18 @@ $lang = array(
 	'tool_dsl' => 'Dual-slot limiter',
 	'tool_dsl_desc' => 'Disallow the dual-slot booster',
 	
-	'tool_igcmds' => 'In-game commands',
-	'tool_igcmds_desc' => 'Use commands in-game',
+	'tool_ping' => 'Ping',
+	'tool_ping_desc' => 'Check the connection status',
+	'tool_ping_info1' => 'The ping between the servertool and your gameserver is:',
+	'tool_ping_info2' => 'Between the servertool and gameserver',
+	'tool_ping_info3' => 'The ping between the servertool and the BFP4F website is:',
+	'tool_ping_status1' => 'The connection is exellent!',
+	'tool_ping_status2' => 'The connection is average',
+	'tool_ping_status3' => 'The connection is slow!',
 	
-	// Installation page
-	#'install_welcome' => 'Welcome to the installation wizard, make sure all your details are filled in correctly. Then click on install.',
-	#'install_error_config' => 'Please fill in your details in the file config.php before trying to install the tool',
-	#'install_error' => 'Installation failed, please install the database manually by using the following SQL',
-	#'install_success' => 'Installation was succesful, please delete the file install.php. You can login with the following details',
+	'tool_watcher' => 'Public watcher',
+	
+	'tool_minusone' => 'Rank -1 kicker',
 	
 	// ControlPanel no rights page
 	'cp_norights' => 'Access denied',

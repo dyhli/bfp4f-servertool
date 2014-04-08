@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,6 +55,80 @@ if($user->checkLogin()) {
 		// Commands
 		switch($_POST['cmd']) {
 			
+			/**
+			 * Start the server
+			 */
+			case 'startServer':
+				if($userInfo['rights_superadmin'] == 'yes') {
+					if($settings['i3d_active'] == 'true') {
+						$i3d->action = 'start';
+						$result = (array) $i3d->doRequest(array( 
+							'gameserverId' => decrypt($settings['i3d_gameserverid']),
+						));
+						if($result['status'] == 'Success') {
+							$response['status'] = 'OK';
+							$response['msg'] = $lang['i3d_msg1'];
+							$log->insertActionLog($userInfo['user_id'], 'i3D API: Server started');
+						} else {
+							$response['msg'] = $lang['i3d'] . ': ' . $result['message'];
+						}
+					} else {
+						$response['msg'] = $lang['i3d_err2'];
+					}
+				} else {
+					$response['msg'] = $lang['msg_cmd_noaccess'];
+				}
+			break;
+			
+			/**
+			 * Stop the server
+			 */
+			case 'stopServer':
+				if($userInfo['rights_superadmin'] == 'yes') {
+					if($settings['i3d_active'] == 'true') {
+						$i3d->action = 'stop';
+						$result = (array) $i3d->doRequest(array( 
+							'gameserverId' => decrypt($settings['i3d_gameserverid']),
+						));
+						if($result['status'] == 'Success') {
+							$response['status'] = 'OK';
+							$response['msg'] = $lang['i3d_msg2'];
+							$log->insertActionLog($userInfo['user_id'], 'i3D API: Server stopped');
+						} else {
+							$response['msg'] = $lang['i3d'] . ': ' . $result['message'];
+						}
+					} else {
+						$response['msg'] = $lang['i3d_err2'];
+					}
+				} else {
+					$response['msg'] = $lang['msg_cmd_noaccess'];
+				}
+			break;
+			
+			/**
+			 * Restart the server
+			 */
+			case 'restartServer':
+				if($userInfo['rights_superadmin'] == 'yes') {
+					if($settings['i3d_active'] == 'true') {
+						$i3d->action = 'restart';
+						$result = (array) $i3d->doRequest(array( 
+							'gameserverId' => decrypt($settings['i3d_gameserverid']),
+						));
+						if($result['status'] == 'Success') {
+							$response['status'] = 'OK';
+							$response['msg'] = $lang['i3d_msg3'];
+							$log->insertActionLog($userInfo['user_id'], 'i3D API: Server restarted');
+						} else {
+							$response['msg'] = $lang['i3d'] . ': ' . $result['message'];
+						}
+					} else {
+						$response['msg'] = $lang['i3d_err2'];
+					}
+				} else {
+					$response['msg'] = $lang['msg_cmd_noaccess'];
+				}
+			break;
 			
 			/**
 			 * Add a VIP
@@ -62,12 +136,7 @@ if($user->checkLogin()) {
 			case 'addVip':
 				if(isset($_POST['vars']['name']) && isset($_POST['vars']['profileId'])) {
 					if($userInfo['rights_vips'] == 'yes') {
-						
-						// Connect to server
-						$rc->connect($cn, $cs);
-						$cn = $rc->init();
-						
-						if($cn) {
+						if($rc->connect($cn, $cs) && $rc->init()) {
 							$sv->setVip($_POST['vars']['name'], $_POST['vars']['profileId'], 1);
 							$response['status'] = 'OK';
 							$response['msg'] = $lang['tool_vipm_vipadded'];
@@ -89,12 +158,7 @@ if($user->checkLogin()) {
 			case 'deleteVip':
 				if(isset($_POST['vars']['name']) && isset($_POST['vars']['profileId'])) {
 					if($userInfo['rights_vips'] == 'yes') {
-						
-						// Connect to server
-						$rc->connect($cn, $cs);
-						$cn = $rc->init();
-						
-						if($cn) {
+						if($rc->connect($cn, $cs) && $rc->init()) {
 							$sv->setVip($_POST['vars']['name'], $_POST['vars']['profileId'], 0);
 							$response['status'] = 'OK';
 							$response['msg'] = $lang['tool_vipm_vipdeleted'];
@@ -115,12 +179,8 @@ if($user->checkLogin()) {
 			 */
 			case 'nextMap':
 				if($userInfo['rights_server'] == 'yes') {
-					
-					// Connect to server
-					$rc->connect($cn, $cs);
-					$cn = $rc->init();
-					
-					if($cn) {
+					if($rc->connect($cn, $cs) && $rc->init()) {
+						$ct->send('|ccc| Skipping to next map...');
 						$sv->runNextMap();
 						$response['status'] = 'OK';
 						$response['msg'] = $lang['tool_server_nextmap_msg'];
@@ -138,12 +198,8 @@ if($user->checkLogin()) {
 			 */
 			case 'restartRound':
 				if($userInfo['rights_server'] == 'yes') {
-					
-					// Connect to server
-					$rc->connect($cn, $cs);
-					$cn = $rc->init();
-					
-					if($cn) {
+					if($rc->connect($cn, $cs) && $rc->init()) {
+						$ct->send('|ccc| Round is being restared...');
 						$sv->restartMap();
 						$response['status'] = 'OK';
 						$response['msg'] = $lang['tool_server_restartround_msg'];
@@ -188,12 +244,7 @@ if($user->checkLogin()) {
 			case 'warnPlayer':
 				if(isset($_POST['vars']['player']) && isset($_POST['vars']['index']) && isset($_POST['vars']['reason'])) {
 					if($userInfo['rights_server'] == 'yes') {
-						
-						// Connect to server
-						$rc->connect($cn, $cs);
-						$cn = $rc->init();
-						
-						if($cn) {
+						if($rc->connect($cn, $cs) && $rc->init()) {
 							// We use the index instead of the playername, or else playernames with numbers only won't be warned
 							$pl->warn($_POST['vars']['index'], $_POST['vars']['reason']);
 							
@@ -218,12 +269,7 @@ if($user->checkLogin()) {
 			case 'kickPlayer':
 				if(isset($_POST['vars']['player']) && isset($_POST['vars']['index']) && isset($_POST['vars']['reason'])) {
 					if($userInfo['rights_server'] == 'yes') {
-						
-						// Connect to server
-						$rc->connect($cn, $cs);
-						$cn = $rc->init();
-						
-						if($cn) {
+						if($rc->connect($cn, $cs) && $rc->init()) {
 							// We use the index instead of the playername, or else playernames with numbers only won't be kicked
 							$pl->kick($_POST['vars']['index'], $_POST['vars']['reason']);
 							
@@ -231,6 +277,31 @@ if($user->checkLogin()) {
 							$response['msg'] = $lang['tool_server_kickpl_msg'];
 							
 							$log->insertActionLog($userInfo['user_id'], 'Kicked player: ' . $_POST['vars']['player'] . ' for: ' . $_POST['vars']['reason']);
+						} else {
+							$response['msg'] = $lang['msg_serverdown'] . ' ' . date($settings['cp_date_format_full'], $settings['server_last_stream']);
+						}
+					} else {
+						$response['msg'] = $lang['msg_cmd_noaccess'];
+					}
+				} else {
+					$response['msg'] = $lang['msg_cmd_missingvars'];
+				}
+			break;
+			
+			/**
+			 * Switch a player
+			 */
+			case 'switchPlayer':
+				if(isset($_POST['vars']['player']) && isset($_POST['vars']['index'])) {
+					if($userInfo['rights_server'] == 'yes') {
+						if($rc->connect($cn, $cs) && $rc->init()) {
+							// We use the index instead of the playername, or else playernames with numbers only won't be kicked
+							$pl->switchPlayer($_POST['vars']['index']);
+							
+							$response['status'] = 'OK';
+							$response['msg'] = $lang['tool_server_switchpl_msg'];
+							
+							$log->insertActionLog($userInfo['user_id'], 'Switched player: ' . $_POST['vars']['player']);
 						} else {
 							$response['msg'] = $lang['msg_serverdown'] . ' ' . date($settings['cp_date_format_full'], $settings['server_last_stream']);
 						}
@@ -424,12 +495,7 @@ if($user->checkLogin()) {
 			case 'sendSrvMsg':
 				if(isset($_POST['vars']['msg']) && !empty($_POST['vars']['msg'])) {
 					if($userInfo['rights_server'] == 'yes') {
-						
-						// Connect to server
-						$rc->connect($cn, $cs);
-						$cn = $rc->init();
-						
-						if($cn) {
+						if($rc->connect($cn, $cs) && $rc->init()) {
 							$ct->send($_POST['vars']['msg']);
 							
 							$response['status'] = 'OK';
@@ -462,6 +528,70 @@ if($user->checkLogin()) {
 							$response['msg'] = $lang['msg_cmd_failed'];
 						}
 
+					} else {
+						$response['msg'] = $lang['msg_cmd_noaccess'];
+					}
+				} else {
+					$response['msg'] = $lang['msg_cmd_missingvars'];
+				}
+			break;
+			
+			/**
+			 * Delete from in-game commands
+			 */
+			case 'deleteTmsg':
+				if(isset($_POST['vars']['id'])) {
+					if($userInfo['rights_igcmds'] >= 100) {
+						$tmsg = new TimedMessages($db, $config);
+						if($tmsg->deleteMessage($_POST['vars']['id'])) {
+							$response['status'] = 'OK';
+							$response['msg'] = $lang['tool_tmsg_deleted'];
+							
+							$log->insertActionLog($userInfo['user_id'], 'Timed message deleted');
+						} else {
+							$response['msg'] = $lang['msg_cmd_failed'];
+						}
+
+					} else {
+						$response['msg'] = $lang['msg_cmd_noaccess'];
+					}
+				} else {
+					$response['msg'] = $lang['msg_cmd_missingvars'];
+				}
+			break;
+			
+			/**
+			 * Close active poll
+			 */
+			case 'closePoll':
+				if($userInfo['rights_server'] == 'yes') {
+					$igv = new IgVoting(null, null, null, null, $db, $config, $settings);
+					
+					$response['status'] = 'OK';
+					$response['msg'] = $lang['tool_server_closepoll_msg'];
+					
+					$log->insertActionLog($userInfo['user_id'], 'Active poll closed');
+				} else {
+					$response['msg'] = $lang['msg_cmd_noaccess'];
+				}
+			break;
+			
+			/**
+			 * Switch map
+			 */
+			case 'switchMap':
+				if(isset($_POST['vars']['map']) && !empty($_POST['vars']['map'])) {
+					if($userInfo['rights_server'] == 'yes') {
+						if($rc->connect($cn, $cs) && $rc->init()) {
+							$map = explode($_POST['map'], '|');
+							$sv->changeMap($map[0], $map[1]);
+							
+							$response['status'] = 'OK';
+							$response['msg'] = $lang['tool_server_switchmap_msg'];
+							$log->insertActionLog($userInfo['user_id'], 'Switched map to: ' . $_POST['vars']['map']);
+						} else {
+							$response['msg'] = $lang['msg_serverdown'] . ' ' . date($settings['cp_date_format_full'], $settings['server_last_stream']);
+						}
 					} else {
 						$response['msg'] = $lang['msg_cmd_noaccess'];
 					}

@@ -51,7 +51,7 @@ class Chat
                     'team'      =>  $team,
                     'time'      =>  substr($time, 1, -1),
                     'message'   =>  $message,
-                    'index'     =>  $index
+                    'index'     =>  @$index
                 );
             }            
             ++$i;
@@ -82,7 +82,7 @@ class Chat
      */
     public function sendPlayer($player, $message) // DOESN'T WORK, IT SENDS IT TO ALL PLAYERS (GLOBAL)
     { 
-        return trim(Base::query('exec game.sayToPlayerWithName ' . $player . ' "' . $message . '"'));
+        return trim(Base::query('exec game.sayToPlayerWithId ' . $player . ' "' . $message . '"'));
         //return trim(Base::query('bf2cc sendplayerchat \"' . $player . '\" ' . $message . ""));
     }
 }

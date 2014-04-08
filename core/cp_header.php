@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 	<head>
 		<title><?=$pageTitle?> | BattlefieldTools.com Servertool</title>
 		
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta charset="<?=$lang['lang_charset']?>" />
 		<meta name="author" content="BattlefieldTools.com" />
 		
@@ -120,6 +121,9 @@ if(!$user->checkLogin()) {
 							<li class="divider"></li>
 							<li<?=(($userInfo['rights_server'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/rotation.php"><i class="fa fa-block fa-pencil"></i> <?=$lang['tool_mrot']?></a></li>
 							<li<?=(($userInfo['rights_rcon'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/rcon.php"><i class="fa fa-block fa-terminal"></i> <?=$lang['tool_rcon']?></a></li>
+							<li class="divider"></li>
+							<li<?=(($userInfo['rights_server'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/server-settings.php"><i class="fa fa-block fa-cogs"></i> <?=$lang['tool_svset']?></a></li>
+							<li><a href="<?=HOME_URL?>panel/ping.php"><i class="fa fa-block fa-signal"></i> <?=$lang['tool_ping']?></a></li>
 						</ul>
 					</li>
 					<li class="dropdown">
@@ -136,9 +140,12 @@ if(!$user->checkLogin()) {
 							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/am.php"><i class="fa fa-block fa-comment"></i> <?=$lang['tool_am']?></a></li>
 							<li<?=(($userInfo['rights_limiters'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tool/sm.php"><i class="fa fa-block fa-comment"></i> <?=$lang['tool_sm']?></a></li>
 							<li class="divider"></li>
-							<li<?=(($userInfo['rights_blacklist'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/blacklist.php"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_bl']?></a></li>
+							<li<?=(($userInfo['rights_server'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/tmsg"><i class="fa fa-block fa-comments"></i> <?=$lang['tool_tmsg']?></a></li>
 							<li class="divider"></li>
+							<li<?=(($userInfo['rights_blacklist'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/blacklist.php"><i class="fa fa-block fa-ban"></i> <?=$lang['tool_bl']?></a></li>
 							<li<?=(($userInfo['rights_whitelist'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/whitelist.php"><i class="fa fa-block fa-check-square-o"></i> <?=$lang['tool_wlist']?></a></li>
+							<li class="divider"></li>
+							<li><a href="<?=HOME_URL?>public"><i class="fa fa-block fa-eye"></i> <?=$lang['tool_watcher']?></a></li>
 						</ul>
 					</li>
 					<li<?=(($userInfo['rights_superadmin'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/accounts.php"><i class="fa fa-group"></i> <?=$lang['tool_acc']?></a></li>
@@ -150,9 +157,9 @@ if(!$user->checkLogin()) {
 							<li<?=(($userInfo['rights_itemlist'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/itemlist.php"><i class="fa fa-block fa-list"></i> <?=$lang['tool_iteml']?></a></li>
 							<li<?=(($userInfo['rights_superadmin'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/settings.php"><i class="fa fa-block fa-wrench"></i> <?=$lang['tool_set']?></a></li>
 							<li class="divider"></li>
-							<li<?=(($userInfo['rights_logs'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/view-log.php?log=autokick" target="_blank"><i class="fa fa-block fa-archive"></i> <?=$lang['tool_logs1']?></a></li>
-							<li<?=(($userInfo['rights_logs'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/view-log.php?log=cp_actions" target="_blank"><i class="fa fa-block fa-archive"></i> <?=$lang['tool_logs2']?></a></li>
-							<li<?=(($userInfo['rights_logs'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/view-log.php?log=igcmds" target="_blank"><i class="fa fa-block fa-archive"></i> <?=$lang['tool_logs3']?></a></li>
+							<li<?=(($userInfo['rights_logs'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/view-log.php?log=autokick"><i class="fa fa-block fa-archive"></i> <?=$lang['tool_logs_autokick']?></a></li>
+							<li<?=(($userInfo['rights_logs'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/view-log.php?log=cp_actions"><i class="fa fa-block fa-archive"></i> <?=$lang['tool_logs_cp_actions']?></a></li>
+							<li<?=(($userInfo['rights_logs'] == 'no') ? ' class="disabled"' : '')?>><a href="<?=HOME_URL?>panel/view-log.php?log=igcmds"><i class="fa fa-block fa-archive"></i> <?=$lang['tool_logs_igcmds']?></a></li>
 							<li class="divider"></li>
 							<li><a href="<?=HOME_URL?>panel/checkVersion.php"><i class="fa fa-block fa-refresh"></i> <?=$lang['vcheck']?></a></li>
 						</ul>
@@ -173,6 +180,7 @@ if(!$user->checkLogin()) {
 							<li><a href="https://battlefieldtools.com/forum/forum/4" target="_blank"><i class="fa fa-block fa-bug"></i> <?=$lang['cp_menu_report_bug']?></a></li>
 							<li><a href="https://battlefieldtools.com/forum/forum/4" target="_blank"><i class="fa fa-block fa-lightbulb-o"></i> <?=$lang['cp_menu_subm_sug']?></a></li>
 							<li class="divider"></li>
+							<li><a href="<?=HOME_URL?>panel/livechat.php"><i class="fa fa-block fa-comments"></i> Livechat support</a></li>
 							<li><a href="https://github.com/dyhli/bfp4f-servertool/wiki/Q&A" target="_blank"><i class="fa fa-block fa-question-circle"></i> <?=$lang['cp_menu_qa']?></a></li>
 							<li class="divider"></li>
 							<li><a href="https://github.com/dyhli/bfp4f-servertool/wiki/Changelog-&-Todo" target="_blank"><i class="fa fa-block fa-archive"></i> <?=$lang['cp_menu_changelog']?></a></li>

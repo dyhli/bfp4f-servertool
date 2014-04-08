@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,20 @@ $response = array(
 	'igaAdmins' => array ( ),
 );
 
+function aasort(&$array, $key) {
+	$sorter = array( );
+	$ret = array( );
+	reset($array);
+	foreach($array as $ii => $va) {
+		$sorter[$ii] = $va[$key];
+	}
+	asort($sorter);
+	foreach($sorter as $ii => $va) {
+		$ret[$ii] = $array[$ii];
+	}
+	$array=$ret;
+}
+
 if($user->checkLogin()) {
 			
 	// Connect to server
@@ -56,13 +70,23 @@ if($user->checkLogin()) {
 			$response['info']['mapName'] = $cmg->getMapName($response['info']['map']);
 			$response['info']['gameModeName'] = $cmg->getGameMode($response['info']['gameMode']);
 			if(isset($_GET['players'])) {
-				$response['players'] = $pl->fetch();
+				$players = $pl->fetch();
+				$score = array( );
+				foreach($players as $key => $row) {
+					$score[$key] = $row->score;
+				}
+				array_multisort($score, SORT_DESC, $players);
+				$response['players'] = $players;
 			}
 			if(isset($_GET['chat'])) {
 				$response['chat'] = $ct->fetch();
 			}
 			if(isset($_GET['igaAdmins'])) {
 				$response['igaAdmins'] = $sv->fetchIgaAdmins();
+			}
+			if(isset($_GET['ping'])) {
+				$ping = ping(decrypt($settings['server_ip']) . ':' . decrypt($settings['server_admin_port']));
+				$response['ping'] = ((is_float($ping)) ? $ping . 'ms' : '999+ms');
 			}
 			
 		} else {

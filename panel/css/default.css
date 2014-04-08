@@ -1,8 +1,8 @@
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ a:hover {
 	text-decoration: none;
 }
 
-.dark{color:#333!important}.white{color:#FFF!important}.red{color:#dd5a43!important}.light-red{color:#f77!important}.blue{color:#478fca!important}.light-blue{color:#93cbf9!important}.green{color:#69aa46!important}.light-green{color:#b6e07f!important}.orange{color:#ff892a!important}.purple{color:#a069c3!important}.pink{color:#c6699f!important}.pink2{color:#d6487e!important}.brown{color:brown!important}.grey{color:#777!important}.bigger-110{font-size:110%}.bigger-125{font-size:125%}.bigger-150{font-size:150%}.bigger-200{font-size:200%}.smaller-90{font-size:90%}.smaller-75{font-size:75%}.smaller-50{font-size:50%}.hr{display:block;height:0;overflow:hidden;font-size:1px;margin:12px 0;border-top:1px solid #e3e3e3}.hr-double{height:1px;border-top:1px solid #e3e3e3;border-bottom:1px solid #e3e3e3}.hr8{margin:8px 0}.hr12{margin:12px 0}.hr16{margin:16px 0}.hr18{margin:18px 0}.hr24{margin:24px 0}.hr32{margin:32px 0}.hr.dotted{border-top-style:dotted}.hr-double.dotted{border-bottom-style:dotted}
+.text-dark{color:#2c2c2c!important}.dark{color:#333!important}.white{color:#FFF!important}.red{color:#dd5a43!important}.light-red{color:#f77!important}.blue{color:#478fca!important}.light-blue{color:#93cbf9!important}.green{color:#69aa46!important}.light-green{color:#b6e07f!important}.orange{color:#ff892a!important}.purple{color:#a069c3!important}.pink{color:#c6699f!important}.pink2{color:#d6487e!important}.brown{color:brown!important}.grey{color:#777!important}.bigger-110{font-size:110%}.bigger-125{font-size:125%}.bigger-150{font-size:150%}.bigger-200{font-size:200%}.smaller-90{font-size:90%}.smaller-75{font-size:75%}.smaller-50{font-size:50%}.hr{display:block;height:0;overflow:hidden;font-size:1px;margin:12px 0;border-top:1px solid #e3e3e3}.hr-double{height:1px;border-top:1px solid #e3e3e3;border-bottom:1px solid #e3e3e3}.hr8{margin:8px 0}.hr12{margin:12px 0}.hr16{margin:16px 0}.hr18{margin:18px 0}.hr24{margin:24px 0}.hr32{margin:32px 0}.hr.dotted{border-top-style:dotted}.hr-double.dotted{border-bottom-style:dotted}
 
 .center {
 	text-align: center;
@@ -275,4 +275,116 @@ td.center,th.center {
 .contextMenu {
 	display: none;
 	position: absolute;
+}
+
+.progress {
+	position: relative;
+	height: 28px;
+}
+
+.progress span {
+	position: absolute;
+	z-index: 2;
+	top: 0;
+	right: 0;
+	color: #2c2c2c;
+	text-align: center;
+	width: 100%;
+	line-height: 30px;
+}
+
+.progress .progress-bar-danger span {
+	color: #f2f2f2;
+}
+
+.alert.fix-bottom {
+	padding-bottom: 0;
+}
+
+#i3dInfo {
+	margin-top: 5px;
+}
+
+/**
+ * 	EFFECTS
+ */
+
+.btn,.btn:hover,a,.a:hover {
+	transition: all .25s ease;
+}
+
+.f0 {
+	animation: fadein .3s;
+    -moz-animation: fadein .3s;
+    -webkit-animation: fadein .3s;
+    -o-animation: fadein .3s;
+}
+.f1 {
+	animation: fadein .9s;
+    -moz-animation: fadein .9s;
+    -webkit-animation: fadein .9s;
+    -o-animation: fadein .9s;
+}
+.f2 {
+	animation: fadein 1.5s;
+    -moz-animation: fadein 1.5s;
+    -webkit-animation: fadein 1.5s;
+    -o-animation: fadein 1.5s;
+}
+.f3 {
+	animation: fadein 2.1s;
+    -moz-animation: fadein 2.1s;
+    -webkit-animation: fadein 2.1s;
+    -o-animation: fadein 2.1s;
+}
+.f4 {
+	animation: fadein 2.7s;
+    -moz-animation: fadein 2.7s;
+    -webkit-animation: fadein 2.7s;
+    -o-animation: fadein 2.7s;
+}
+.f5 {
+	animation: fadein 3.3s;
+    -moz-animation: fadein 3.3s;
+    -webkit-animation: fadein 3.3s;
+    -o-animation: fadein 3.3s;
+}
+.f6 {
+	animation: fadein 3.9s;
+    -moz-animation: fadein 3.9s;
+    -webkit-animation: fadein 3.9s;
+    -o-animation: fadein 3.9s;
+}
+
+@keyframes fadein {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@-moz-keyframes fadein { /* Firefox */
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@-o-keyframes fadein { /* Opera */
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }

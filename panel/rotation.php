@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,6 +84,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['rotation']) && isset($_
 				$sv->appendMap($map[0], $map[1]);
 			}
 			$sv->setNumOfRounds($_POST['rpm']);
+			$rc->query('exec maplist.save');
 
 			$status = '<div class="alert alert-success alert-block"><h4><i class="fa fa-check"></i> ' . $lang['word_ok'] . '</h4><p>' . $lang['msg_settings_saved'] . '</p></div>';
 			$log->insertActionLog($userInfo['user_id'], 'Map rotation edited');

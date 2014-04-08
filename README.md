@@ -2,9 +2,9 @@ BattlefieldTools BFP4F Servertool
 ================
 
 Battlefield Play4free Servertool
-Version 0.6.0
+Version 0.7.2
 
-Copyright 2013 Danny Li <SharpBunny> <bunny@battlefieldtools.com>
+Copyright 2014 Danny Li <SharpBunny> <bunny@battlefieldtools.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -58,12 +58,15 @@ FEATURES
 * VIPs management
 * Logviewer
 * Questions and answers (Q&A)
-* In-game commands **34 commands by default**
+* In-game commands **36 commands by default**
 	* Public commands
 	* Admin/mod commands
 	* Possible to create your own commands
 	* Much more!
+* Timed messages
+* Server settings
 * Maybe some easter eggs? :P
+* AND MORE MORE MORE MORE MORE
 
 - - - - 
 
@@ -78,7 +81,7 @@ SUGGESTIONS
 * Post it in the forumthread: http://battlefield.play4free.com/en/forum/showthread.php?tid=137006
 * PM me (SharpBunny)
 * Send an e-mail to bunny@battlefieldtools.com
-* BattlefieldTools/BTC Teamspeak 3: ts.battlefieldtools.com
+* BattlefieldTools Teamspeak 3: battlefieldtools.com
 
 - - - - 
 
@@ -102,7 +105,7 @@ SUPPORT
 * Post it in the forumthread: http://battlefield.play4free.com/en/forum/showthread.php?tid=137006
 * PM me (SharpBunny)
 * Send an e-mail to bunny@battlefieldtools.com
-* BattlefieldTools/BTC Teamspeak 3: ts.battlefieldtools.com
+* BattlefieldTools Teamspeak 3: battlefieldtools.com
 
 - - - - 
 
@@ -111,7 +114,7 @@ BUGS
 * Post it in the forumthread: http://battlefield.play4free.com/en/forum/showthread.php?tid=137006
 * PM me (SharpBunny)
 * Send an e-mail to bunny@battlefieldtools.com
-* BattlefieldTools/BTC Teamspeak 3: ts.battlefieldtools.com
+* BattlefieldTools Teamspeak 3: battlefieldtools.com
 
 - - - - 
 

@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,12 +43,13 @@ include(CORE_DIR . '/cp_header.php');
 					<h2><i class="fa fa-bullhorn"></i> <?=$lang['tool_igcmds']?> <small><?=$lang['tool_igcmds_desc']?></small></h2>
 					<hr />
 					
-					<a href="<?=HOME_URL?>panel/igcmds/add.php" class="btn btn-success"><i class="fa fa-plus"></i> <?=$lang['btn_add']?></a>
+					<a href="<?=HOME_URL?>panel/igcmds/add.php" class="btn btn-success"><i class="fa fa-plus"></i> <?=$lang['btn_add']?></a> 
+					<a href="<?=HOME_URL?>panel/igcmds/settings.php" class="btn btn-primary"><i class="fa fa-cog"></i> <?=$lang['tool_set']?></a>
 					
 					<hr />
 					
 					<div class="table-responsive">
-						<table class="table table-striped table-bordered table-hover">
+						<table class="table table-striped table-bordered table-hover table-condensed">
 							<thead>
 								<tr>
 									<th><?=$lang['tool_igcmds_cmd']?></th>
@@ -77,7 +78,7 @@ if($igcmds['code'] == 'OK') {
 } else {
 ?>
 								<tr>
-									<td colspan="4"><?=getLang($user['message'])?></td>
+									<td colspan="4"><?=getLang($cmd['message'])?></td>
 								</tr>
 <?php
 }

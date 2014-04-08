@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 // CHANGE THIS!
 
 // Your home URL, end with a backslash
-define('HOME_URL', 'http://MYDOMAIN.COM/TOOL/');
+define('HOME_URL', 'http://YOUR_URL_HERE/');
 
 // A random string, please change this to your own random string!
 // Do NOT change this after the installation
@@ -40,11 +40,11 @@ $config = array(
 	// Database host, usually localhost
 	'db_host' => 'localhost',
 	// Database username
-	'db_username' => '',
+	'db_username' => 'XXX',
 	// Database password
-	'db_password' => '',
+	'db_password' => 'XXX',
 	// Database name
-	'db_name' => '',
+	'db_name' => 'XXX',
 	// Database table prefix (optional)
 	'db_prefix' => '',
 	
@@ -64,5 +64,5 @@ $config = array(
 // DON'T CHANGE
 // DON'T CHANGE
 
-define('TOOL_VERSION', 'v0.6.0');
+define('TOOL_VERSION', 'v0.7.2');
 ?>

@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,18 +65,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cmd']) && isset($_POST[
 		$errors[] = $lang['tool_igcmds_err4'];
 	}
 	// Check response
-	if(strlen($_POST['response']) > 75) {
+	if(strlen($_POST['response']) > 150) {
 		$errors[] = $lang['tool_igcmds_err5'];
 	}
 	// Set the private response setting
-	$_POST['response_priv'] = 'no';
 	if(isset($_POST['response_priv'])) {
 		$_POST['response_priv'] = 'yes';
+	} else {
+		$_POST['response_priv'] = 'no';
 	}
 	// Set the rights values
-	$_POST['active'] = 'no';
 	if(isset($_POST['active'])) {
 		$_POST['active'] = 'yes';
+	} else {
+		$_POST['active'] = 'no';
 	}
 	
 	// Check igcmds_rights
@@ -116,7 +118,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cmd']) && isset($_POST[
 					<h2><i class="fa fa-plus green"></i> <?=$lang['tool_igcmds_add']?> <small><?=$lang['tool_igcmds']?></small></h2>
 					<hr />
 					
-					<a href="<?=HOME_URL?>panel/igcmds/" class="btn btn-primary"><i class="fa fa-arrow-left"></i> <?=$lang['btn_back']?></a>
+					<a href="<?=HOME_URL?>panel/igcmds" class="btn btn-primary"><i class="fa fa-arrow-left"></i> <?=$lang['btn_back']?></a>
 					
 					<hr />
 					

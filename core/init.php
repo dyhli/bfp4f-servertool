@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@ session_start();
 
 // Namespaces
 use T4G\BFP4F\Rcon as rcon;
-use BT\API as Api;
 
 // Do not display errors
 #error_reporting(0);
@@ -36,6 +35,21 @@ require_once(CORE_DIR . '/config.php');
 
 // Measuring pageload time
 $pageStart = microtime(true);
+
+// Check if short open tags are on
+if(@ini_get('short_open_tag') != 'On' && @ini_get('short_open_tag') != '1') {
+	die('Please set short_open_tag = On in your php.ini file!');
+}
+
+// Check if fsockopen exists
+if(!function_exists('fsockopen')) {
+	die('PHP function fsockopen does not exists!');
+}
+
+// Check if mcrypt is enabled/exists
+if(!function_exists('mcrypt_encrypt') || !function_exists('mcrypt_create_iv') || !function_exists('mcrypt_get_iv_size')) {
+	die('Please install/enable mcrypt extension');
+}
 
 // Connect to database using MySQLi
 $db = new mysqli($config['db_host'], $config['db_username'], $config['db_password'], $config['db_name']);
@@ -50,6 +64,15 @@ $db->set_charset('utf8');
 // Include all the functions
 foreach(glob(CORE_DIR . '/functions/*.php') as $file) {
 	require_once($file);
+}
+function progressColor($p) {
+	if($p <= 45) {
+		return 'info';
+	} elseif($p > 45 && $p < 75) {
+		return 'warning';
+	} else {
+		return 'danger';
+	}
 }
 // Include all the classes
 foreach(glob(CORE_DIR . '/classes/*.php') as $file) {
@@ -130,9 +153,33 @@ if(!defined('INSTALL_PAGE')) {
 	$log = new Log($db, $config);
 	
 	// BattlefieldTools API class
-	$api = new Api\Base();
+	$api = new BT\API\Base;
 	$api->setUser(decrypt($settings['api_username']));
 	$api->setKey(decrypt($settings['api_key']));
+	
+	// i3D API
+	$i3d = new Extern\I3D\API;
+	$i3d->userId = decrypt($settings['i3d_userid']);
+	$i3d->apiKey = decrypt($settings['i3d_apikey']);
+	$i3d->category = 'gameserver';
+	
+	// Check every day if the i3D API details are still valid and working
+	if(time() - $settings['i3d_last_check'] >= 86400 || isset($i3dStart)) {
+		updateSetting('i3d_last_check', time());
+		$i3d->action = 'getServerById';
+		$i3dResult = (array) $i3d->doRequest(array( 
+			'gameserverId' => decrypt($settings['i3d_gameserverid']),
+		));
+		$i3dStatus = 'error';
+		if(!isset($i3dResult['status']) || $i3dResult['status'] == 'Error') {
+			updateSetting('i3d_active', 'false');
+		} elseif(count($i3dResult['data']) == 0) {
+			updateSetting('i3d_active', 'false');
+		} else {
+			$i3dStatus = 'success';
+			updateSetting('i3d_active', 'true');
+		}
+	}
 	
 	// If user is logged in, then fetch the user
 	if($user->checkLogin()) {

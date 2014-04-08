@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,15 @@ require_once(dirname(dirname(__FILE__)) . '/core/init.php');
 
 use T4G\BFP4F\Rcon as rcon;
 
+/**
+ * Check if the limiters are enabled
+ */
+if($settings['tool_limiters'] == 'false') {
+	
+	die('[' . date($settings['cp_date_format_full']) . '] Limiters are disabled.' . PHP_EOL);
+	
+}
+
 if($rc->connect($cn, $cs) && $rc->init()) {
 
 	/**
@@ -44,6 +53,7 @@ if($rc->connect($cn, $cs) && $rc->init()) {
 	$it = new Itemlist($db, $config);
 	$bl = new Blacklist($db, $config);
 	$wl = new WhiteList($db, $config);
+	$tm = new TimedMessages($db, $config);
 	
 	/**
 	 * LIMITERS
@@ -82,6 +92,26 @@ if($rc->connect($cn, $cs) && $rc->init()) {
 		 */
 		if($player->connected != 1) {
 			continue;
+		}
+		
+		/**
+		 * RANK -1 KICKER
+		 * 
+		 * Kicks a player with rank -1
+		 */
+		if($settings['tool_minusone']) {
+			if($player->level == -1) {
+				$reason = 'Rank -1';
+				
+				// Kick the player
+				// We use the index instead of the playername, or else playernames with numbers only won't be kicked
+				$pl->kick($player->index, $reason);
+				// Log the kick
+				$log->insertKickLog($player->nucleusId, $player->cdKeyHash, $player->name, $reason);
+			
+				// Skip, don't check for other limiters and stuff
+				continue;
+			}
 		}
 		
 		/**
@@ -145,6 +175,7 @@ if($rc->connect($cn, $cs) && $rc->init()) {
 		 * 	- Class
 		 * 	- Rank
 		 * 	- Kills and deaths
+		 *  - KD
 		 * 	- Score
 		 * 	- VIP
 		 */
@@ -158,15 +189,16 @@ if($rc->connect($cn, $cs) && $rc->init()) {
 				'%rank%' => $player->level,
 				'%kills%' => $player->kills,
 				'%deaths%' => $player->deaths,
+				'%kd%' => round($player->kills/$player->deaths, 2, PHP_ROUND_HALF_UP),
 				'%score%' => $player->score,
 				'%vip%' => (($player->vip == '1') ? 'Yes' : 'No'),
 			));
 			
 			// Send it to the player
-			$ct->sendPlayer($player->name, $message);
+			$ct->sendPlayer($player->index, $message);
 			
 			// Wait 0.5 seconds
-			sleep(.5);
+			//sleep(.5);
 			
 		}
 		
@@ -445,7 +477,6 @@ if($rc->connect($cn, $cs) && $rc->init()) {
 	 * - Displays a message with the currently in-game admins
 	 */
 	if($settings['tool_am'] > 0 && (time()-$settings['tool_am_last']) >= $settings['tool_am']) {
-
 		if(count($admins) > 0) {
 			$message = replace($settings['tool_am_msg'], array(
 				'%admins%' => implode(', ', $admins),
@@ -456,7 +487,30 @@ if($rc->connect($cn, $cs) && $rc->init()) {
 
 		$ct->send($message);
 		updateSetting('tool_am_last', time());
-			
+	}
+	
+	/**
+	 * TIMED MESSAGES
+	 * 
+	 * - Displays timed messages
+	 */
+	if($settings['tool_tmsg'] == 'true') {
+		// Fetch messages
+		$tmsgs = $tm->fetchMessages();
+		if($tmsgs['code'] == 'OK') {
+			foreach($tmsgs['msg'] as $msg) {
+				// Check how many seconds between now and the last message and check if it is active or not
+				if(time()-$msg['msg_last'] >= $msg['msg_time'] && $msg['msg_active'] == 'yes') {
+					// Send message
+					$ct->send($msg['msg_content']);
+					
+					// Update last message
+					$tm->updateMessage($msg['msg_id'], array(
+						'msg_last' => time(),
+					));
+				}
+			}
+		}
 	}
 	
 	/**

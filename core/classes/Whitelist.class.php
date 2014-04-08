@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ class Whitelist {
 	
 	protected $db,
 			  $config;
+			  
+	public $listId = null;
 			  
 	function __construct($db, $config) {
 		$this->db = $db;
@@ -115,6 +117,9 @@ class Whitelist {
 		profile_id='" . $this->db->real_escape_string($profileId) . "'")) {
 			
 			if($result->num_rows > 0) {
+				$a = $result->fetch_array();
+				$this->listId = $a['list_id'];
+				
 				return true;
 			}
 						

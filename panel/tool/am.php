@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -104,7 +104,7 @@ foreach(array(0, 30, 60, 90, 120, 180, 240, 300) as $sec) {
 		$input = $lang['word_disabled'];
 	}
 ?>
-									<option value="<?=$sec?>"<?=(($settings['tool_am'] == $sec) ? ' selected' : '') . (($sec > 0) ? ' " data-icon="fa fa-clock-o"' : 'data-icon="fa fa-times"')?>><?=replace($input, array('%s%' => $sec))?></option>
+									<option value="<?=$sec?>"<?=(($settings['tool_am'] == $sec) ? ' selected' : '') . (($sec > 0) ? ' " data-icon="fa fa-clock-o"' : ' data-icon="fa fa-times"')?>><?=replace($input, array('%s%' => $sec))?></option>
 <?php
 }
 ?>

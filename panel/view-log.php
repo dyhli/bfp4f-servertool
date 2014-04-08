@@ -1,9 +1,9 @@
 <?php
 /**
  * BattlefieldTools.com BFP4F ServerTool
- * Version 0.6.0
+ * Version 0.7.2
  *
- * Copyright (C) 2013 <Danny Li> a.k.a. SharpBunny
+ * Copyright (C) 2014 <Danny Li> a.k.a. SharpBunny
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,30 +28,88 @@ if($userInfo['rights_logs'] == 'no') {
 	header('Location: ' . HOME_URL . 'panel/accessDenied.php');
 	die();
 }
-
-header('Content-type: text/plain');
-
+$pageTitle = $lang['tool_logs'];
+include(CORE_DIR . '/cp_header.php');
+?>
+			
+			<div class="row">
+				<div class="col-md-12">
+					
+					<h2><i class="fa fa-clock-o"></i> <?=$lang['tool_logs']?> <small><?=$lang['tool_logs_desc']?></small></h2>
+					<hr />
+					
+<?php
 if(isset($_GET['log'])) {
 	
 	$result = $log->fetchLog($_GET['log']);
 	
 	if($result['code'] == 'OK') {
 		
-		$i = 0;
+		$keysSet = false;
+		$keys = array( );
+		$values = array( );
 		
 		foreach($result['items'] as $value) {
-			$i++;
-			
-			echo '[#' . $i . '] ';
+			$values[] = $value;
 			foreach($value as $key => $value) {
-				echo $key . ': ' . $value . ' || ';
+				if(!$keysSet) $keys[] = $key;
 			}
-			echo PHP_EOL;
+			$keysSet = true;
 		}
-		
-	} else {
-		echo $result['message'];
-	}
-	
+?>
+
+					<h3><?=@$lang['tool_logs_' . $_GET['log']]?> <small><?=@$lang['tool_logs_' . $_GET['log']. '_desc']?></small></h3>
+					<br />
+
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+<?php
+foreach($keys as $key) {
+?>
+									<th><?=$key?></th>
+<?php
 }
 ?>
+								</tr>
+							</thead>
+							
+							<tbody>
+							
+<?php
+foreach($values as $value) {
+?>
+								<tr>
+<?php
+	foreach($keys as $key) {
+?>
+									<td><?=$value[$key]?></td>
+<?php
+	}
+?>
+								</tr>
+<?php
+}
+?>
+							
+							</tbody>
+						</table>
+					</div>
+<?php
+	} else {
+?>
+					<div class="alert alert-danger alert-block"><h4><i class="fa fa-times"></i> <?=$lang['word_error']?></h4><p><?=getLang($result['message'])?></p></div>
+<?php
+	}
+} else {
+?>
+					<div class="alert alert-danger alert-block"><h4><i class="fa fa-times"></i> <?=$lang['word_error']?></h4><p><?=$lang['tool_logs_err1']?></p></div>
+<?php
+}
+?>
+					
+				</div>
+			</div>
+			
+<?php include(CORE_DIR . '/cp_footer.php'); ?>

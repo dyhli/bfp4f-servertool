@@ -141,7 +141,7 @@ foreach(range(30, 600, 30) as $time) {
 						<div class="form-group">
 							<div class="col-sm-9 col-sm-offset-3">
 								<div class="checkbox">
-									<label><input type="checkbox" name="active" <?=(($msg['msg_active'] == 'yes') ? 'checked ' : '')?>/> <span><?=$lang['tool_igcmds_help4']?></span></label>
+									<label><input type="checkbox" name="active" <?=(($msg['msg_active'] == 'yes') ? 'checked ' : '')?>/> <span><?=$lang['tool_tmsg_help1']?></span></label>
 								</div>
 							</div>
  						</div>
@@ -164,7 +164,7 @@ foreach(range(30, 600, 30) as $time) {
 			<div class="row-fluid">
 				<div class="span8 offset2">
 					
-					<h2><i class="fa fa-pencil"></i> <?=$lang['tool_igcmds_edit']?> <small><?=$lang['tool_igcmds']?></small></h2>
+					<h2><i class="fa fa-pencil"></i> <?=$lang['tool_tmsg_edit']?> <small><?=$lang['tool_tmsg']?></small></h2>
 					<hr />
 					
 					<a href="<?=HOME_URL?>panel/igcmds" class="btn btn-primary"><i class="fa fa-arrow-left"></i> <?=$lang['btn_back']?></a>

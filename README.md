@@ -112,7 +112,7 @@ BUGS
 * Raise a bug report on Battlefieldtools.com https://battlefieldtools.com/support/?page=buglist
 * PM me (SharpBunny)
 * Send an e-mail to bunny@battlefieldtools.com
-* BattlefieldTools Teamspeak 3: battlefieldtools.com
+* start a live chat with us via https://battlefieldtools.com or through your panel
 
 - - - - 
 

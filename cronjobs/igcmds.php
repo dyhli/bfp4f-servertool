@@ -28,7 +28,7 @@
  * 
  * Run this script every 5 seconds is recommended.
  */
- 
+define('IS_CRONJOB', TRUE);
 require_once(dirname(dirname(__FILE__)) . '/core/init.php');
 
 use T4G\BFP4F\Rcon as rcon;

@@ -36,19 +36,24 @@ require_once(CORE_DIR . '/config.php');
 // Measuring pageload time
 $pageStart = microtime(true);
 
-// Check if short open tags are on
-if(@ini_get('short_open_tag') != 'On' && @ini_get('short_open_tag') != '1') {
-	die('Please set short_open_tag = On in your php.ini file!');
-}
+// Ignore these checks in the cronjobs
+if(!defined('IS_CRONJOB')) {
+	
+	// Check if short open tags are on
+	if(@ini_get('short_open_tag') != 'On' && @ini_get('short_open_tag') != '1') {
+		die('Please set short_open_tag = On in your php.ini file!');
+	}
+	
+	// Check if fsockopen exists
+	if(!function_exists('fsockopen')) {
+		die('PHP function fsockopen does not exists!');
+	}
+	
+	// Check if mcrypt is enabled/exists
+	if(!function_exists('mcrypt_encrypt') || !function_exists('mcrypt_create_iv') || !function_exists('mcrypt_get_iv_size')) {
+		die('Please install/enable mcrypt extension');
+	}
 
-// Check if fsockopen exists
-if(!function_exists('fsockopen')) {
-	die('PHP function fsockopen does not exists!');
-}
-
-// Check if mcrypt is enabled/exists
-if(!function_exists('mcrypt_encrypt') || !function_exists('mcrypt_create_iv') || !function_exists('mcrypt_get_iv_size')) {
-	die('Please install/enable mcrypt extension');
 }
 
 // Connect to database using MySQLi

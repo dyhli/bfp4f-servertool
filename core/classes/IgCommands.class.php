@@ -963,7 +963,7 @@ class IgCommands {
 			'%rank%' => $cmdInfo['origin']['level'],
 			'%kills%' => $cmdInfo['origin']['kills'],
 			'%deaths%' => $cmdInfo['origin']['deaths'],
-			'%kd%' => round($cmdInfo['origin']['kills']/$cmdInfo['origin']['deaths'], 2, PHP_ROUND_HALF_UP),
+			'%kd%' => round($cmdInfo['origin']['kills']/(($cmdInfo['origin']['deaths'] == 0) ? 1 : $cmdInfo['origin']['deaths']), 2, PHP_ROUND_HALF_UP),
 			'%score%' => $cmdInfo['origin']['score'],
 			'%vip%' => (($cmdInfo['origin']['vip'] == '1') ? 'Yes' : 'No'),
 			'%position%' => $cmdInfo['origin']['position'],

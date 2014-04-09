@@ -325,7 +325,6 @@ INSERT INTO {%prefix%}settings (setting_id, setting_name, setting_value, setting
 (57, 'api_key', '', 'Battlefieldtools.com API key'),
 (58, 'tool_wl_inverse', 'false', 'Weapon limiter: inverse'),
 (59, 'tool_igcmds_votes', '6', 'In-game commands: votes'),
-(59, 'tool_igcmds_votes', '6', 'In-game commands: votes'),
 (60, 'i3d_userid', '', '(No description)'),
 (61, 'i3d_apikey', '', '(No description)'),
 (62, 'i3d_last_check', '0', '(No description)'),

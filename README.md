@@ -81,7 +81,6 @@ SUGGESTIONS
 * Post it in the forumthread: http://battlefield.play4free.com/en/forum/showthread.php?tid=137006
 * PM me (SharpBunny)
 * Send an e-mail to bunny@battlefieldtools.com
-* BattlefieldTools Teamspeak 3: battlefieldtools.com
 
 - - - - 
 
@@ -105,13 +104,12 @@ SUPPORT
 * Post it in the forumthread: http://battlefield.play4free.com/en/forum/showthread.php?tid=137006
 * PM me (SharpBunny)
 * Send an e-mail to bunny@battlefieldtools.com
-* BattlefieldTools Teamspeak 3: battlefieldtools.com
 
 - - - - 
 
 BUGS
 --------
-* Post it in the forumthread: http://battlefield.play4free.com/en/forum/showthread.php?tid=137006
+* Raise a bug report on Battlefieldtools.com https://battlefieldtools.com/support/?page=buglist
 * PM me (SharpBunny)
 * Send an e-mail to bunny@battlefieldtools.com
 * BattlefieldTools Teamspeak 3: battlefieldtools.com

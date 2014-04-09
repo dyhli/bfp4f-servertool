@@ -304,21 +304,21 @@ foreach(array(0, 30, 60, 90, 120, 180, 240, 300) as $sec) {
 								<div class="form-group">
 									<label class="col-sm-3 control-label"><i class="fa fa-user"></i> i3D userId</label>
 		 							<div class="col-sm-9">
-										<input type="text" name="i3d_userid" class="form-control" value="<?=decrypt($settings['i3d_userid'])?>" />
+										<input type="text" name="i3d_userid" class="form-control" value="<?=((empty($settings['i3d_userid'])) ? '' : decrypt($settings['i3d_userid']))?>" />
 									</div>
 								</div>
 								
 								<div class="form-group">
 									<label class="col-sm-3 control-label"><i class="fa fa-key"></i> i3D API key</label>
 		 							<div class="col-sm-9">
-										<input type="password" name="i3d_apikey" class="form-control" value="<?=decrypt($settings['i3d_apikey'])?>" />
+										<input type="password" name="i3d_apikey" class="form-control" value="<?=((empty($settings['i3d_apikey'])) ? '' : decrypt($settings['i3d_apikey']))?>" />
 									</div>
 								</div>
 								
 								<div class="form-group">
 									<label class="col-sm-3 control-label"><i class="fa fa-hdd-o"></i> i3D gameserverId</label>
 		 							<div class="col-sm-9">
-										<input type="text" name="i3d_gameserverid" class="form-control" value="<?=decrypt($settings['i3d_gameserverid'])?>" />
+										<input type="text" name="i3d_gameserverid" class="form-control" value="<?=((empty($settings['i3d_gameserverid'])) ? '' : decrypt($settings['i3d_gameserverid']))?>" />
 									</div>
 								</div>
 							</div>

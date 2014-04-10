@@ -57,24 +57,19 @@ if($settings['tool_watcher'] == 'true') {
 		$cmg = new GameMaps();
 		$sv = new rcon\Server();
 		$pl = new rcon\Players();
-		
-		if($userInfo['rights_server'] == 'yes') {
-			
-			$response['status'] = 'OK';
-			$response['info'] = (array) $sv->fetch();
-			$response['info']['mapName'] = $cmg->getMapName($response['info']['map']);
-			$response['info']['gameModeName'] = $cmg->getGameMode($response['info']['gameMode']);
-			$players = $pl->fetch();
-			$score = array( );
-			foreach($players as $key => $row) {
-				$score[$key] = $row->score;
-			}
-			array_multisort($score, SORT_DESC, $players);
-			$response['players'] = $players;
-			
-		} else {
-			$response['msg'] = $lang['msg_cmd_noaccess'];
+					
+		$response['status'] = 'OK';
+		$response['info'] = (array) $sv->fetch();
+		$response['info']['mapName'] = $cmg->getMapName($response['info']['map']);
+		$response['info']['gameModeName'] = $cmg->getGameMode($response['info']['gameMode']);
+		$players = $pl->fetch();
+		$score = array( );
+		foreach($players as $key => $row) {
+			$score[$key] = $row->score;
 		}
+		array_multisort($score, SORT_DESC, $players);
+		$response['players'] = $players;
+
 	}
 } else {
 	$response['msg'] = 'The public server watcher is not available.';

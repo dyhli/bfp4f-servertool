@@ -1,3 +1,10 @@
+<p align="center">
+<a href="http://secure.hostgator.com/~affiliat/cgi-bin/affiliates/clickthru.cgi?id=dyhli-bfp4fsvtool" target="_blank"><small>NOW! Get 25% off by using coupon <b>BFTSRVTOOL</b></small>
+<img src="https://tracking.hostgator.com/img/Discount_Shared/Hostgator-new-_AN-728X90.gif" /></a>
+</p>
+
+***
+
 BattlefieldTools BFP4F Servertool
 ================
 

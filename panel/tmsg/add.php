@@ -37,7 +37,7 @@ include(CORE_DIR . '/cp_header.php');
 
 $status = '';
 
-if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['msg']) && isset($_POST['time']) && isset($_POST['active'])) {
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['msg']) && isset($_POST['time'])) {
 	
 	sleep(2);
 	

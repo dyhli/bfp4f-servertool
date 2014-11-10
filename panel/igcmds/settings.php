@@ -57,9 +57,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['votes']) && isset($_POS
 		$errors[] = $lang['tool_igcmds_err7'];
 	}
 	// Active
-	$_POST['active'] = 'false';
 	if(isset($_POST['active'])) {
 		$_POST['active'] = 'true';
+	} else {
+		$_POST['active'] = 'false';
 	}
 	
 	// Check errors and stuff
